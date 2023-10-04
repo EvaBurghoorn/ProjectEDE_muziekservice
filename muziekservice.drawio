@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-04T09:07:00.704Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="1n8HmQBxmTIRJkWVOOAi" version="22.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-04T09:16:59.181Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="SD4Qi1oi8iP9_-nA77YN" version="22.0.2" type="github">
   <diagram name="Page-1" id="NBVJEllzR1ZUASM5w6jj">
     <mxGraphModel dx="1490" dy="668" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -57,7 +57,7 @@
         <mxCell id="QcWOiemHpY6lAmE6clA4-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" edge="1" parent="1" source="QcWOiemHpY6lAmE6clA4-15" target="QcWOiemHpY6lAmE6clA4-84">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="927" y="480" />
+              <mxPoint x="910" y="480" />
               <mxPoint x="194" y="480" />
             </Array>
           </mxGeometry>
@@ -220,6 +220,22 @@
         <mxCell id="QcWOiemHpY6lAmE6clA4-111" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;dashed=1;strokeWidth=2;fillColor=#dae8fc;" vertex="1" parent="1">
           <mxGeometry x="570" y="302" width="420" height="50" as="geometry" />
         </mxCell>
+        <mxCell id="QcWOiemHpY6lAmE6clA4-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="QcWOiemHpY6lAmE6clA4-112">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QcWOiemHpY6lAmE6clA4-120" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QcWOiemHpY6lAmE6clA4-112" target="QcWOiemHpY6lAmE6clA4-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QcWOiemHpY6lAmE6clA4-122" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QcWOiemHpY6lAmE6clA4-112">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="930" y="530" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="930" y="342" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="QcWOiemHpY6lAmE6clA4-112" value="api-gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="580" y="312" width="400" height="30" as="geometry" />
         </mxCell>
@@ -238,8 +254,8 @@
             <mxPoint x="888" y="200" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="QcWOiemHpY6lAmE6clA4-117" value="Endpoints:&lt;br&gt;GET /podcasts" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="818.5" y="180" width="240" height="90" as="geometry" />
+        <mxCell id="QcWOiemHpY6lAmE6clA4-117" value="Endpoints:&lt;br&gt;GET /podcasts -&amp;gt; get all podcasts&lt;br&gt;GET /songs -&amp;gt; get all songs&lt;br&gt;GET /song -&amp;gt; get a song&lt;br&gt;GET /podcast -&amp;gt; get a podcast&lt;br&gt;GET /songspodcasts -&amp;gt; get all songs and podcasts&lt;br&gt;GET /user -&amp;gt; get user&lt;br&gt;POST /user -&amp;gt; make user&lt;br&gt;PUT /user -&amp;gt; update user&lt;br&gt;GET / playlists -&amp;gt; get all playlists&lt;br&gt;GET /playlist -&amp;gt; get a playlist&lt;br&gt;POST /playlist -&amp;gt; make new playlist&lt;br&gt;PUT /playlist -&amp;gt; update playlist&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1289.88" y="167" width="290" height="230" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
