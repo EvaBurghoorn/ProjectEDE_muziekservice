@@ -23,6 +23,8 @@ public class UserService {
                 .country(userRequest.getCountry())
                 .build();
 
+        userRepository.save(user);
+
 
     }
 }
