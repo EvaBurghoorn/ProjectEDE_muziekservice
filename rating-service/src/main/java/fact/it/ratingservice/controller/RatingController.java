@@ -15,13 +15,14 @@ import java.util.List;
 public class RatingController {
     private final RatingService ratingService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public void createRating
-            (@RequestBody RatingRequest ratingRequest){
-        ratingService.createRating(ratingRequest);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public void createRating
+//            (@RequestBody RatingRequest ratingRequest){
+//        ratingService.createRating(ratingRequest);
+//    }
 
+//    Get all ratings
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<RatingResponse> getAllRatings(){

@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RatingResponse {
     private String id;
-    private int score;
-    private String description;
+    private boolean isLiked;
+    private boolean isDisliked;
+
 
 }

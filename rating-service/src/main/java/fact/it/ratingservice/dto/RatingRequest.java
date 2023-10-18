@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RatingRequest {
-    private int score;
-    private String description;
+    private boolean isLiked;
+    private boolean isDisliked;
 }
