@@ -13,8 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 public class Rating {
     private String id;
-//    e.g Een score van 1-5
-    private int score;
-//    Eventueel een beschrijving bij de Rating zetten
-    private String description;
+//    liked
+    private boolean isLiked;
+//    dislike
+    private boolean isDisliked;
+
+
 }

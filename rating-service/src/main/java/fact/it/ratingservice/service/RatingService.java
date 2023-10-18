@@ -15,14 +15,14 @@ public class RatingService {
 
     private final RatingRepository ratingRepository;
 
-    public void createRating(RatingRequest ratingRequest){
-        Rating rating = Rating.builder()
-                .score(ratingRequest.getScore())
-                .description(ratingRequest.getDescription())
-                .build();
-
-        ratingRepository.save(rating);
-    }
+//    public void createRating(RatingRequest ratingRequest){
+//        Rating rating = Rating.builder()
+//                .isLiked(ratingRequest.isLiked())
+//                .isDisliked(ratingRequest.isDisliked())
+//                .build();
+//
+//        ratingRepository.save(rating);
+//    }
 
     public List<RatingResponse> getAllRatings(){
         List<Rating> ratings = ratingRepository.findAll();
@@ -34,8 +34,8 @@ public class RatingService {
     {
         return RatingResponse.builder()
                 .id(rating.getId())
-                .score(rating.getScore())
-                .description(rating.getDescription())
+                .isLiked(rating.isLiked())
+                .isDisliked(rating.isDisliked())
                 .build();
     }
 }
