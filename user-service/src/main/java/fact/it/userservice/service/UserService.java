@@ -24,7 +24,28 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+    }
 
+    public void editUser(int userId,UserRequest userRequest){
+        User editUser = userRepository.findByUserId(userId);
+        if(editUser != null){
+            editUser.setFirstName(userRequest.getFirstName());
+            editUser.setLastName(userRequest.getLastName());
+            editUser.setBirthday(userRequest.getBirthday());
+            editUser.setEmailAddress(userRequest.getEmailAddress());
+            editUser.setPhoneNumber(userRequest.getPhoneNumber());
+            editUser.setCity(userRequest.getCity());
+            editUser.setPostalCode(userRequest.getPostalCode());
+            editUser.setCountry(userRequest.getCountry());
+            userRepository.save(editUser);
+
+        }
+    }
+    public void deleteUser(int userId){
+        User deleteUser = userRepository.findByUserId(userId);
+        if(deleteUser != null){
+            userRepository.delete(deleteUser);
+        }
 
     }
 }
