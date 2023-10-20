@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
+    public User getUserById(int userId) {
+        return userRepository.findByUserId(userId);
+    }
+
     public void createUser(UserRequest userRequest){
         User user = User.builder()
                 .firstName(userRequest.getFirstName())
