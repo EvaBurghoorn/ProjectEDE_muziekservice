@@ -1,15 +1,13 @@
 package fact.it.playlistservice.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "playlist")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Playlist {
@@ -19,6 +17,10 @@ public class Playlist {
     private String title;
     private int userid;
     private int musicpodcastid;
-    private boolean isPublic;
+    private boolean isPrivate;
+    private String description;
+
+
+
 
 }
