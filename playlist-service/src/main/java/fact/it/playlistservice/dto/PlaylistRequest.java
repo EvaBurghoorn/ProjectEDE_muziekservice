@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PlaylistResponse {
-    private Long id;
+public class PlaylistRequest {
     private String title;
     private int userid;
     private int musicpodcastid;
     private boolean isPrivate;
     private String description;
-
 }
