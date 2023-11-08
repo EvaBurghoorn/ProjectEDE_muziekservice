@@ -4,6 +4,7 @@ import fact.it.musicpodcastservice.dto.MusicPodcastRequest;
 import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,25 @@ import java.util.Optional;
 public class MusicPodcastService {
     private final MusicPodcastRepository musicPodcastRepository;
 
+    @PostConstruct
+    public void loadData(){
+        if(musicPodcastRepository.count() <= 0){
+            MusicPodcast musicPodcast = new MusicPodcast();
+            musicPodcast.setTitle("Title1");
+            musicPodcast.setArtist("Artist1");
+            musicPodcast.setDurationSeconds(200);
+            musicPodcast.setGenre("Pop");
+            musicPodcast.setPodcast(false);
+
+            MusicPodcast musicPodcast_two = new MusicPodcast();
+            musicPodcast_two.setTitle("TitlePodcast");
+            musicPodcast_two.setArtist("Artist2");
+            musicPodcast_two.setDurationSeconds(5000);
+            musicPodcast_two.setGenre("Drama");
+            musicPodcast_two.setPodcast(true);
+
+        }
+    }
 //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
         List<MusicPodcast> musicPodcasts = musicPodcastRepository.findAll();
