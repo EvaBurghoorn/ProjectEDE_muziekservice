@@ -18,6 +18,8 @@ public class MusicPodcast {
     private int durationSeconds;
     private String genre;
     private boolean isPodcast;
+    private String uniqueIdentifier;
+
 
 
 }

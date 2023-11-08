@@ -25,6 +25,7 @@ public class MusicPodcastService {
             musicPodcast.setDurationSeconds(200);
             musicPodcast.setGenre("Pop");
             musicPodcast.setPodcast(false);
+            musicPodcast.setUniqueIdentifier("Title1Artist1");
 
             MusicPodcast musicPodcast_two = new MusicPodcast();
             musicPodcast_two.setTitle("TitlePodcast");
@@ -32,6 +33,7 @@ public class MusicPodcastService {
             musicPodcast_two.setDurationSeconds(5000);
             musicPodcast_two.setGenre("Drama");
             musicPodcast_two.setPodcast(true);
+            musicPodcast_two.setUniqueIdentifier("TitlePodcastArtist2");
 
         }
     }

@@ -33,8 +33,6 @@ public class PlaylistController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createPlaylist(@RequestBody PlaylistRequest playlistRequest){

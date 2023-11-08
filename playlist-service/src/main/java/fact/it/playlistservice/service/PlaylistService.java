@@ -76,7 +76,6 @@ public class PlaylistService {
 
 
 
-
     private PlaylistResponse mapToPlaylistResponse(Playlist playlist) {
         return PlaylistResponse.builder()
                 .id(playlist.getId())
