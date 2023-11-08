@@ -17,6 +17,9 @@ public class Rating {
     private boolean isLiked;
 //    dislike
     private boolean isDisliked;
+    private String uniqueIdentifier;
+
+
 
 
 }
