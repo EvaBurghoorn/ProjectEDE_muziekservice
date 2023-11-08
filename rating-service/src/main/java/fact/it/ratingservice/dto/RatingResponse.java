@@ -14,6 +14,8 @@ public class RatingResponse {
     private String id;
     private boolean isLiked;
     private boolean isDisliked;
+    private String uniqueIdentifier;
+
 
 
 }
