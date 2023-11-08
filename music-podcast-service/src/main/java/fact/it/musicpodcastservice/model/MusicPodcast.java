@@ -15,8 +15,6 @@ public class MusicPodcast {
     private String id;
     private String title;
     private String artist;
-    // private int durationHours;
-    // private int durationMinutes;
     private int durationSeconds;
     private String genre;
     private boolean isPodcast;
