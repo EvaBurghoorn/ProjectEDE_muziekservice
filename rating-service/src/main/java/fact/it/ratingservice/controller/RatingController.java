@@ -1,5 +1,6 @@
 package fact.it.ratingservice.controller;
 
+import fact.it.ratingservice.dto.MusicPodcastResponse;
 import fact.it.ratingservice.dto.RatingRequest;
 import fact.it.ratingservice.dto.RatingResponse;
 import fact.it.ratingservice.service.RatingService;
@@ -22,10 +23,10 @@ public class RatingController {
 //        ratingService.createRating(ratingRequest);
 //    }
 
-//    Get all ratings
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<RatingResponse> getAllRatings(){
-        return ratingService.getAllRatings();
-    }
+//    Get all ratings that are liked
+//    @GetMapping("/allLiked")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<MusicPodcastResponse> getAllLikedMusicPodcasts(){
+//        return ratingService.getAllRatings()
+//    }
 }

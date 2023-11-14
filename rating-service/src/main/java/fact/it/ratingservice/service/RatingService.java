@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,13 +34,40 @@ public class RatingService {
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
                 .block();
-//        if(uniqueIdentifierCode != null){
-//
-//        }
+
+
+        if(uniqueIdentifierCode != null){
+            MusicPodcastResponse musicPodcastResponse = Arrays.stream(musicPodcastResponseArray)
+                    .filter(mp -> mp.getUniqueIdentifier().equals(rating.getUniqueIdentifier()))
+                    .findFirst()
+                    .orElse(null);
+            if(musicPodcastResponse != null && rating.isLiked()){
+                rating.setLiked(true);
+                rating.setDisliked(!rating.isDisliked());
+            }
+            if(musicPodcastResponse != null && rating.isDisliked()){
+                rating.setDisliked(true);
+                rating.setLiked(!rating.isLiked());
+            }
+
+        }
 
     }
 
-    @PostConstruct
+
+    public List<MusicPodcastResponse> getMusicPodcast(){
+        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
+                .uri("http:localhost:8080/LikedMusicpodcast",
+                        uriBuilder -> uriBuilder.build())
+                .retrieve()
+                .bodyToMono(MusicPodcastResponse[].class)
+                .block();
+
+        return Arrays.stream(musicPodcastResponseArray).toList();
+    }
+
+
+        @PostConstruct
     public void loadData(){
         if(ratingRepository.count() <= 0){
             Rating rating = new Rating();
@@ -58,6 +86,7 @@ public class RatingService {
         Rating rating = Rating.builder()
                 .isLiked(ratingRequest.isLiked())
                 .isDisliked(ratingRequest.isDisliked())
+                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
                 .build();
 
         ratingRepository.save(rating);
@@ -78,6 +107,7 @@ public class RatingService {
                 .id(rating.getId())
                 .isLiked(rating.isLiked())
                 .isDisliked(rating.isDisliked())
+                .uniqueIdentifier(rating.getUniqueIdentifier())
                 .build();
     }
 }
