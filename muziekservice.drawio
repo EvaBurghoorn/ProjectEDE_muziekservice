@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-11-08T08:30:01.770Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="7fYZ4zYDuVbVILleoOpz" version="22.0.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-14T12:11:40.961Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="7nRc-z_AahDovIrf7Vr-" version="22.1.0" type="github">
   <diagram name="Page-1" id="NBVJEllzR1ZUASM5w6jj">
-    <mxGraphModel dx="553" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2314" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -263,7 +263,7 @@
         <mxCell id="QcWOiemHpY6lAmE6clA4-124" value="Endpoints:&lt;br&gt;GET /user -&amp;gt; get user&lt;br&gt;POST /user -&amp;gt; make user&lt;br&gt;PUT /user -&amp;gt; update user&lt;br&gt;DELETE /user -&amp;gt; delete user" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="877.12" y="800" width="290" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="QcWOiemHpY6lAmE6clA4-125" value="Endpoints&lt;br&gt;GET /rating/{songId} -&amp;gt; get rating for song&lt;br&gt;GET /rating/{podcastId} -&amp;gt; get rating for podcast&lt;br&gt;POST/rating/{musicPodcastsId} -&amp;gt; put rating for a song or podcast&lt;br&gt;Delete/rating{musicPodcastId} -&amp;gt; delete rating" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="QcWOiemHpY6lAmE6clA4-125" value="Endpoints&lt;br&gt;GET /rating/liked -&amp;gt; get a music podcasts with liked rating&lt;br&gt;GET /rating/{musicPodcastsId} -&amp;gt; get rating for song or podcast&lt;br&gt;POST/rating/{musicPodcastsId} -&amp;gt; put rating for a song or podcast&lt;br&gt;Delete/rating{musicPodcastId} -&amp;gt; delete rating" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="520.12" y="800" width="290" height="40" as="geometry" />
         </mxCell>
         <mxCell id="QcWOiemHpY6lAmE6clA4-126" value="Endpoints:&lt;br&gt;GET / playlists -&amp;gt; get all playlists&lt;br&gt;GET /playlist -&amp;gt; get a playlist&lt;br&gt;POST /playlist -&amp;gt; make new playlist&lt;br&gt;PUT /playlist -&amp;gt; update playlist&lt;br&gt;DELETE /playlist -&amp;gt; delete a playlist" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
