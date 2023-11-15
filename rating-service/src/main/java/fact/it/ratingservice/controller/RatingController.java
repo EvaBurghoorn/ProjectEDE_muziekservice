@@ -16,17 +16,29 @@ import java.util.List;
 public class RatingController {
     private final RatingService ratingService;
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.OK)
-//    public void createRating
-//            (@RequestBody RatingRequest ratingRequest){
-//        ratingService.createRating(ratingRequest);
-//    }
+    // Create a rating for a music podcast per user
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void createRating(@RequestBody RatingRequest ratingRequest){
+        ratingService.createRating(ratingRequest);
+    }
+    // Delete a rating for a music podcast per user
 
-//    Get all ratings that are liked
-//    @GetMapping("/allLiked")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<MusicPodcastResponse> getAllLikedMusicPodcasts(){
-//        return ratingService.getAllRatings()
-//    }
+    @DeleteMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteRating(@PathVariable int ratingId)
+    {
+        ratingService.deleteRatingMusicPodcast(ratingId);
+    }
+
+    // Edit a rating for a music podcast per user
+
+    @PutMapping("id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateRating(@PathVariable int ratingId, @RequestBody RatingRequest ratingRequest){
+        ratingService.editRatingMusicPodcast(ratingId, ratingRequest);
+    }
+
+
+
 }

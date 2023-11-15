@@ -26,13 +26,14 @@ public class MusicPodcastController {
         return  musicPodcastService.getAllMusicPodcast();
     }
 
-//    Get all songs or podcasts
+//    Get all songs
     @GetMapping("/songs")
     @ResponseStatus(HttpStatus.OK)
     public List<MusicPodcastResponse> getAllSongs(){
         return musicPodcastService.getAllSongs();
     }
 
+    //    Get all podcasts
     @GetMapping("/podcasts")
     @ResponseStatus(HttpStatus.OK)
     public List<MusicPodcastResponse> getAllPodcasts(){

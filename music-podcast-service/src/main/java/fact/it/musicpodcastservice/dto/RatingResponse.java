@@ -1,6 +1,5 @@
-package fact.it.ratingservice.dto;
+package fact.it.musicpodcastservice.dto;
 
-import fact.it.ratingservice.model.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RatingRequest {
+public class RatingResponse {
+    private String id;
+    //    liked
     private boolean isLiked;
+    //    dislike
     private boolean isDisliked;
     private String uniqueIdentifier;
+    // unique username (UUID)
     private String username;
-
 }
