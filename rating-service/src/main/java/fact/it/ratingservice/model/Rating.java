@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +20,9 @@ public class Rating {
 //    dislike
     private boolean isDisliked;
     private String uniqueIdentifier;
+    // unique username (UUID)
+    private String username;
+
 
 
 

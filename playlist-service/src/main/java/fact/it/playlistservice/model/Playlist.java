@@ -13,7 +13,7 @@ import lombok.*;
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String title;
     private int userid;
     private int musicpodcastid;

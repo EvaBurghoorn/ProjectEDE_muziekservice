@@ -14,5 +14,6 @@ public class RatingRequest {
     private boolean isLiked;
     private boolean isDisliked;
     private String uniqueIdentifier;
+    private String username;
 
 }
