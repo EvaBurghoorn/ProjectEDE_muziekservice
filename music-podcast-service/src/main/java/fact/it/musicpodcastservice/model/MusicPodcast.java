@@ -19,6 +19,8 @@ public class MusicPodcast {
     private String genre;
     private boolean isPodcast;
     private String uniqueIdentifier;
+//    private String username;
+
 
 
 
