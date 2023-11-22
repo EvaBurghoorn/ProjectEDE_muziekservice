@@ -11,6 +11,7 @@ import java.util.List;
 @Transactional
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     List<Playlist> findByTitle(List<String> title);
+//    Playlist findById(int id);
 
     //Find for the userID the private
 //    List<Playlist> findByUserid(List<String> privatePlaylistIds);
