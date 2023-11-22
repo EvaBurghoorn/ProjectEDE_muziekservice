@@ -1,5 +1,6 @@
 package fact.it.musicpodcastservice.repository;
 
+import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -10,6 +11,7 @@ public interface MusicPodcastRepository extends MongoRepository<MusicPodcast, St
     List<MusicPodcast>findByArtist(List<String> artist);
     List<MusicPodcast>findByGenre(List<String> genre);
     List<MusicPodcast>findByIsPodcast(List<String> isPodcast);
+    MusicPodcast findByUniqueIdentifier(String uniqueIdentifier);
 
 
 }

@@ -16,5 +16,7 @@ public class MusicPodcastRequest {
     private String genre;
     private boolean isPodcast;
     private String uniqueIdentifier;
+//    private String username;
+
 
 }
