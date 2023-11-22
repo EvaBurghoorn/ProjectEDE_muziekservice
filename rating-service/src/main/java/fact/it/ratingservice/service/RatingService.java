@@ -73,14 +73,14 @@ public class RatingService {
     }
 
     public void deleteRatingMusicPodcast(int ratingId){
-        Rating deleteRating = ratingRepository.findByRatingId(ratingId);
+        Rating deleteRating = ratingRepository.findById(ratingId);
         if(deleteRating != null){
             ratingRepository.delete(deleteRating);
         }
     }
 
     public void editRatingMusicPodcast(int ratingId, RatingRequest ratingRequest){
-        Rating editRating = ratingRepository.findByRatingId(ratingId);
+        Rating editRating = ratingRepository.findById(ratingId);
         if(editRating != null && ratingRequest.isLiked()) {
             editRating.setLiked(true);
             editRating.setDisliked(!editRating.isDisliked());

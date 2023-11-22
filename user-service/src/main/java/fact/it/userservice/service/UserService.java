@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public User getUserById(int userId) {
-        return userRepository.findByUserId(userId);
+        return userRepository.findById(userId);
     }
 
     public void createUser(UserRequest userRequest){
@@ -60,7 +60,7 @@ public class UserService {
     }
 
     public void editUser(int userId,UserRequest userRequest){
-        User editUser = userRepository.findByUserId(userId);
+        User editUser = userRepository.findById(userId);
         if(editUser != null){
             editUser.setFirstName(userRequest.getFirstName());
             editUser.setLastName(userRequest.getLastName());
@@ -75,7 +75,7 @@ public class UserService {
         }
     }
     public void deleteUser(int userId){
-        User deleteUser = userRepository.findByUserId(userId);
+        User deleteUser = userRepository.findById(userId);
         if(deleteUser != null){
             userRepository.delete(deleteUser);
         }
