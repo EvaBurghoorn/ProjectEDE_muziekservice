@@ -16,7 +16,7 @@ services:
   mongo-rating:
     image: mongo:latest
     ports:
-      -27020: 27017
+      - 27020:27017
     volumes:
       -mongodb_rating_data:/data/db
   
