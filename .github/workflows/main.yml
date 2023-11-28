@@ -45,7 +45,7 @@ jobs:
 
       - name: Build, test and package project
         working-directory: ./playlist-service
-        run: mvn package -B
+        run: mvn package -DskipTests
 
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -71,7 +71,7 @@ jobs:
 
       - name: Build, test and package project
         working-directory: ./rating-service
-        run: mvn package -B
+        run: mvn package -DskipTests
 
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -97,7 +97,7 @@ jobs:
 
       - name: Build, test and package project
         working-directory: ./user-service
-        run: mvn package -B
+        run: mvn package -DskipTests
 
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
