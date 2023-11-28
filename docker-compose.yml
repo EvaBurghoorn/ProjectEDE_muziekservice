@@ -18,14 +18,14 @@ services:
     ports:
       - 27020:27017
     volumes:
-      -mongodb_rating_data:/data/db
+      - mongodb_rating_data:/data/db
   
   mysql-playlist:
     image: mysql:latest
     ports:
-      -3306:3306
+      - 3306:3306
     volumes:
-      -mysql_playlist_data:/var/lib/mysql
+      - mysql_playlist_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD: 1234
 
