@@ -27,7 +27,7 @@ services:
     volumes:
       - mysql_playlist_data:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
 
 musicpodcast-service:
   depends_on:
