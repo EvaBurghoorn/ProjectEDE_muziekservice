@@ -1,0 +1,89 @@
+services:
+  mongo-musicpodcast:
+    image: mongo:latest
+    ports:
+      - 27019:27017
+    volumes:
+      - mongodb_musicpodcast_data:/data/db
+  
+  mongo-user:
+    image: mongo:latest
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb_user_data:/data/db
+  
+  mongo-rating:
+    image: mongo:latest
+    ports:
+      -27020: 27017
+    volumes:
+      -mongodb_rating_data:/data/db
+  
+  mysql-playlist:
+    image: mysql:latest
+    ports:
+      -3306:3306
+    volumes:
+      -mysql_playlist_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD: 1234
+
+musicpodcast-service:
+  depends_on:
+    - mongo-musicpodcast
+  image: EvaBurghoorn/music-podcast-service
+  ports:
+    - 8080:8080
+  links:
+    - mongo-musicpodcast
+  environment:
+    MONGODB_PORT: 27019
+    MONGODB_HOST: mongo-musicpodcast
+
+user-service:
+  depends_on:
+    - mongo-user
+  image: EvaBurghoorn/user-service
+  ports:
+    - 8081:8081
+  links:
+    - mongo-user
+  environment:
+    MONGODB_PORT: 27018
+    MONGODB_HOST: mongo-user
+
+rating-service:
+  depends_on:
+    - mongo-rating
+  image: EvaBurghoorn/rating-service
+  ports:
+    - 8082:8082
+  links:
+    - mongo-rating
+  environment:
+    MONGODB_PORT: 27020
+    MONGODB_HOST: mongo-rating
+
+playlist-service:
+  depends_on:
+    - mysql-playlist
+  image: EvaBurghoorn/playlist-service
+  ports:
+    - 8083:8083
+  links:
+    - mysql-playlist
+  environment:
+    MYSQL_DB_USERNAME: root
+    MYSQL_DB_PASSWORD: 12334
+    MYSQL_DB_HOST: mysql-playlist
+    MYSQL_DB_PORT: 3306
+
+volumes:
+  mongodb_musicpodcast_data:
+  mongodb_rating_data:
+  mongodb_user_data:
+  mysql_playlist_data:
+
+
+
