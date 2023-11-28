@@ -32,7 +32,7 @@ services:
   musicpodcast-service:
     depends_on:
       - mongo-musicpodcast
-    image: EvaBurghoorn/music-podcast-service
+    image: eburghoorn/music-podcast-service
     ports:
       - 8080:8080
     links:
@@ -44,7 +44,7 @@ services:
   user-service:
     depends_on:
       - mongo-user
-    image: EvaBurghoorn/user-service
+    image: eburghoorn/user-service
     ports:
       - 8081:8081
     links:
@@ -56,7 +56,7 @@ services:
   rating-service:
     depends_on:
       - mongo-rating
-    image: EvaBurghoorn/rating-service
+    image: eburghoorn/rating-service
     ports:
       - 8082:8082
     links:
@@ -68,7 +68,7 @@ services:
   playlist-service:
     depends_on:
       - mysql-playlist
-    image: EvaBurghoorn/playlist-service
+    image: eburghoorn/playlist-service
     ports:
       - 8083:8083
     links:
