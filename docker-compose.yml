@@ -29,6 +29,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 1234
 
+
   musicpodcast-service:
     depends_on:
       - mongo-musicpodcast
@@ -78,6 +79,27 @@ services:
       MYSQL_DB_PASSWORD: 12334
       MYSQL_DB_HOST: mysql-playlist
       MYSQL_DB_PORT: 3306
+
+  api-gateway:
+    depends_on:
+      - musicpodcast-service
+      - user-service
+      - rating-service
+      - playlist-service
+    image: eburghoorn/api-gateway
+    ports:
+      - 8084:8084
+    links:
+      - musicpodcast-service
+      - user-service
+      - rating-service
+      - playlist-service
+    environment:
+      - USER_SERVICE_BASEURL: user-service:8081
+      - PLAYLIST_SERVICE_BASEURL: playlist-service:8083
+      - RATING_SERVICE_BASEURL: rating-service:8082
+      - MUSICPODCAST_SERVICE_BASEURL: musicpodcast-service:8080
+
 
 volumes:
   mongodb_musicpodcast_data:
