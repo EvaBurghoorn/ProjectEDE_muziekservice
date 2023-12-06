@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-12-06T10:39:15.074Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="ILoyiHpaIR1NXwQePqFP" version="22.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-06T10:39:29.938Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="KH0b88tYQTmHQ3n62elx" version="22.1.5" type="github">
   <diagram name="Page-1" id="NBVJEllzR1ZUASM5w6jj">
-    <mxGraphModel dx="1434" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1793" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -247,7 +247,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="QcWOiemHpY6lAmE6clA4-117" value="Endpoints:&lt;br&gt;GET /podcasts -&amp;gt; get all podcasts&lt;br&gt;GET /songs -&amp;gt; get all songs&lt;br&gt;GET /song -&amp;gt; get a song&lt;br&gt;GET /podcast -&amp;gt; get a podcast&lt;br&gt;GET /songspodcasts -&amp;gt; get all songs and podcasts&lt;br&gt;GET /user -&amp;gt; get user&lt;br&gt;POST /user -&amp;gt; make user&lt;br&gt;PUT /user -&amp;gt; update user&lt;br&gt;GET / playlists -&amp;gt; get all playlists&lt;br&gt;GET /playlist -&amp;gt; get a playlist&lt;br&gt;POST /playlist -&amp;gt; make new playlist&lt;br&gt;PUT /playlist -&amp;gt; update playlist&lt;br&gt;GET /song/rating -&amp;gt; get rating for song&lt;br&gt;GET /song/rating -&amp;gt; get rating for podcast" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="839.2400000000001" y="35" width="290" height="230" as="geometry" />
+          <mxGeometry x="830.0000000000001" y="35" width="290" height="230" as="geometry" />
         </mxCell>
         <mxCell id="QcWOiemHpY6lAmE6clA4-123" value="Endpoints:&lt;br&gt;GET /musicpodcast/all -&amp;gt; get all podcasts and songs&lt;br&gt;GET /musicpodcast/songs -&amp;gt; get all songs&lt;br&gt;GET /musicpodcast/podcasts -&amp;gt; get all podcasts&lt;br&gt;GET /musicpodcast/song/{id} -&amp;gt; get a song&lt;br&gt;GET /musicpodcast/podcast/{id} -&amp;gt; get a podcast" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1120" y="803" width="290" height="90" as="geometry" />
