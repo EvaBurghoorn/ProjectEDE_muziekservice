@@ -95,10 +95,10 @@ services:
       - rating-service
       - playlist-service
     environment:
-      - USER_SERVICE_BASEURL: user-service:8081
-      - PLAYLIST_SERVICE_BASEURL: playlist-service:8083
-      - RATING_SERVICE_BASEURL: rating-service:8082
-      - MUSICPODCAST_SERVICE_BASEURL: musicpodcast-service:8080
+      USER_SERVICE_BASEURL: user-service:8081
+      PLAYLIST_SERVICE_BASEURL: playlist-service:8083
+      RATING_SERVICE_BASEURL: rating-service:8082
+      MUSICPODCAST_SERVICE_BASEURL: musicpodcast-service:8080
 
 
 volumes:
