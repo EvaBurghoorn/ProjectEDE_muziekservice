@@ -1,1 +1,142 @@
+server:
+  port: 8084
 
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    reactor.netty: TRACE
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+          - Path=/users
+          - Method=GET
+          filters:
+          - SetPath=/user/id/{id}
+        - id: user-service-create
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/users
+            - Method=POST
+          filters:
+            - SetPath=/user
+        - id: user-service-update
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/users
+            - Method=PUT
+          filters:
+            - SetPath=/user/id/{id}
+        - id: user-service-delete
+          uri: http://${USER_SERVICE_BASEURL:localhost:8081}
+          predicates:
+            - Path=/users
+            - Method=DELETE
+          filters:
+            - SetPath=/user/id/{id}
+
+
+
+        - id: playlist-service
+          uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8083}
+          predicates:
+          - Path=/playlists
+          - Method=GET
+          filters:
+          - SetPath=/playlist/id/{id}
+        - id: playlist-service-all
+          uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/playlists
+            - Method=GET
+          filters:
+            - SetPath=/playlist/all
+        - id: playlist-service-create
+          uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/playlists
+            - Method=POST
+          filters:
+            - SetPath=/playlist
+        - id: playlist-service-update
+          uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/playlists
+            - Method=PUT
+          filters:
+            - SetPath=/playlist/id/{id}
+        - id: playlist-service-delete
+          uri: http://${PLAYLIST_SERVICE_BASEURL:localhost:8083}
+          predicates:
+            - Path=/playlists
+            - Method=DELETE
+          filters:
+            - SetPath=/playlist/id/{id}
+
+
+
+        - id: rating-service-create
+          uri: http://${RATING_SERVICE_BASEURL:localhost:8082}
+          predicates:
+          - Path=/ratings
+          - Method=POST
+          filters:
+          - SetPath=/rating
+        - id: rating-service-delete
+          uri: http://${RATING_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/ratings
+            - Method=DELETE
+          filters:
+            - SetPath=/rating/id/{id}
+        - id: rating-service-update
+          uri: http://${RATING_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/ratings
+            - Method=PUT
+          filters:
+            - SetPath=/rating/id/{id}
+
+
+
+        - id: music-podcast-service-all
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcasts
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/all
+        - id: music-podcast-service-songs
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcasts
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/songs
+        - id: music-podcast-service-podcasts
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcasts
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/podcasts
+        - id: music-podcast-service-song
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcasts
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/song/{id}
+        - id: music-podcast-service-podcast
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcasts
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/podcast/{id}
