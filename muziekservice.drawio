@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-12-06T09:17:28.164Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="eYwL1EV5TU6VquqcslDX" version="22.1.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-06T10:39:00.415Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="2pMfmzPq4wRuVC0CzV-U" version="22.1.5" type="github">
   <diagram name="Page-1" id="NBVJEllzR1ZUASM5w6jj">
-    <mxGraphModel dx="472" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -331,6 +331,9 @@
             </Array>
             <mxPoint x="528.53" y="350" as="sourcePoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="FqKszVJcQmUqD9usHz55-15" value="&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&amp;nbsp;api-gateway:&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; depends_on:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - musicpodcast-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - user-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - rating-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - playlist-service&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(213, 232, 212);&quot;&gt;&amp;nbsp; &amp;nbsp; image: eburghoorn/ede-api-gateway&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; ports:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - 8084:8084&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; links:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - musicpodcast-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - user-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - rating-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; - playlist-service&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; environment:&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; USER_SERVICE_BASEURL: user-service:8081&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; PLAYLIST_SERVICE_BASEURL: playlist-service:8083&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; RATING_SERVICE_BASEURL: rating-service:8082&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; MUSICPODCAST_SERVICE_BASEURL: musicpodcast-service:8080&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="1226.12" y="15" width="410" height="290" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
