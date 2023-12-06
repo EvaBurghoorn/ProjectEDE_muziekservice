@@ -86,7 +86,7 @@ services:
       - user-service
       - rating-service
       - playlist-service
-    image: eburghoorn/api-gateway
+    image: eburghoorn/ede-api-gateway
     ports:
       - 8084:8084
     links:
