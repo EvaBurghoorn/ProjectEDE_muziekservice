@@ -1,11 +1,14 @@
 package fact.it.userservice.service;
 
 import fact.it.userservice.dto.UserRequest;
+import fact.it.userservice.dto.UserResponse;
 import fact.it.userservice.model.User;
 import fact.it.userservice.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +40,19 @@ public class UserService {
             userTwo.setPhoneNumber("04 54 78 98 78");
             userTwo.setBirthday("10/07/2001");
 
+
+            userRepository.save(user);
+            userRepository.save(userTwo);
+
         }
     }
 
+
+    //    Get all the users
+    public List<UserResponse> getAllUsers(){
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::mapToUserResponse).toList();
+    }
     public User getUserById(int userId) {
         return userRepository.findById(userId);
     }
@@ -80,5 +93,14 @@ public class UserService {
             userRepository.delete(deleteUser);
         }
 
+    }
+
+
+    private UserResponse mapToUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build();
     }
 }

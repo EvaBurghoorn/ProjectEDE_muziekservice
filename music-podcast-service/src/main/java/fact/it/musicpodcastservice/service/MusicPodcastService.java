@@ -45,7 +45,8 @@ public class MusicPodcastService {
             musicPodcast_two.setPodcast(true);
             musicPodcast_two.setUniqueIdentifier("TitlePodcastArtist2");
 //            musicPodcast_two.setUsername("Lillie123");
-
+            musicPodcastRepository.save(musicPodcast);
+            musicPodcastRepository.save(musicPodcast_two);
         }
     }
 

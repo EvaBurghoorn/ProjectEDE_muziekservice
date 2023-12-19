@@ -22,8 +22,29 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final WebClient webClient;
 
+    @PostConstruct
+    public void loadData(){
+        if(ratingRepository.count() <= 0){
+            Rating rating = new Rating();
+            rating.setDisliked(false);
+            rating.setLiked(true);
+            rating.setUniqueIdentifier("Title1Artist1");
+            rating.setUsername("LexiBlevins");
+
+            Rating rating_two = new Rating();
+            rating_two.setDisliked(true);
+            rating_two.setLiked(false);
+            rating_two.setUniqueIdentifier("TitlePodcastArtist2");
+            rating.setUsername("Lillie123");
+
+            ratingRepository.save(rating);
+            ratingRepository.save(rating_two);
+
+        }
+    }
 
     public void rateMusicPodcast(RatingRequest ratingRequest){
+
         Rating rating = new Rating();
 //        rating.setUniqueIdentifier(UUID.randomUUID().toString());
 
@@ -105,23 +126,7 @@ public class RatingService {
     }
 
 
-        @PostConstruct
-    public void loadData(){
-        if(ratingRepository.count() <= 0){
-            Rating rating = new Rating();
-            rating.setDisliked(false);
-            rating.setLiked(true);
-            rating.setUniqueIdentifier("Title1Artist1");
-            rating.setUsername("LexiBlevins");
 
-            Rating rating_two = new Rating();
-            rating_two.setDisliked(true);
-            rating_two.setLiked(false);
-            rating_two.setUniqueIdentifier("TitlePodcastArtist2");
-            rating.setUsername("Lillie123");
-
-        }
-    }
     public void createRating(RatingRequest ratingRequest){
         Rating rating = Rating.builder()
                 .isLiked(ratingRequest.isLiked())
