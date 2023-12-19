@@ -27,6 +27,8 @@ public class PlaylistService {
             playlist.setPrivate(true);
             playlist.setDescription("Dit is een test description");
 
+            playlistRepository.save(playlist);
+
         }
     }
 

@@ -16,6 +16,14 @@ import java.util.List;
 public class RatingController {
     private final RatingService ratingService;
 
+
+    //    Get all songs and podcasts
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RatingResponse> getAllRating(){
+        return  ratingService.getAllRatings();
+    }
+
     // Create a rating for a music podcast per user
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
