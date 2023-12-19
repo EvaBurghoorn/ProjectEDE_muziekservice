@@ -18,10 +18,10 @@ spring:
             client-id: ${GOOGLE_CLIENTID}
             client-secret: ${GOOGLE_CLIENTSECRET}
             scope: openid,profile,email
-        resourceserver:
-          jwt:
-            issuer-uri: https://accounts.google.com/
-            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com/
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
   cloud:
     gateway:
       routes:
