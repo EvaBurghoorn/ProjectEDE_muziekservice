@@ -27,11 +27,12 @@ public class UserController {
         return  userService.getAllUsers();
     }
 
+
     @GetMapping("/id/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") int userId) {
-        User user = userService.getUserById(userId);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<User> getUserById(@PathVariable("id") String userId) {
+        Optional<User> user = userService.getUserById(userId);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
