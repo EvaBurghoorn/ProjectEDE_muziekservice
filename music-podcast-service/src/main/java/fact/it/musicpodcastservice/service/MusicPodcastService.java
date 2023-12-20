@@ -22,9 +22,6 @@ public class MusicPodcastService {
     private final WebClient webClient;
 
 
-//            rating.setUniqueIdentifier(UUID.randomUUID().toString());
-
-
     @PostConstruct
     public void loadData(){
         if(musicPodcastRepository.count() <= 0){

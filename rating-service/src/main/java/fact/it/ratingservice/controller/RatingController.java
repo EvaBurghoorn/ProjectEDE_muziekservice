@@ -28,11 +28,12 @@ public class RatingController {
     @ResponseStatus(HttpStatus.OK)
     public List<MusicPodcastResponse> getAllLikedRating(){return ratingService.getAllLikedMusicPodcast();}
 
+
     // Create a rating for a music podcast per user
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRating(@RequestBody RatingRequest ratingRequest){
-        ratingService.rateMusicPodcast(ratingRequest);
+        ratingService.createRating(ratingRequest);
     }
 
 
@@ -52,7 +53,4 @@ public class RatingController {
     public void updateRating(@PathVariable("id") String ratingId, @RequestBody RatingRequest ratingRequest){
         ratingService.editRatingMusicPodcast(ratingId, ratingRequest);
     }
-
-
-
 }
