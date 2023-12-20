@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserRequest {
     private String firstName;
     private String lastName;
+    private String username;
     private String emailAddress;
     private String country;
     private String city;
