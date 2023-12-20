@@ -114,6 +114,7 @@ public class UserService {
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .username(user.getUsername())
                 .build();
     }
 }

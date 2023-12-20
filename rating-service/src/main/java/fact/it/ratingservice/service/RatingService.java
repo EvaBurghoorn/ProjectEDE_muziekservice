@@ -92,6 +92,13 @@ public class RatingService {
                 }
             }
         }
+        WebClient.create()
+                .post()
+                .uri("http://localhost:8082/rating") // Vervang dit met jouw POST eindpunt URL
+                .bodyValue(rating) // Stel de rating in als de body van het POST-verzoek
+                .retrieve()
+                .toBodilessEntity() // Als je geen response verwacht na de POST
+                .block();
     }
 
     public void deleteRatingMusicPodcast(String ratingId){
@@ -129,16 +136,16 @@ public class RatingService {
         return Arrays.stream(musicPodcastResponseArray).toList();
     }
 
-//    public void createRating(RatingRequest ratingRequest){
-//        Rating rating = Rating.builder()
-//                .isLiked(ratingRequest.isLiked())
-//                .isDisliked(ratingRequest.isDisliked())
-//                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
-//                .username(ratingRequest.getUsername())
-//                .build();
-//
-//        ratingRepository.save(rating);
-//    }
+    public void createRating(RatingRequest ratingRequest){
+        Rating rating = Rating.builder()
+                .isLiked(ratingRequest.isLiked())
+                .isDisliked(ratingRequest.isDisliked())
+                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
+                .username(ratingRequest.getUsername())
+                .build();
+
+        ratingRepository.save(rating);
+    }
 
     public List<RatingResponse> getAllRatings(){
         List<Rating> ratings = ratingRepository.findAll();
