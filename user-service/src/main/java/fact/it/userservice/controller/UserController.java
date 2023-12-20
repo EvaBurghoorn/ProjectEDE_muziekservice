@@ -20,11 +20,11 @@ public class UserController {
     private final UserService userService;
 
 //    Get all users
-//    @GetMapping("/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<UserResponse> getAllUsers(){
-//        return  userService.getAllUsers();
-//    }
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserResponse> getAllUsers(){
+        return  userService.getAllUsers();
+    }
 
 
     @GetMapping("/id/{id}")

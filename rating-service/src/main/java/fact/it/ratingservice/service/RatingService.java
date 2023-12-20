@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,14 +54,14 @@ public class RatingService {
         String username = ratingRequest.getUsername();
 
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http:localhost:8080/musicpodcast",
+                .uri("http://localhost:8080/musicpodcast",
                         uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", uniqueIdentifierCode).build())
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
                 .block();
 
         UserResponse[] userResponseArray = webClient.get()
-                .uri("http:localhost:8081/peruser",
+                .uri("http://localhost:8081/peruser",
                         uriBuilder -> uriBuilder.queryParam("username", username).build())
                 .retrieve()
                 .bodyToMono(UserResponse[].class)
@@ -93,31 +94,34 @@ public class RatingService {
         }
     }
 
-    public void deleteRatingMusicPodcast(int ratingId){
-        Rating deleteRating = ratingRepository.findById(ratingId);
-        if(deleteRating != null){
-            ratingRepository.delete(deleteRating);
+    public void deleteRatingMusicPodcast(String ratingId){
+        Optional<Rating> deleteRating = ratingRepository.findById(ratingId);
+        if(deleteRating.isPresent()){
+            ratingRepository.deleteById(ratingId);
         }
     }
 
-    public void editRatingMusicPodcast(int ratingId, RatingRequest ratingRequest){
-        Rating editRating = ratingRepository.findById(ratingId);
-        if(editRating != null && ratingRequest.isLiked()) {
-            editRating.setLiked(true);
-            editRating.setDisliked(!editRating.isDisliked());
+    public void editRatingMusicPodcast(String ratingId, RatingRequest ratingRequest){
+        Optional<Rating> editRating = ratingRepository.findById(ratingId);
+        if(editRating.isPresent() && ratingRequest.isLiked()) {
+            Rating rating = editRating.get();
+            rating.setLiked(true);
+            rating.setDisliked(!rating.isDisliked());
+            ratingRepository.save(rating);
+
         }
-        if(editRating != null && ratingRequest.isDisliked()) {
-            editRating.setDisliked(true);
-            editRating.setLiked(!editRating.isLiked());
+        if(editRating.isPresent() && ratingRequest.isDisliked()) {
+            Rating rating = editRating.get();
+            rating.setDisliked(true);
+            rating.setLiked(!rating.isLiked());
+            ratingRepository.save(rating);
+
         }
-        ratingRepository.save(editRating);
     }
 
-
-
-    public List<MusicPodcastResponse> getMusicPodcast(){
+    public List<MusicPodcastResponse> getAllLikedMusicPodcast(){
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http:localhost:8080/LikedMusicpodcast",
+                .uri("http://localhost:8080/LikedMusicpodcast",
                         uriBuilder -> uriBuilder.build())
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
@@ -125,27 +129,21 @@ public class RatingService {
         return Arrays.stream(musicPodcastResponseArray).toList();
     }
 
-
-
-    public void createRating(RatingRequest ratingRequest){
-        Rating rating = Rating.builder()
-                .isLiked(ratingRequest.isLiked())
-                .isDisliked(ratingRequest.isDisliked())
-                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
-                .username(ratingRequest.getUsername())
-                .build();
-
-        ratingRepository.save(rating);
-    }
-
+//    public void createRating(RatingRequest ratingRequest){
+//        Rating rating = Rating.builder()
+//                .isLiked(ratingRequest.isLiked())
+//                .isDisliked(ratingRequest.isDisliked())
+//                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
+//                .username(ratingRequest.getUsername())
+//                .build();
+//
+//        ratingRepository.save(rating);
+//    }
 
     public List<RatingResponse> getAllRatings(){
         List<Rating> ratings = ratingRepository.findAll();
         return ratings.stream().map(this::mapToRatingResponse).toList();
     }
-
-
-
 
     private RatingResponse mapToRatingResponse(Rating rating)
     {

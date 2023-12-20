@@ -48,12 +48,12 @@ public class UserService {
         }
     }
 
-//
-//    //    Get all the users
-//    public List<UserResponse> getAllUsers() {
-//        List<User> users = userRepository.findAll();
-//        return users.stream().map(this::mapToUserResponse).toList();
-//    }
+
+    //    Get all the users
+    public List<UserResponse> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::mapToUserResponse).toList();
+    }
 
     public Optional<User> getUserById(String userId) {
         return userRepository.findById(userId);
@@ -65,6 +65,7 @@ public class UserService {
         User user = User.builder()
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
+                .username(userRequest.getUsername())
                 .birthday(userRequest.getBirthday())
                 .emailAddress(userRequest.getEmailAddress())
                 .phoneNumber(userRequest.getPhoneNumber())
@@ -73,7 +74,14 @@ public class UserService {
                 .country(userRequest.getCountry())
                 .build();
 
-        userRepository.save(user);
+        User username = userRepository.findByUsername(userRequest.getUsername());
+
+        if (username == null){
+            userRepository.save(user);
+        }
+        else{
+            System.out.println("Username in use");
+        }
     }
 
     public void editUserBy (String userId,UserRequest userRequest){
