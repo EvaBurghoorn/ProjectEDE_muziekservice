@@ -19,13 +19,12 @@ public class UserController {
 
     private final UserService userService;
 
-
-    //    Get all users
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserResponse> getAllUsers(){
-        return  userService.getAllUsers();
-    }
+//    Get all users
+//    @GetMapping("/all")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<UserResponse> getAllUsers(){
+//        return  userService.getAllUsers();
+//    }
 
 
     @GetMapping("/id/{id}")
@@ -46,13 +45,13 @@ public class UserController {
 
     @PutMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable int id,@RequestBody UserRequest userRequest)
+    public void updateUser(@PathVariable String id,@RequestBody UserRequest userRequest)
     {
-        userService.editUser(id, userRequest);
+        userService.editUserBy(id, userRequest);
     }
     @DeleteMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable int id)
+    public void deleteUser(@PathVariable String id)
     {
         userService.deleteUser(id);
     }

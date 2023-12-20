@@ -48,14 +48,11 @@ public class UserService {
         }
     }
 
-
-    //    Get all the users
-    public List<UserResponse> getAllUsers(){
-        List<User> users = userRepository.findAll();
-        return users.stream().map(this::mapToUserResponse).toList();
-    }
-//    public User getUserById(int userId) {
-//        return userRepository.findById(userId);
+//
+//    //    Get all the users
+//    public List<UserResponse> getAllUsers() {
+//        List<User> users = userRepository.findAll();
+//        return users.stream().map(this::mapToUserResponse).toList();
 //    }
 
     public Optional<User> getUserById(String userId) {
@@ -79,25 +76,26 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void editUser(int userId,UserRequest userRequest){
-        User editUser = userRepository.findById(userId);
-        if(editUser != null){
-            editUser.setFirstName(userRequest.getFirstName());
-            editUser.setLastName(userRequest.getLastName());
-            editUser.setBirthday(userRequest.getBirthday());
-            editUser.setEmailAddress(userRequest.getEmailAddress());
-            editUser.setPhoneNumber(userRequest.getPhoneNumber());
-            editUser.setCity(userRequest.getCity());
-            editUser.setPostalCode(userRequest.getPostalCode());
-            editUser.setCountry(userRequest.getCountry());
-            userRepository.save(editUser);
+    public void editUserBy (String userId,UserRequest userRequest){
+        Optional<User> userForEdit = userRepository.findById(userId);
+        if(userForEdit.isPresent()){
+            User user = userForEdit.get();
+            user.setFirstName(userRequest.getFirstName());
+            user.setLastName(userRequest.getLastName());
+            user.setBirthday(userRequest.getBirthday());
+            user.setEmailAddress(userRequest.getEmailAddress());
+            user.setPhoneNumber(userRequest.getPhoneNumber());
+            user.setCity(userRequest.getCity());
+            user.setPostalCode(userRequest.getPostalCode());
+            user.setCountry(userRequest.getCountry());
+            userRepository.save(user);
 
         }
     }
-    public void deleteUser(int userId){
-        User deleteUser = userRepository.findById(userId);
-        if(deleteUser != null){
-            userRepository.delete(deleteUser);
+    public void deleteUser(String userId){
+        Optional<User> deletingUser = userRepository.findById(userId);
+        if(deletingUser.isPresent()){
+            userRepository.deleteById(userId);
         }
 
     }
