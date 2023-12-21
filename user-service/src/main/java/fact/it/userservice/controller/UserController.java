@@ -27,33 +27,33 @@ public class UserController {
     }
 
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") String userId) {
-        Optional<User> user = userService.getUserById(userId);
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    @GetMapping("/username/{username}")
+    public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void createUser
-            (@RequestBody UserRequest userRequest){
+    public void createUser(@RequestBody UserRequest userRequest)
+    {
         userService.createUser(userRequest);
     }
 
-    @PutMapping("/id/{id}")
+    @PutMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@PathVariable String id,@RequestBody UserRequest userRequest)
+    public void updateUser(@PathVariable("username") String username,@RequestBody UserRequest userRequest)
     {
-        userService.editUserBy(id, userRequest);
+        userService.editUserBy(username, userRequest);
     }
-    @DeleteMapping("id/{id}")
+    @DeleteMapping("username/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable String id)
+    public void deleteUser(@PathVariable("username") String username)
     {
-        userService.deleteUser(id);
+        userService.deleteByUsername(username);
     }
 
 }

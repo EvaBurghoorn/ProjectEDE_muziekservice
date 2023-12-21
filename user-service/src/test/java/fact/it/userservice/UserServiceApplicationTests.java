@@ -42,15 +42,15 @@ class UserServiceApplicationTests {
         user.setPhoneNumber("04 12 34 56 78");
         user.setBirthday("01/01/2003");
 
-        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
 
         // Act
-        Optional<User> responseUserOptional = userService.getUserById(id);
+        User responseUserOptional = userService.getUserByUsername(user.getUsername());
 
         // Assert
-        assertTrue(responseUserOptional.isPresent()); // Controleer of de optionele gebruiker aanwezig is
+        assertTrue(responseUserOptional != null); // Controleer of de optionele gebruiker aanwezig is
 
-        User responseUser = responseUserOptional.get(); // Haal de gebruiker op uit de optionele waarde
+        User responseUser = responseUserOptional; // Haal de gebruiker op uit de optionele waarde
         assertEquals(String.valueOf(id), responseUser.getId());
         assertEquals("Kyara", responseUser.getFirstName());
         assertEquals("Van Genechten", responseUser.getLastName());
@@ -126,7 +126,7 @@ class UserServiceApplicationTests {
         when(userRepository.findById("4")).thenReturn(Optional.of(user));
 
         // Act
-        userService.deleteUser(user.getId());
+        userService.deleteByUsername(user.getId());
 
         // Assert
         verify(userRepository, times(1)).deleteById(user.getId());

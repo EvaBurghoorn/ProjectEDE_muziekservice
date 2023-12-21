@@ -46,7 +46,6 @@ public class RatingController {
     }
 
 
-
     // Edit a rating for a music podcast per user
     @PutMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)

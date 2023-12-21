@@ -8,6 +8,7 @@ import fact.it.ratingservice.model.Rating;
 import fact.it.ratingservice.repository.RatingRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -22,6 +23,13 @@ public class RatingService {
 
     private final RatingRepository ratingRepository;
     private final WebClient webClient;
+
+
+    @Value("${musicpodcastservice.baseurl}")
+    private String musicpodcastServiceBaseUrl;
+
+    @Value("${userservice.baseurl}")
+    private String userServiceBaseUrl;
 
     @PostConstruct
     public void loadData(){
@@ -40,7 +48,6 @@ public class RatingService {
 
             ratingRepository.save(rating);
             ratingRepository.save(rating_two);
-
         }
     }
 
@@ -54,14 +61,14 @@ public class RatingService {
         String username = ratingRequest.getUsername();
 
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http://localhost:8080/musicpodcast",
+                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
                         uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", uniqueIdentifierCode).build())
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
                 .block();
 
         UserResponse[] userResponseArray = webClient.get()
-                .uri("http://localhost:8081/peruser",
+                .uri("http://" + userServiceBaseUrl + "/user",
                         uriBuilder -> uriBuilder.queryParam("username", username).build())
                 .retrieve()
                 .bodyToMono(UserResponse[].class)
@@ -92,13 +99,6 @@ public class RatingService {
                 }
             }
         }
-        WebClient.create()
-                .post()
-                .uri("http://localhost:8082/rating") // Vervang dit met jouw POST eindpunt URL
-                .bodyValue(rating) // Stel de rating in als de body van het POST-verzoek
-                .retrieve()
-                .toBodilessEntity() // Als je geen response verwacht na de POST
-                .block();
     }
 
     public void deleteRatingMusicPodcast(String ratingId){
@@ -128,7 +128,7 @@ public class RatingService {
 
     public List<MusicPodcastResponse> getAllLikedMusicPodcast(){
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http://localhost:8080/LikedMusicpodcast",
+                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
                         uriBuilder -> uriBuilder.build())
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
