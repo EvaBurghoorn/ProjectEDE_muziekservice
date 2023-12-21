@@ -41,18 +41,15 @@ public class PlaylistController {
 
     @PutMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void editPlaylist(@PathVariable Long id,@RequestBody PlaylistRequest playlistRequest)
+    public void editPlaylist(@PathVariable("id") Long id,@RequestBody PlaylistRequest playlistRequest)
     {
         playlistService.editPlaylist(id, playlistRequest);
     }
+
     @DeleteMapping("id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deletePlaylist(@PathVariable Long id)
+    public void deletePlaylist(@PathVariable("id") Long id)
     {
         playlistService.deletePlaylist(id);
     }
-
-
-
 }
-

@@ -7,6 +7,7 @@ import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -47,6 +48,8 @@ public class MusicPodcastService {
         }
     }
 
+    @Value("${ratingservice.baseurl}")
+    private String ratingServiceBaseUrl;
 
 
     // Get all liked musicPodcasts per user
@@ -56,7 +59,7 @@ public class MusicPodcastService {
 
 
         RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                .uri("http:localhost:8082/rating",
+                .uri("http://" + ratingServiceBaseUrl + "/rating",
                         uriBuilder -> uriBuilder.queryParam("username", username).build())
                 .retrieve()
                 .bodyToMono(RatingResponse[].class)
@@ -92,7 +95,7 @@ public class MusicPodcastService {
 
 
         RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                .uri("http:localhost:8082/rating",
+                .uri("http://" + ratingServiceBaseUrl + "/rating",
                         uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifierCode).build())
                 .retrieve()
                 .bodyToMono(RatingResponse[].class)
@@ -114,11 +117,6 @@ public class MusicPodcastService {
         }
         return null;
     }
-
-
-
-
-
 
 //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
@@ -143,15 +141,15 @@ public class MusicPodcastService {
                 .toList();
     }
 
-// Get a song
-    public Optional<MusicPodcast> getSongById(String songId) {
-        return musicPodcastRepository.findById(songId);
+// Get a music podcast by unique identifier
+    public Optional<MusicPodcast> getMusicPodcastByUniqueIdentifier(String songUniqueIdentifier) {
+        return Optional.ofNullable(musicPodcastRepository.findByUniqueIdentifier(songUniqueIdentifier));
     }
 
 //    Get a podcast
-    public Optional<MusicPodcast> getPodcastById(String podcastId) {
-        return musicPodcastRepository.findById(podcastId);
-    }
+//    public Optional<MusicPodcast> getPodcastById(String podcastId) {
+//        return musicPodcastRepository.findById(podcastId);
+//    }
 
 
     private MusicPodcastResponse mapToMusicPodcastResponse(MusicPodcast musicPodcast) {
