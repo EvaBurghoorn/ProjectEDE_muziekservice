@@ -22,8 +22,8 @@ public class PlaylistService {
         if(playlistRepository.count() <= 0){
             Playlist playlist = new Playlist();
             playlist.setTitle("Title1");
-            playlist.setUserid("6581adfad08a0a1410aa4d55 ");
-            playlist.setMusicpodcastid("6581adb4499cda5543f8de35 ");
+            playlist.setUsername("eburghoorn ");
+            playlist.setUsername("Title1Artist1 ");
             playlist.setPrivate(true);
             playlist.setDescription("Dit is een test description");
 
@@ -45,8 +45,8 @@ public class PlaylistService {
     public void createPlaylist(PlaylistRequest playlistRequest){
         Playlist playlist = Playlist.builder()
                 .title(playlistRequest.getTitle())
-                .userid(playlistRequest.getUserid())
-                .musicpodcastid(playlistRequest.getMusicpodcastid())
+                .username(playlistRequest.getUsername())
+                .uniqueIdentifier(playlistRequest.getUniqueIdentifier())
                 .isPrivate(playlistRequest.isPrivate())
                 .description(playlistRequest.getDescription())
                 .build();
@@ -60,8 +60,8 @@ public class PlaylistService {
             playlist = Playlist.builder()
                     .id(playlist.getId())
                     .title(playlistRequest.getTitle())
-                    .userid(playlistRequest.getUserid())
-                    .musicpodcastid(playlistRequest.getMusicpodcastid())
+                    .username(playlistRequest.getUsername())
+                    .uniqueIdentifier(playlistRequest.getUniqueIdentifier())
                     .isPrivate(playlistRequest.isPrivate())
                     .description(playlistRequest.getDescription())
                     .build();
@@ -82,8 +82,8 @@ public class PlaylistService {
         return PlaylistResponse.builder()
                 .id(playlist.getId())
                 .title(playlist.getTitle())
-                .userid(playlist.getUserid())
-                .musicpodcastid(playlist.getMusicpodcastid())
+                .username(playlist.getUsername())
+                .uniqueIdentifier(playlist.getUniqueIdentifier())
                 .isPrivate(playlist.isPrivate())
                 .description(playlist.getDescription())
                 .build();
