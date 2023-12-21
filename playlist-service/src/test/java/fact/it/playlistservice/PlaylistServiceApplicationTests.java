@@ -36,16 +36,16 @@ class PlaylistServiceApplicationTests {
         Playlist playlist1 = new Playlist();
         playlist1.setId(1L);
         playlist1.setTitle("My Playlist 1");
-        playlist1.setUserid("1");
-        playlist1.setMusicpodcastid("1");
+        playlist1.setUsername("1");
+        playlist1.setUniqueIdentifier("1");
         playlist1.setPrivate(true);
         playlist1.setDescription("This is playlist1");
 
         Playlist playlist2 = new Playlist();
         playlist2.setId(2L);
         playlist2.setTitle("My Playlist 2");
-        playlist2.setUserid("2");
-        playlist2.setMusicpodcastid("2");
+        playlist2.setUsername("2");
+        playlist2.setUniqueIdentifier("2");
         playlist2.setPrivate(false);
         playlist2.setDescription("This is the second playlist");
 
@@ -62,16 +62,16 @@ class PlaylistServiceApplicationTests {
         Playlist playlist1 = new Playlist();
         playlist1.setId(1L);
         playlist1.setTitle("My Playlist 1");
-        playlist1.setUserid("1");
-        playlist1.setMusicpodcastid("1");
+        playlist1.setUsername("1");
+        playlist1.setUniqueIdentifier("1");
         playlist1.setPrivate(true);
         playlist1.setDescription("This is playlist1");
 
         Playlist playlist2 = new Playlist();
         playlist2.setId(2L);
         playlist2.setTitle("My Playlist 2");
-        playlist2.setUserid("2");
-        playlist1.setMusicpodcastid("2");
+        playlist2.setUsername("2");
+        playlist1.setUniqueIdentifier("2");
         playlist1.setPrivate(false);
         playlist1.setDescription("This is the second playlist");
 
@@ -124,8 +124,8 @@ class PlaylistServiceApplicationTests {
         // Arrange
         PlaylistRequest playlistRequest = new PlaylistRequest();
         playlistRequest.setTitle("My Playlist");
-        playlistRequest.setUserid("20");
-        playlistRequest.setMusicpodcastid("25");
+        playlistRequest.setUsername("20");
+        playlistRequest.setUniqueIdentifier("25");
         playlistRequest.setPrivate(false);
         playlistRequest.setDescription("This is a test playlist");
 
@@ -143,14 +143,14 @@ class PlaylistServiceApplicationTests {
         Playlist playlist = new Playlist();
         playlist.setId(5L);
         playlist.setTitle("My Playlist");
-        playlist.setUserid("20");
-        playlist.setMusicpodcastid("25");
+        playlist.setUsername("20");
+        playlist.setUniqueIdentifier("25");
         playlist.setPrivate(false);
         playlist.setDescription("This is a test playlist");
 
         PlaylistRequest playlistRequest = new PlaylistRequest();
         playlistRequest.setTitle("Podcasts");
-        playlist.setMusicpodcastid("20");
+        playlist.setUniqueIdentifier("20");
         playlist.setPrivate(true);
         playlist.setDescription("Podcasts about life");
 
@@ -211,8 +211,8 @@ class PlaylistServiceApplicationTests {
         Playlist playlist = new Playlist();
         playlist.setId(playlistId);
         playlist.setTitle("My Playlist");
-        playlist.setUserid("20");
-        playlist.setMusicpodcastid("25");
+        playlist.setUsername("20");
+        playlist.setUniqueIdentifier("25");
         playlist.setPrivate(false);
         playlist.setDescription("This is a test playlist");
 
