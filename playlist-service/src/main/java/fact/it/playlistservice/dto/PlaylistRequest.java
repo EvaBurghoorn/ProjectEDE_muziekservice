@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PlaylistRequest {
     private String title;
-    private int userid;
-    private int musicpodcastid;
+    private String userid;
+    private String musicpodcastid;
     private boolean isPrivate;
     private String description;
 }
