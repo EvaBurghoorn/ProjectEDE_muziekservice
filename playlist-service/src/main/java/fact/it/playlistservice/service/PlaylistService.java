@@ -23,7 +23,7 @@ public class PlaylistService {
             Playlist playlist = new Playlist();
             playlist.setTitle("Title1");
             playlist.setUsername("eburghoorn ");
-            playlist.setUsername("Title1Artist1 ");
+            playlist.setUniqueIdentifier("Title1Artist1 ");
             playlist.setPrivate(true);
             playlist.setDescription("Dit is een test description");
 
@@ -75,8 +75,6 @@ public class PlaylistService {
         deletePlaylist.ifPresent(playlistRepository::delete);
 
     }
-
-
 
     private PlaylistResponse mapToPlaylistResponse(Playlist playlist) {
         return PlaylistResponse.builder()
