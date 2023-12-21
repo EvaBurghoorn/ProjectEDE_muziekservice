@@ -22,8 +22,8 @@ public class PlaylistService {
         if(playlistRepository.count() <= 0){
             Playlist playlist = new Playlist();
             playlist.setTitle("Title1");
-            playlist.setUserid("1");
-            playlist.setMusicpodcastid("1");
+            playlist.setUserid("6581adfad08a0a1410aa4d55 ");
+            playlist.setMusicpodcastid("6581adb4499cda5543f8de35 ");
             playlist.setPrivate(true);
             playlist.setDescription("Dit is een test description");
 
