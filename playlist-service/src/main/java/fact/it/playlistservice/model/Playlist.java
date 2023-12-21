@@ -15,8 +15,8 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String userid;
-    private String musicpodcastid;
+    private String username;
+    private String uniqueIdentifier;
     private boolean isPrivate;
     private String description;
 
