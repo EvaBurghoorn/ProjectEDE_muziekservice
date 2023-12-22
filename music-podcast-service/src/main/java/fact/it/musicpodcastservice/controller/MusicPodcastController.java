@@ -41,7 +41,7 @@ public class MusicPodcastController {
     }
 
 
-//    Get a song with an id
+//    Get a musicpodcast with an uniqueIdentifier
     @GetMapping("/id/{uniqueIdentifier}")
     public ResponseEntity<MusicPodcast> getMusicPodcastById(@PathVariable("uniqueIdentifier") String songUniqueIdentifier) {
         Optional<MusicPodcast> musicPodcast = musicPodcastService.getMusicPodcastByUniqueIdentifier(songUniqueIdentifier);
@@ -51,8 +51,6 @@ public class MusicPodcastController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
-//
 ////     Get a podcast with an id
 //    @GetMapping("/podcast/{id}")
 //    public ResponseEntity<MusicPodcast> getPodcastById(@PathVariable("id") String podcastId) {
