@@ -5,13 +5,11 @@ import fact.it.playlistservice.dto.PlaylistResponse;
 import fact.it.playlistservice.model.Playlist;
 import fact.it.playlistservice.repository.PlaylistRepository;
 import fact.it.playlistservice.service.PlaylistService;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -30,31 +28,6 @@ class PlaylistServiceApplicationTests {
     @Mock
     private PlaylistRepository playlistRepository;
 
-    private List<Playlist> createSamplePlaylists() {
-        List<Playlist> playlists = new ArrayList<>();
-
-        Playlist playlist1 = new Playlist();
-        playlist1.setId(1L);
-        playlist1.setTitle("My Playlist 1");
-        playlist1.setUserid("1");
-        playlist1.setMusicpodcastid("1");
-        playlist1.setPrivate(true);
-        playlist1.setDescription("This is playlist1");
-
-        Playlist playlist2 = new Playlist();
-        playlist2.setId(2L);
-        playlist2.setTitle("My Playlist 2");
-        playlist2.setUserid("2");
-        playlist2.setMusicpodcastid("2");
-        playlist2.setPrivate(false);
-        playlist2.setDescription("This is the second playlist");
-
-        playlists.add(playlist1);
-        playlists.add(playlist2);
-
-        return playlists;
-    }
-
     @Test
     public void testGetAllPlaylists() {
         // Arrange
@@ -62,8 +35,8 @@ class PlaylistServiceApplicationTests {
         Playlist playlist1 = new Playlist();
         playlist1.setId(1L);
         playlist1.setTitle("My Playlist 1");
-        playlist1.setUserid("1");
-        playlist1.setMusicpodcastid("1");
+        playlist1.setUserid("12");
+        playlist1.setMusicpodcastid("25");
         playlist1.setPrivate(true);
         playlist1.setDescription("This is playlist1");
 
@@ -71,12 +44,13 @@ class PlaylistServiceApplicationTests {
         playlist2.setId(2L);
         playlist2.setTitle("My Playlist 2");
         playlist2.setUserid("2");
-        playlist1.setMusicpodcastid("2");
+        playlist1.setMusicpodcastid("4");
         playlist1.setPrivate(false);
         playlist1.setDescription("This is the second playlist");
 
         playlists.add(playlist1);
         playlists.add(playlist2);
+
         when(playlistRepository.findAll()).thenReturn(playlists);
 
         // Act
@@ -84,31 +58,69 @@ class PlaylistServiceApplicationTests {
 
         // Assert
         assertEquals(2, result.size());
-
         verify(playlistRepository, times(1)).findAll();
     }
 
     @Test
     public void testGetPlayListByIdExists(){
         // Arrange
-        List<Playlist> playlists = createSamplePlaylists();
-//       variable for Id of the playlist
+        List<Playlist> playlists = new ArrayList<>();
+        Playlist playlist1 = new Playlist();
+        playlist1.setId(1L);
+        playlist1.setTitle("My Playlist 1");
+        playlist1.setUserid("12");
+        playlist1.setMusicpodcastid("25");
+        playlist1.setPrivate(true);
+        playlist1.setDescription("This is playlist1");
+
+        Playlist playlist2 = new Playlist();
+        playlist2.setId(2L);
+        playlist2.setTitle("My Playlist 2");
+        playlist2.setUserid("2");
+        playlist1.setMusicpodcastid("4");
+        playlist1.setPrivate(false);
+        playlist1.setDescription("This is the second playlist");
+
+        playlists.add(playlist1);
+        playlists.add(playlist2);
+
+        // Id of the first playlist
         Long playlistId = 1L;
 
         when(playlistRepository.findById(playlistId)).thenReturn(playlists.stream().filter(p -> p.getId().equals(playlistId)).findFirst());
+
         // Act
         Optional<PlaylistResponse> responseOptional = playlistService.getPlaylistById(playlistId);
 
         //Assert
         assertTrue(responseOptional.isPresent());
+        assertEquals("My Playlist 1", responseOptional.get().getTitle());
 
     }
     @Test
     public void testGetPlaylistByIdWhenNotExists() {
         // Arrange
-        List<Playlist> playlists = createSamplePlaylists();
+        List<Playlist> playlists = new ArrayList<>();
+        Playlist playlist1 = new Playlist();
+        playlist1.setId(5L);
+        playlist1.setTitle("Pop music");
+        playlist1.setUserid("5");
+        playlist1.setMusicpodcastid("14");
+        playlist1.setPrivate(false);
+        playlist1.setDescription("Pop music 2020");
 
-        Long nonExistentPlaylistId = 3L;
+        Playlist playlist2 = new Playlist();
+        playlist2.setId(3L);
+        playlist2.setTitle("My Playlist");
+        playlist2.setUserid("3");
+        playlist1.setMusicpodcastid("5");
+        playlist1.setPrivate(true);
+        playlist1.setDescription("This is my favorite playlist");
+
+        playlists.add(playlist1);
+        playlists.add(playlist2);
+//        Id of the playlist
+        Long nonExistentPlaylistId = 4L;
 
         when(playlistRepository.findById(nonExistentPlaylistId)).thenReturn(Optional.empty());
 
@@ -149,7 +161,7 @@ class PlaylistServiceApplicationTests {
         playlist.setDescription("This is a test playlist");
 
         PlaylistRequest playlistRequest = new PlaylistRequest();
-        playlistRequest.setTitle("Podcasts");
+        playlist.setTitle("Podcasts");
         playlist.setMusicpodcastid("20");
         playlist.setPrivate(true);
         playlist.setDescription("Podcasts about life");
@@ -162,7 +174,13 @@ class PlaylistServiceApplicationTests {
         // Assert
         verify(playlistRepository, times(1)).findById(5L);
         verify(playlistRepository, times(1)).save(any(Playlist.class));
+        assertEquals("Podcasts", playlist.getTitle());
+        assertEquals("20", playlist.getMusicpodcastid());
+        assertTrue(playlist.isPrivate());
+        assertEquals("Podcasts about life", playlist.getDescription());
+
     }
+
 
 //    @Test
 //    public void testDeletePlaylist(){
