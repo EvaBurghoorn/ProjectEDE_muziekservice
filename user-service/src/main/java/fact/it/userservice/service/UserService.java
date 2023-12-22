@@ -41,10 +41,8 @@ public class UserService {
             userTwo.setPhoneNumber("04 54 78 98 78");
             userTwo.setBirthday("10/07/2001");
 
-
             userRepository.save(user);
             userRepository.save(userTwo);
-
         }
     }
 
@@ -54,11 +52,9 @@ public class UserService {
         return users.stream().map(this::mapToUserResponse).toList();
     }
 
-    public Optional<User> getUserById(String userId) {
-        return userRepository.findById(userId);
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
-
-
 
     public void createUser(UserRequest userRequest){
         User user = User.builder()
@@ -73,9 +69,9 @@ public class UserService {
                 .country(userRequest.getCountry())
                 .build();
 
-        User username = userRepository.findByUsername(userRequest.getUsername());
+        User findUsername = userRepository.findByUsername(userRequest.getUsername());
 
-        if (username == null){
+        if (findUsername == null){
             userRepository.save(user);
         }
         else{
@@ -83,30 +79,28 @@ public class UserService {
         }
     }
 
-    public void editUserBy (String userId,UserRequest userRequest){
-        Optional<User> userForEdit = userRepository.findById(userId);
-        if(userForEdit.isPresent()){
-            User user = userForEdit.get();
-            user.setFirstName(userRequest.getFirstName());
-            user.setLastName(userRequest.getLastName());
-            user.setBirthday(userRequest.getBirthday());
-            user.setEmailAddress(userRequest.getEmailAddress());
-            user.setPhoneNumber(userRequest.getPhoneNumber());
-            user.setCity(userRequest.getCity());
-            user.setPostalCode(userRequest.getPostalCode());
-            user.setCountry(userRequest.getCountry());
-            userRepository.save(user);
-
+    public void editUserBy (String username,UserRequest userRequest){
+        User userForEdit = userRepository.findByUsername(username);
+        if(userForEdit != null){
+//            User user = userForEdit.get();
+            userForEdit.setFirstName(userRequest.getFirstName());
+            userForEdit.setLastName(userRequest.getLastName());
+            userForEdit.setBirthday(userRequest.getBirthday());
+            userForEdit.setEmailAddress(userRequest.getEmailAddress());
+            userForEdit.setPhoneNumber(userRequest.getPhoneNumber());
+            userForEdit.setCity(userRequest.getCity());
+            userForEdit.setPostalCode(userRequest.getPostalCode());
+            userForEdit.setCountry(userRequest.getCountry());
+            userRepository.save(userForEdit);
         }
     }
-    public void deleteUser(String userId){
-        Optional<User> deletingUser = userRepository.findById(userId);
-        if(deletingUser.isPresent()){
-            userRepository.deleteById(userId);
+
+    public void deleteByUsername(String username){
+        User deletingUser = userRepository.findByUsername(username);
+        if(deletingUser != null){
+            userRepository.deleteByUsername(username);
         }
-
     }
-
 
     private UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()

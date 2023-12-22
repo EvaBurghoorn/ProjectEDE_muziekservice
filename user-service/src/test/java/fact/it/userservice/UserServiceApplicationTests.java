@@ -45,14 +45,15 @@ class UserServiceApplicationTests {
         user.setPhoneNumber("04 12 34 56 78");
         user.setBirthday("02/09/1999");
 
-        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
 
         // Act
-        Optional<User> responseUserOptional = userService.getUserById(id);
+        User responseUserOptional = userService.getUserByUsername(user.getUsername());
 
         // Assert
         assertTrue(responseUserOptional.isPresent());
         User responseUser = responseUserOptional.get();
+        User responseUser = responseUserOptional; 
         assertEquals(String.valueOf(id), responseUser.getId());
         assertEquals("Lexi", responseUser.getFirstName());
         assertEquals("Blevins", responseUser.getLastName());
@@ -160,7 +161,7 @@ class UserServiceApplicationTests {
         when(userRepository.findById("4")).thenReturn(Optional.of(user));
 
         // Act
-        userService.deleteUser(user.getId());
+        userService.deleteByUsername(user.getId());
 
         // Assert
         verify(userRepository, times(1)).deleteById(user.getId());

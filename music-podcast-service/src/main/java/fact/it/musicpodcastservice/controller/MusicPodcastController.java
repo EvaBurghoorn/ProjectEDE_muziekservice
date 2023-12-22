@@ -42,9 +42,9 @@ public class MusicPodcastController {
 
 
 //    Get a song with an id
-    @GetMapping("/song/{id}")
-    public ResponseEntity<MusicPodcast> getSongById(@PathVariable("id") String songId) {
-        Optional<MusicPodcast> musicPodcast = musicPodcastService.getSongById(songId);
+    @GetMapping("/id/{uniqueIdentifier}")
+    public ResponseEntity<MusicPodcast> getMusicPodcastById(@PathVariable("uniqueIdentifier") String songUniqueIdentifier) {
+        Optional<MusicPodcast> musicPodcast = musicPodcastService.getMusicPodcastByUniqueIdentifier(songUniqueIdentifier);
         if (musicPodcast.isPresent()) {
             return new ResponseEntity<>(musicPodcast.get(), HttpStatus.OK);
         }
@@ -52,16 +52,16 @@ public class MusicPodcastController {
     }
 
 
-
-//     Get a podcast with an id
-    @GetMapping("/podcast/{id}")
-    public ResponseEntity<MusicPodcast> getPodcastById(@PathVariable("id") String podcastId) {
-        Optional<MusicPodcast> musicPodcast = musicPodcastService.getPodcastById(podcastId);
-        if (musicPodcast.isPresent()) {
-            return new ResponseEntity<>(musicPodcast.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+//
+////     Get a podcast with an id
+//    @GetMapping("/podcast/{id}")
+//    public ResponseEntity<MusicPodcast> getPodcastById(@PathVariable("id") String podcastId) {
+//        Optional<MusicPodcast> musicPodcast = musicPodcastService.getPodcastById(podcastId);
+//        if (musicPodcast.isPresent()) {
+//            return new ResponseEntity<>(musicPodcast.get(), HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 
 
 
