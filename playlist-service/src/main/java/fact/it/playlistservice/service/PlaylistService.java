@@ -57,16 +57,13 @@ public class PlaylistService {
         Optional<Playlist> editPlaylist = playlistRepository.findById(playlistId);
         if(editPlaylist.isPresent()){
             Playlist playlist = editPlaylist.get();
-            playlist = Playlist.builder()
-                    .id(playlist.getId())
-                    .title(playlistRequest.getTitle())
-                    .username(playlistRequest.getUsername())
-                    .uniqueIdentifier(playlistRequest.getUniqueIdentifier())
-                    .isPrivate(playlistRequest.isPrivate())
-                    .description(playlistRequest.getDescription())
-                    .build();
-
+            playlist.setTitle(playlistRequest.getTitle());
+            playlist.setUsername(playlistRequest.getUsername());
+            playlist.setUniqueIdentifier(playlistRequest.getUniqueIdentifier());
+            playlist.setPrivate(playlistRequest.isPrivate());
+            playlist.setDescription(playlistRequest.getDescription());
             playlistRepository.save(playlist);
+
         }
     }
 
