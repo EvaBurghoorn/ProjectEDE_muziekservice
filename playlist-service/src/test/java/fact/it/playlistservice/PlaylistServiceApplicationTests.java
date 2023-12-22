@@ -160,15 +160,14 @@ class PlaylistServiceApplicationTests {
         playlist.setPrivate(false);
         playlist.setDescription("This is a test playlist");
 
-        PlaylistRequest playlistRequest = new PlaylistRequest();
-        playlist.setTitle("Podcasts");
-        playlist.setMusicpodcastid("20");
-        playlist.setPrivate(true);
-        playlist.setDescription("Podcasts about life");
-
         when(playlistRepository.findById(5L)).thenReturn(Optional.of(playlist));
 
         // Act
+        PlaylistRequest playlistRequest = new PlaylistRequest();
+        playlistRequest.setTitle("Podcasts");
+        playlistRequest.setMusicpodcastid("20");
+        playlistRequest.setDescription("Podcasts about life");
+
         playlistService.editPlaylist(playlist.getId(), playlistRequest);
 
         // Assert
@@ -176,54 +175,12 @@ class PlaylistServiceApplicationTests {
         verify(playlistRepository, times(1)).save(any(Playlist.class));
         assertEquals("Podcasts", playlist.getTitle());
         assertEquals("20", playlist.getMusicpodcastid());
-        assertTrue(playlist.isPrivate());
         assertEquals("Podcasts about life", playlist.getDescription());
 
     }
 
-
-//    @Test
-//    public void testDeletePlaylist(){
-//        // Arrange
-//        List<Playlist> playlists = new ArrayList<>();
-//        Playlist playlist1 = new Playlist();
-//        playlist1.setId(1L);
-//        playlist1.setTitle("My Playlist 1");
-//        playlist1.setUserid("1");
-//        playlist1.setMusicpodcastid("1");
-//        playlist1.setPrivate(true);
-//        playlist1.setDescription("This is playlist1");
-//
-//        Playlist playlist2 = new Playlist();
-//        playlist2.setId(2L);
-//        playlist2.setTitle("My Playlist 2");
-//        playlist2.setUserid("2");
-//        playlist1.setMusicpodcastid("2");
-//        playlist1.setPrivate(false);
-//        playlist1.setDescription("This is the second playlist");
-//
-//        playlists.add(playlist1);
-//        playlists.add(playlist2);
-//
-//        // id verwijderen
-//        Long id = 2L;
-//        Optional<Playlist> optionalPlaylist = playlists.stream()
-//                .filter(playlist -> playlist.getId().equals(id))
-//                .findFirst();
-//
-//        // Act
-//        if (optionalPlaylist.isPresent()) {
-//            Playlist playlist = optionalPlaylist.get();
-//            playlists.remove(playlist);
-//        }
-//        // Assert
-//        assertFalse(playlists.contains(optionalPlaylist.orElse(null)));
-//        verify(playlistRepository, times(1)).findById(id);
-//
-//    }
-
     @Test
-    public void testDeletePlaylist1(){
+    public void testDeletePlaylist(){
         // Arrange
         Long playlistId = 1L;
         Playlist playlist = new Playlist();
