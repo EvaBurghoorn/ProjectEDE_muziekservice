@@ -136,7 +136,7 @@ jobs:
 
       - name: Build, test and package project
         working-directory: ./api-gateway
-        run: mvn package -DskipTests
+        run: mvn package -B -DskipTests
 
       - name: Docker login
         uses: docker/login-action@v3
