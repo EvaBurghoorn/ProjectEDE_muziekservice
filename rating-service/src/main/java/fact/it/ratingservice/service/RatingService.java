@@ -24,7 +24,6 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final WebClient webClient;
 
-
     @Value("${musicpodcastservice.baseurl}")
     private String musicpodcastServiceBaseUrl;
 
@@ -51,12 +50,11 @@ public class RatingService {
         }
     }
 
+//    Create a new rating for a music podcast
     public void rateMusicPodcast(RatingRequest ratingRequest){
 
         Rating rating = new Rating();
-//        rating.setUniqueIdentifier(UUID.randomUUID().toString());
 
-//        String uniqueIdentifierCodes = ratingResponse.getUniqueIdentifier().toString();
         String uniqueIdentifierCode = ratingRequest.getUniqueIdentifier();
         String username = ratingRequest.getUsername();
 
@@ -74,40 +72,46 @@ public class RatingService {
                 .bodyToMono(UserResponse[].class)
                 .block();
 
-        if(uniqueIdentifierCode != null){
+        if (uniqueIdentifierCode != null && username != null) {
             MusicPodcastResponse musicPodcastResponse = Arrays.stream(musicPodcastResponseArray )
                     .filter(mp -> mp.getUniqueIdentifier().equals(uniqueIdentifierCode))
                     .findFirst()
                     .orElse(null);
-            if(username != null) {
+
 
                 UserResponse userResponse = Arrays.stream(userResponseArray)
                         .filter(u -> u.getUsername().equals(username))
                         .findFirst()
                         .orElse(null);
 
-                if (musicPodcastResponse != null && rating.isLiked()) {
-                    rating.setLiked(true);
-                    rating.setDisliked(!rating.isDisliked());
-                    rating.setUsername(userResponse.getUsername());
 
-                }
-                if (musicPodcastResponse != null && rating.isDisliked()) {
+            if (musicPodcastResponse != null && userResponse != null) {
+                rating.setUniqueIdentifier(uniqueIdentifierCode);
+                rating.setUsername(userResponse.getUsername());                if (ratingRequest.isLiked()) {
+                    rating.setLiked(true);
+                    rating.setDisliked(false);
+                } else if (ratingRequest.isDisliked()) {
                     rating.setDisliked(true);
-                    rating.setLiked(!rating.isLiked());
-                    rating.setUsername(userResponse.getUsername());
+                    rating.setLiked(false);
                 }
+                ratingRepository.save(rating);
+
             }
         }
     }
+//    public void createRating(RatingRequest ratingRequest){
+//        Rating rating = Rating.builder()
+//                .isLiked(ratingRequest.isLiked())
+//                .isDisliked(ratingRequest.isDisliked())
+//                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
+//                .username(ratingRequest.getUsername())
+//                .build();
+//
+//        ratingRepository.save(rating);
+//    }
 
-    public void deleteRatingMusicPodcast(String ratingId){
-        Optional<Rating> deleteRating = ratingRepository.findById(ratingId);
-        if(deleteRating.isPresent()){
-            ratingRepository.deleteById(ratingId);
-        }
-    }
 
+//    Edit a rating
     public void editRatingMusicPodcast(String ratingId, RatingRequest ratingRequest){
         Optional<Rating> editRating = ratingRepository.findById(ratingId);
         if(editRating.isPresent() && ratingRequest.isLiked()) {
@@ -126,6 +130,15 @@ public class RatingService {
         }
     }
 
+//    Delete a rating
+    public void deleteRatingMusicPodcast(String ratingId){
+        Optional<Rating> deleteRating = ratingRepository.findById(ratingId);
+        if(deleteRating.isPresent()){
+            ratingRepository.deleteById(ratingId);
+        }
+    }
+
+    // Get all liked music podcasts
     public List<MusicPodcastResponse> getAllLikedMusicPodcast(){
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
                 .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
@@ -134,17 +147,6 @@ public class RatingService {
                 .bodyToMono(MusicPodcastResponse[].class)
                 .block();
         return Arrays.stream(musicPodcastResponseArray).toList();
-    }
-
-    public void createRating(RatingRequest ratingRequest){
-        Rating rating = Rating.builder()
-                .isLiked(ratingRequest.isLiked())
-                .isDisliked(ratingRequest.isDisliked())
-                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
-                .username(ratingRequest.getUsername())
-                .build();
-
-        ratingRepository.save(rating);
     }
 
     public List<RatingResponse> getAllRatings(){

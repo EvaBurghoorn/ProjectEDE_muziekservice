@@ -26,7 +26,7 @@ public class UserController {
         return  userService.getAllUsers();
     }
 
-
+// Get a user with username
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
         User user = userService.getUserByUsername(username);
@@ -36,6 +36,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+//    Create a new user
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createUser(@RequestBody UserRequest userRequest)
@@ -43,12 +44,15 @@ public class UserController {
         userService.createUser(userRequest);
     }
 
+//    Edit a user
     @PutMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public void updateUser(@PathVariable("username") String username,@RequestBody UserRequest userRequest)
     {
         userService.editUserBy(username, userRequest);
     }
+
+    // Delete a user
     @DeleteMapping("username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable("username") String username)

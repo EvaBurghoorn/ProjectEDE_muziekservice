@@ -1,14 +1,20 @@
 package fact.it.ratingservice;
 
+import fact.it.ratingservice.dto.MusicPodcastResponse;
 import fact.it.ratingservice.dto.RatingRequest;
+import fact.it.ratingservice.dto.UserResponse;
 import fact.it.ratingservice.model.Rating;
 import fact.it.ratingservice.repository.RatingRepository;
 import fact.it.ratingservice.service.RatingService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +30,68 @@ class RatingServiceApplicationTests {
 
     @Mock
     private RatingRepository ratingRepository;
+
+    @Mock
+    private WebClient webClient;
+
+    @Mock
+    private WebClient.RequestHeadersUriSpec requestHeadersUriSpec;
+
+    @Mock
+    private WebClient.RequestHeadersSpec requestHeadersSpec;
+
+    @Mock
+    private WebClient.ResponseSpec responseSpec;
+
+    @BeforeEach
+    void setUp() {
+        ReflectionTestUtils.setField(ratingService, "musicpodcastServiceBaseUrl", "http://localhost:8080");
+        ReflectionTestUtils.setField(ratingService, "userServiceBaseUrl", "http://localhost:8081");
+    }
     @Test
     public void testGetAllLikedRatings() {
         // Arrange
-        // Act
-        // Assert
-    }
-    @Test
-    public void testCreateRating() {
-        // Arrange
-        RatingRequest ratingRequest = new RatingRequest();
-        ratingRequest.setDisliked(false);
-        ratingRequest.setLiked(true);
-        ratingRequest.setUniqueIdentifier("Title1Artist1");
-        ratingRequest.setUsername("LexiBlevins");
 
         // Act
-        ratingService.createRating(ratingRequest);
 
         // Assert
-        verify(ratingRepository, times(1)).save(any(Rating.class));
+
     }
+//    @Test
+//    public void testCreateRating() {
+//        // Arrange
+//        String uniqueIdentifier = "test";
+//        String username = "test";
+//        Boolean isDisliked= false;
+//        Boolean isLiked = true;
+//
+//        RatingRequest ratingRequest = new RatingRequest();
+//        ratingRequest.setDisliked(isDisliked);
+//        ratingRequest.setLiked(isLiked);
+//        ratingRequest.setUniqueIdentifier(uniqueIdentifier);
+//        ratingRequest.setUsername(username);
+//
+//        MusicPodcastResponse musicPodcastResponse = new MusicPodcastResponse();
+//        musicPodcastResponse.setUniqueIdentifier(uniqueIdentifier);
+//
+//        UserResponse userResponse = new UserResponse();
+//        userResponse.setUsername(username);
+//
+//
+//        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+//        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
+//        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+//        when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(new MusicPodcastResponse[]{musicPodcastResponse}));
+//        when(responseSpec.bodyToMono(UserResponse[].class)).thenReturn(Mono.just(new UserResponse[]{userResponse}));
+//        when(ratingRepository.save(any(Rating.class)));
+//
+//        // Act
+//        ratingService.rateMusicPodcast(ratingRequest);
+//
+//        // Assert
+//        verify(ratingRepository, times(1)).save(any(Rating.class));
+//    }
+
     @Test
     public void testEditRating() {
         // Arrange

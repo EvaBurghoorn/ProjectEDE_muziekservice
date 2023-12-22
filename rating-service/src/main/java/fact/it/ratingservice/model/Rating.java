@@ -15,12 +15,9 @@ import java.util.UUID;
 @Data
 public class Rating {
     private String id;
-//    liked
     private boolean isLiked;
-//    dislike
     private boolean isDisliked;
     private String uniqueIdentifier;
-    // unique username (UUID)
     private String username;
 
 
