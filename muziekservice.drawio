@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-12-22T08:29:20.193Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="yHSM8sxBNOr2x9rajR4b" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-22T09:34:06.705Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="3gBSNAnxWALpRN187wdM" version="22.1.11" type="github">
   <diagram name="Page-1" id="NBVJEllzR1ZUASM5w6jj">
-    <mxGraphModel dx="861" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1430" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -10,8 +10,8 @@
         <mxCell id="3TCQNBXgngy0kVLWkxzT-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" parent="1" source="3TCQNBXgngy0kVLWkxzT-3" target="3TCQNBXgngy0kVLWkxzT-28" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1253.24" y="433" />
-              <mxPoint x="529.24" y="433" />
+              <mxPoint x="1200" y="433" />
+              <mxPoint x="499" y="433" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -259,7 +259,7 @@
             <mxPoint x="847.24" y="213" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="3TCQNBXgngy0kVLWkxzT-71" value="Endpoints:&lt;br&gt;GET /podcasts(AUTH) -&amp;gt; get all podcasts&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /songs (AUTH)&amp;nbsp;-&amp;gt; get all songs&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /song (AUTH)&amp;nbsp;-&amp;gt; get a song&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /podcast (AUTH)-&amp;gt; get a podcast&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /all (AUTH)&amp;nbsp;-&amp;gt; get all songs and podcasts&lt;br&gt;GET /user (AUTH)-&amp;gt; get user&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;POST /user -&amp;gt; make user&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;PUT /user(AUTH) -&amp;gt; update user&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;DELETE /user (AUTH)-&amp;gt; delete user&lt;br&gt;GET /rating/liked (AUTH) -&amp;gt; get a music podcasts with liked rating&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /rating/{musicPodcastsId} (AUTH) -&amp;gt; get rating for song or podcast&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;POST /rating/{musicPodcastsId} (AUTH)-&amp;gt; put rating for a song or podcast&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;DELETE /rating{musicPodcastId} (AUTH)&amp;nbsp;-&amp;gt; delete rating&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET / playlists (AUTH)-&amp;gt; get all playlists&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /playlist (AUTH)-&amp;gt; get a playlist&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;POST /playlist (AUTH)&amp;nbsp;-&amp;gt; make new playlist&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;PUT /playlist (AUTH)-&amp;gt; update playlist&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;DELETE /playlist (AUTH)-&amp;gt; delete a playlist" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="3TCQNBXgngy0kVLWkxzT-71" value="Endpoints:&lt;br&gt;GET /musicpodcast/all (AUTH) -&amp;gt; get all musicpodcasts&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /musicpodcast/podcasts (AUTH)&amp;nbsp;-&amp;gt; get all podcasts&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GETmusicpodcast/songs (AUTH) -&amp;gt; get all songs&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;GET /musicpodcast/id/{uniqueIdentifier}(AUTH)-&amp;gt; get a musicpodcast with unique identifier&lt;br&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1150" y="53" width="430" height="230" as="geometry" />
         </mxCell>
         <mxCell id="3TCQNBXgngy0kVLWkxzT-72" value="Endpoints:&lt;br&gt;GET /musicpodcast/all -&amp;gt; get all musicpodcasts&lt;br&gt;GET /musicpodcast/podcasts -&amp;gt; get all podcasts&lt;br&gt;GETmusicpodcast/songs -&amp;gt; get all songs&lt;br&gt;GET /musicpodcast/id/{uniqueIdentifier} -&amp;gt; get a musicpodcast with unique identifier" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
