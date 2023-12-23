@@ -17,3 +17,7 @@ Rating-service houdt alle beoordelingen bij voor de liedjes en/of podcasts die e
 
 Dit is kort uitgelegd wat ons muziekservice met de 4 microservices inhoudt.
 
+## API Gateway
+Wij hebben ook een api gateway geimplementeerd als onderdeel van onze muziekservice. Het dient als een soort toegangspunt voor externe gebruikers, hier rond hoort onder andere ook de authentication, authorization, routing, security,...
+
+Voor de authenticatie hebben wij GCP 0Auth2 geimplementeerd. Alle onze routes zijn beveiligd buiten het aanmaken van een gebruiker. Het aanmaken van een gebruiker gaat dus zonder authenticatie verlopen. 
