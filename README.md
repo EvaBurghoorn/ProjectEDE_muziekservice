@@ -75,7 +75,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![CreatePlaylist](Images/EndpointCreatePlaylist.png)
 
 4. Edit /playlist/id/{id} -> Edit a specific playlist
-![PutPlaylist](Images/EndpointEditPlaylistById.png)
+![CreatePlaylist](Images/EndpointEditPlaylistById.png)
 
 5. Delete /playlist/id/{id} -> Verwijdert een playlist
 ![DeletePlaylist](Images/EndpointDeletePlaylistById.png)
