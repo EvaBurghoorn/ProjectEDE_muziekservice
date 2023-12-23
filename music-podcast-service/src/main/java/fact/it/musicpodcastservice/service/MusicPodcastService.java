@@ -128,17 +128,7 @@ public class MusicPodcastService {
         }
     }
 
-    public class CustomException extends RuntimeException {
-        private final String errorMessage;
 
-        public CustomException(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
-
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-    }
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
