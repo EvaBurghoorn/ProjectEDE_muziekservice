@@ -26,8 +26,8 @@ public class MusicPodcastService {
     @Value("${ratingservice.baseurl}")
     private String ratingServiceBaseUrl;
 
-    @Value("${musicpodcastservice.baseurl}")
-    private String musicpodcastServiceBaseUrl;
+//    @Value("${musicpodcastservice.baseurl}")
+//    private String musicpodcastServiceBaseUrl;
 
     @PostConstruct
     public void loadData(){
