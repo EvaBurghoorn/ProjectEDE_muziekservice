@@ -1,5 +1,5 @@
 # Project Entreprise Development Experience: MuziekService (Eva Burghoorn & Kyara Van Genechten)
-Het onderwerp van dit project is een muziekservice en deze is opgedeeld in 4 microservices. We hebben voor een muziekservice als onderwerp gekozen omdat wij dit allebei interessant vinden. Hieronder kan je onze 4 microservices opgelijst terugvinden: 
+Het onderwerp van dit project is een muziekservice en deze is opgedeeld in 4 microservices. We hebben voor een muziekservice als onderwerp gekozen omdat wij dit allebei interessant vinden. Een muziekservice bestaat natuurlijk ook uit verschillende microservices, hieronder kan je onze 4 microservices opgelijst terugvinden: 
 
 -	User-service 
 -	MusicPodcast-service
