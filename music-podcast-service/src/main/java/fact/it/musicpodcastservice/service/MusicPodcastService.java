@@ -8,8 +8,10 @@ import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -111,36 +113,53 @@ public class MusicPodcastService {
 //        }
 //        return Collections.emptyList();
 //    }
-    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+// Create a custom exception class
+    public class CustomException extends RuntimeException {
+        private final String errorMessage;
+
+        public CustomException(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+    }
+
+    // Modify your method to throw the custom exception
+    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) throws CustomException {
         String username = ratingResponse.getUsername();
 
-        if (username != null) {
-            try {
-                RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                        .uri("http://" + ratingServiceBaseUrl + "/rating",
-                                uriBuilder -> uriBuilder.queryParam("username", username).build())
-                        .retrieve()
-                        .bodyToMono(RatingResponse[].class)
-                        .block();
-
-                List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-                if (ratingResponsePerUserArray != null) {
-                    Arrays.stream(ratingResponsePerUserArray)
-                            .filter(RatingResponse::isLiked)
-                            .map(RatingResponse::getUniqueIdentifier)
-                            .map(this::getMusicPodcastByUniqueIdentifier)
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .map(this::mapToMusicPodcastResponse)
-                            .forEach(musicPodcastResponses::add);
-                }
-                return musicPodcastResponses;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return Collections.emptyList();
-            }
+        if (username == null) {
+            throw new CustomException("Username cannot be null");
         }
-        return Collections.emptyList();
+
+        try {
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating",
+                            uriBuilder -> uriBuilder.queryParam("username", username).build())
+                    .retrieve()
+                    .bodyToMono(RatingResponse[].class)
+                    .block();
+
+            if (ratingResponsePerUserArray == null) {
+                throw new CustomException("No rating responses received");
+            }
+
+            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+            Arrays.stream(ratingResponsePerUserArray)
+                    .filter(RatingResponse::isLiked)
+                    .map(RatingResponse::getUniqueIdentifier)
+                    .map(this::getMusicPodcastByUniqueIdentifier)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(this::mapToMusicPodcastResponse)
+                    .forEach(musicPodcastResponses::add);
+
+            return musicPodcastResponses;
+        } catch (CustomException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getErrorMessage());
+        }
     }
 
     // Get a musicPodcast per user
@@ -166,13 +185,13 @@ public class MusicPodcastService {
         return null;
     }
 
-//    Get all the songs and podcasts
+    //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
         List<MusicPodcast> musicPodcasts = musicPodcastRepository.findAll();
         return musicPodcasts.stream().map(this::mapToMusicPodcastResponse).toList();
     }
 
-//    Get all songs
+    //    Get all songs
     public List<MusicPodcastResponse> getAllSongs() {
         List<MusicPodcast> musicPodcasts = musicPodcastRepository.findAll();
         return musicPodcasts.stream()
@@ -180,7 +199,7 @@ public class MusicPodcastService {
                 .map(this::mapToMusicPodcastResponse).toList();
     }
 
-//    Get all the podcasts
+    //    Get all the podcasts
     public List<MusicPodcastResponse> getAllPodcast() {
         List<MusicPodcast> musicPodcasts = musicPodcastRepository.findAll();
         return musicPodcasts.stream()
@@ -189,7 +208,7 @@ public class MusicPodcastService {
                 .toList();
     }
 
-// Get a music podcast by unique identifier
+    // Get a music podcast by unique identifier
     public Optional<MusicPodcast> getMusicPodcastByUniqueIdentifier(String songUniqueIdentifier) {
         return Optional.ofNullable(musicPodcastRepository.findByUniqueIdentifier(songUniqueIdentifier));
     }
