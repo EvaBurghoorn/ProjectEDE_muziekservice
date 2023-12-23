@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,10 +52,12 @@ public class UserService {
         return users.stream().map(this::mapToUserResponse).toList();
     }
 
+    // Get user by username
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    // Create a new user
     public void createUser(UserRequest userRequest){
         User user = User.builder()
                 .firstName(userRequest.getFirstName())
@@ -80,10 +81,10 @@ public class UserService {
         }
     }
 
+    // Edit a user by the username
     public void editUserBy (String username,UserRequest userRequest){
         User userForEdit = userRepository.findByUsername(username);
         if(userForEdit != null){
-//            User user = userForEdit.get();
             userForEdit.setFirstName(userRequest.getFirstName());
             userForEdit.setLastName(userRequest.getLastName());
             userForEdit.setBirthday(userRequest.getBirthday());
@@ -96,6 +97,7 @@ public class UserService {
         }
     }
 
+    // Delete a user by username
     public void deleteByUsername(String username){
         User deletingUser = userRepository.findByUsername(username);
         if(deletingUser != null){

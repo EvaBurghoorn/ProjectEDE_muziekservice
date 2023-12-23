@@ -32,16 +32,18 @@ public class PlaylistService {
         }
     }
 
+//    Get all the playlists
     public List<PlaylistResponse> getAllPlaylists(){
         List<Playlist> playlists = playlistRepository.findAll();
         return playlists.stream().map(this::mapToPlaylistResponse).toList();
     }
 
+//  Get a playlist by id
     public Optional<PlaylistResponse> getPlaylistById(Long playlistId) {
         return playlistRepository.findById(playlistId).map(this::mapToPlaylistResponse);
     }
 
-
+//  Create a new playlist
     public void createPlaylist(PlaylistRequest playlistRequest){
         Playlist playlist = Playlist.builder()
                 .title(playlistRequest.getTitle())
@@ -53,6 +55,8 @@ public class PlaylistService {
 
         playlistRepository.save(playlist);
     }
+
+//    Edit a playlist
     public void editPlaylist(Long playlistId, PlaylistRequest playlistRequest){
         Optional<Playlist> editPlaylist = playlistRepository.findById(playlistId);
         if(editPlaylist.isPresent()){
@@ -67,6 +71,7 @@ public class PlaylistService {
         }
     }
 
+//    Delete a playlist
     public void deletePlaylist(Long playlistId){
         Optional<Playlist> deletePlaylist = playlistRepository.findById(playlistId);
         deletePlaylist.ifPresent(playlistRepository::delete);

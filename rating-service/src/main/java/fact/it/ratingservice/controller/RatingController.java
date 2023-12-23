@@ -24,6 +24,7 @@ public class RatingController {
         return  ratingService.getAllRatings();
     }
 
+    // Get all the liked ratings
     @GetMapping("/all/liked")
     @ResponseStatus(HttpStatus.OK)
     public List<MusicPodcastResponse> getAllLikedRating(){return ratingService.getAllLikedMusicPodcast();}
@@ -33,7 +34,7 @@ public class RatingController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createRating(@RequestBody RatingRequest ratingRequest){
-        ratingService.createRating(ratingRequest);
+        ratingService.rateMusicPodcast(ratingRequest);
     }
 
 

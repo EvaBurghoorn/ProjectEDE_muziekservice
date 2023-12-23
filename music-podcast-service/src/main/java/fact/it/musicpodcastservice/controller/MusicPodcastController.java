@@ -51,15 +51,6 @@ public class MusicPodcastController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-////     Get a podcast with an id
-//    @GetMapping("/podcast/{id}")
-//    public ResponseEntity<MusicPodcast> getPodcastById(@PathVariable("id") String podcastId) {
-//        Optional<MusicPodcast> musicPodcast = musicPodcastService.getPodcastById(podcastId);
-//        if (musicPodcast.isPresent()) {
-//            return new ResponseEntity<>(musicPodcast.get(), HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
 
 
 

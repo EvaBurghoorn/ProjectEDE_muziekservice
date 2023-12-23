@@ -11,11 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RatingResponse {
     private String id;
-    //    liked
     private boolean isLiked;
-    //    dislike
     private boolean isDisliked;
     private String uniqueIdentifier;
-    // unique username (UUID)
     private String username;
 }

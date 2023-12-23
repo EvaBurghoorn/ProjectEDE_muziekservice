@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,11 @@ public class MusicPodcastService {
     private final MusicPodcastRepository musicPodcastRepository;
     private final WebClient webClient;
 
+    @Value("${ratingservice.baseurl}")
+    private String ratingServiceBaseUrl;
+
+    @Value("${musicpodcastservice.baseurl}")
+    private String musicpodcastServiceBaseUrl;
 
     @PostConstruct
     public void loadData(){
@@ -33,7 +39,6 @@ public class MusicPodcastService {
             musicPodcast.setGenre("Pop");
             musicPodcast.setPodcast(false);
             musicPodcast.setUniqueIdentifier("Title1Artist1");
-//            musicPodcast.setUsername("LexiBlevins");
 
             MusicPodcast musicPodcast_two = new MusicPodcast();
             musicPodcast_two.setTitle("TitlePodcast");
@@ -42,17 +47,13 @@ public class MusicPodcastService {
             musicPodcast_two.setGenre("Drama");
             musicPodcast_two.setPodcast(true);
             musicPodcast_two.setUniqueIdentifier("TitlePodcastArtist2");
-//            musicPodcast_two.setUsername("Lillie123");
             musicPodcastRepository.save(musicPodcast);
             musicPodcastRepository.save(musicPodcast_two);
         }
     }
 
-    @Value("${ratingservice.baseurl}")
-    private String ratingServiceBaseUrl;
 
-
-    // Get all liked musicPodcasts per user
+    // Get all  musicPodcasts with a liked rating per user
     public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(MusicPodcastRequest musicPodcastRequest, RatingResponse ratingResponse) {
         String uniqueIdentifierCode = musicPodcastRequest.getUniqueIdentifier();
         String username = ratingResponse.getUsername();
@@ -67,25 +68,24 @@ public class MusicPodcastService {
 
 
         List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-        if (username != null && uniqueIdentifierCode != null) {
-            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
+        if (username != null) {
+            Arrays.stream(ratingResponsePerUserArray)
                     .filter(r -> r.isLiked())
-                    .findAny()
-                    .orElse(null);
+                    .forEach(r -> {
+                        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
+                                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
+                                        uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", r.getUniqueIdentifier()).build())
+                                .retrieve()
+                                .bodyToMono(MusicPodcastResponse[].class)
+                                .block();
 
-            if (userMP != null) {
-                Optional<MusicPodcast> musicPodcastOptional = musicPodcastRepository.findById(userMP.getId());
-                if (musicPodcastOptional.isPresent()) {
-                    MusicPodcast musicPodcast = musicPodcastOptional.get();
-                    MusicPodcastResponse musicPodcastResponse = mapToMusicPodcastResponse(musicPodcast);
-                    musicPodcastResponses.add(musicPodcastResponse);
-                }
-            }
+                        if (musicPodcastResponseArray != null) {
+                            musicPodcastResponses.addAll(Arrays.asList(musicPodcastResponseArray));
+                        }
+                    });
         }
         return musicPodcastResponses;
     }
-
-
 
 
     // Get a musicPodcast per user
@@ -146,11 +146,6 @@ public class MusicPodcastService {
         return Optional.ofNullable(musicPodcastRepository.findByUniqueIdentifier(songUniqueIdentifier));
     }
 
-//    Get a podcast
-//    public Optional<MusicPodcast> getPodcastById(String podcastId) {
-//        return musicPodcastRepository.findById(podcastId);
-//    }
-
 
     private MusicPodcastResponse mapToMusicPodcastResponse(MusicPodcast musicPodcast) {
         return MusicPodcastResponse.builder()
@@ -161,7 +156,6 @@ public class MusicPodcastService {
                 .durationSeconds(musicPodcast.getDurationSeconds())
                 .isPodcast(musicPodcast.isPodcast())
                 .uniqueIdentifier(musicPodcast.getUniqueIdentifier())
-//                .username(musicPodcast.getUsername())
                 .build();
     }
 
