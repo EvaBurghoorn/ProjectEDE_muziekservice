@@ -89,30 +89,23 @@ public class MusicPodcastService {
 
 
     // Get a musicPodcast per user
-    public MusicPodcast getMusicPodcastPerUser(MusicPodcastRequest musicPodcastRequest, RatingResponse ratingResponse) {
-        String uniqueIdentifierCode = musicPodcastRequest.getUniqueIdentifier();
-        String username = ratingResponse.getUsername();
-
+    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
 
         RatingResponse[] ratingResponsePerUserArray = webClient.get()
                 .uri("http://" + ratingServiceBaseUrl + "/rating",
-                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifierCode).build())
+                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
                 .retrieve()
                 .bodyToMono(RatingResponse[].class)
                 .block();
 
-
-
-        if (username != null && uniqueIdentifierCode != null) {
+        if (username != null && uniqueIdentifier != null) {
             RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
                     .findFirst()
                     .orElse(null);
 
-
             if (userMP != null) {
-              MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
+                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
                 return musicPodcast;
-
             }
         }
         return null;
