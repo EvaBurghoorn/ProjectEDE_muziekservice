@@ -53,63 +53,63 @@ public class MusicPodcastService {
     }
 
 
-    // Get all  musicPodcasts with a liked rating per user
-    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(MusicPodcastRequest musicPodcastRequest, RatingResponse ratingResponse) {
-        String uniqueIdentifierCode = musicPodcastRequest.getUniqueIdentifier();
-        String username = ratingResponse.getUsername();
+//    // Get all  musicPodcasts with a liked rating per user
+//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(MusicPodcastRequest musicPodcastRequest, RatingResponse ratingResponse) {
+//        String uniqueIdentifierCode = musicPodcastRequest.getUniqueIdentifier();
+//        String username = ratingResponse.getUsername();
+//
+//
+//        RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                .uri("http://" + ratingServiceBaseUrl + "/rating",
+//                        uriBuilder -> uriBuilder.queryParam("username", username).build())
+//                .retrieve()
+//                .bodyToMono(RatingResponse[].class)
+//                .block();
+//
+//
+//        List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+//        if (username != null) {
+//            Arrays.stream(ratingResponsePerUserArray)
+//                    .filter(r -> r.isLiked())
+//                    .forEach(r -> {
+//                        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
+//                                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
+//                                        uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", r.getUniqueIdentifier()).build())
+//                                .retrieve()
+//                                .bodyToMono(MusicPodcastResponse[].class)
+//                                .block();
+//
+//                        if (musicPodcastResponseArray != null) {
+//                            musicPodcastResponses.addAll(Arrays.asList(musicPodcastResponseArray));
+//                        }
+//                    });
+//        }
+//        return musicPodcastResponses;
+//    }
 
 
-        RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                .uri("http://" + ratingServiceBaseUrl + "/rating",
-                        uriBuilder -> uriBuilder.queryParam("username", username).build())
-                .retrieve()
-                .bodyToMono(RatingResponse[].class)
-                .block();
-
-
-        List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-        if (username != null) {
-            Arrays.stream(ratingResponsePerUserArray)
-                    .filter(r -> r.isLiked())
-                    .forEach(r -> {
-                        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
-                                        uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", r.getUniqueIdentifier()).build())
-                                .retrieve()
-                                .bodyToMono(MusicPodcastResponse[].class)
-                                .block();
-
-                        if (musicPodcastResponseArray != null) {
-                            musicPodcastResponses.addAll(Arrays.asList(musicPodcastResponseArray));
-                        }
-                    });
-        }
-        return musicPodcastResponses;
-    }
-
-
-    // Get a musicPodcast per user
-    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
-
-        RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                .uri("http://" + ratingServiceBaseUrl + "/rating",
-                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
-                .retrieve()
-                .bodyToMono(RatingResponse[].class)
-                .block();
-
-        if (username != null && uniqueIdentifier != null) {
-            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
-                    .findFirst()
-                    .orElse(null);
-
-            if (userMP != null) {
-                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
-                return musicPodcast;
-            }
-        }
-        return null;
-    }
+//    // Get a musicPodcast per user
+//    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
+//
+//        RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                .uri("http://" + ratingServiceBaseUrl + "/rating",
+//                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
+//                .retrieve()
+//                .bodyToMono(RatingResponse[].class)
+//                .block();
+//
+//        if (username != null && uniqueIdentifier != null) {
+//            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
+//                    .findFirst()
+//                    .orElse(null);
+//
+//            if (userMP != null) {
+//                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
+//                return musicPodcast;
+//            }
+//        }
+//        return null;
+//    }
 
 //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
