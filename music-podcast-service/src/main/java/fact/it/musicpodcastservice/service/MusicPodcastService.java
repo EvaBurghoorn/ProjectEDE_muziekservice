@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,29 +84,56 @@ public class MusicPodcastService {
 //        return musicPodcastResponses;
 //    }
 
+    // Get all musicPodcasts with a liked rating per user
+    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+        String username = ratingResponse.getUsername();
 
-//    // Get a musicPodcast per user
-//    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
-//
-//        RatingResponse[] ratingResponsePerUserArray = webClient.get()
-//                .uri("http://" + ratingServiceBaseUrl + "/rating",
-//                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
-//                .retrieve()
-//                .bodyToMono(RatingResponse[].class)
-//                .block();
-//
-//        if (username != null && uniqueIdentifier != null) {
-//            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
-//                    .findFirst()
-//                    .orElse(null);
-//
-//            if (userMP != null) {
-//                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
-//                return musicPodcast;
-//            }
-//        }
-//        return null;
-//    }
+        if (username != null) {
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating",
+                            uriBuilder -> uriBuilder.queryParam("username", username).build())
+                    .retrieve()
+                    .bodyToMono(RatingResponse[].class)
+                    .block();
+
+            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+            if (ratingResponsePerUserArray != null) {
+                Arrays.stream(ratingResponsePerUserArray)
+                        .filter(RatingResponse::isLiked)
+                        .map(RatingResponse::getUniqueIdentifier)
+                        .map(this::getMusicPodcastByUniqueIdentifier)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .map(this::mapToMusicPodcastResponse)
+                        .forEach(musicPodcastResponses::add);
+            }
+            return musicPodcastResponses;
+        }
+        return Collections.emptyList();
+    }
+
+    // Get a musicPodcast per user
+    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
+
+        RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                .uri("http://" + ratingServiceBaseUrl + "/rating",
+                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
+                .retrieve()
+                .bodyToMono(RatingResponse[].class)
+                .block();
+
+        if (username != null && uniqueIdentifier != null) {
+            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
+                    .findFirst()
+                    .orElse(null);
+
+            if (userMP != null) {
+                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
+                return musicPodcast;
+            }
+        }
+        return null;
+    }
 
 //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
