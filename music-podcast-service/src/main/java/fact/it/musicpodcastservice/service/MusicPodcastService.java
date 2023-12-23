@@ -8,8 +8,10 @@ import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,40 +52,6 @@ public class MusicPodcastService {
     }
 
 
-//    // Get all  musicPodcasts with a liked rating per user
-//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(MusicPodcastRequest musicPodcastRequest, RatingResponse ratingResponse) {
-//        String uniqueIdentifierCode = musicPodcastRequest.getUniqueIdentifier();
-//        String username = ratingResponse.getUsername();
-//
-//
-//        RatingResponse[] ratingResponsePerUserArray = webClient.get()
-//                .uri("http://" + ratingServiceBaseUrl + "/rating",
-//                        uriBuilder -> uriBuilder.queryParam("username", username).build())
-//                .retrieve()
-//                .bodyToMono(RatingResponse[].class)
-//                .block();
-//
-//
-//        List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-//        if (username != null) {
-//            Arrays.stream(ratingResponsePerUserArray)
-//                    .filter(r -> r.isLiked())
-//                    .forEach(r -> {
-//                        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-//                                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
-//                                        uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", r.getUniqueIdentifier()).build())
-//                                .retrieve()
-//                                .bodyToMono(MusicPodcastResponse[].class)
-//                                .block();
-//
-//                        if (musicPodcastResponseArray != null) {
-//                            musicPodcastResponses.addAll(Arrays.asList(musicPodcastResponseArray));
-//                        }
-//                    });
-//        }
-//        return musicPodcastResponses;
-//    }
-
     // Get all musicPodcasts with a liked rating per user
 //    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 //        String username = ratingResponse.getUsername();
@@ -111,36 +79,65 @@ public class MusicPodcastService {
 //        }
 //        return Collections.emptyList();
 //    }
-    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+    // Create a custom exception class
+    public class CustomException extends RuntimeException {
+        private final String errorMessage;
+
+        public CustomException(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+    }
+
+    // Modify your method to throw the custom exception
+    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) throws CustomException {
         String username = ratingResponse.getUsername();
 
-        if (username != null) {
-            try {
-                RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                        .uri("http://" + ratingServiceBaseUrl + "/rating",
-                                uriBuilder -> uriBuilder.queryParam("username", username).build())
-                        .retrieve()
-                        .bodyToMono(RatingResponse[].class)
-                        .block();
-
-                List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-                if (ratingResponsePerUserArray != null) {
-                    Arrays.stream(ratingResponsePerUserArray)
-                            .filter(RatingResponse::isLiked)
-                            .map(RatingResponse::getUniqueIdentifier)
-                            .map(this::getMusicPodcastByUniqueIdentifier)
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .map(this::mapToMusicPodcastResponse)
-                            .forEach(musicPodcastResponses::add);
-                }
-                return musicPodcastResponses;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return Collections.emptyList();
-            }
+        if (username == null) {
+            throw new CustomException("Username cannot be null");
         }
-        return Collections.emptyList();
+
+        try {
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating",
+                            uriBuilder -> uriBuilder.queryParam("username", username).build())
+                    .retrieve()
+                    .bodyToMono(RatingResponse[].class)
+                    .block();
+
+            if (ratingResponsePerUserArray == null) {
+                throw new CustomException("No rating responses received");
+            }
+
+            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+            Arrays.stream(ratingResponsePerUserArray)
+                    .filter(RatingResponse::isLiked)
+                    .map(RatingResponse::getUniqueIdentifier)
+                    .map(this::getMusicPodcastByUniqueIdentifier)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(this::mapToMusicPodcastResponse)
+                    .forEach(musicPodcastResponses::add);
+
+            return musicPodcastResponses;
+        } catch (CustomException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getErrorMessage());
+        }
+    }
+
+    public class CustomException extends RuntimeException {
+        private final String errorMessage;
+
+        public CustomException(String errorMessage) {
+            this.errorMessage = errorMessage;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
     }
 
     // Get a musicPodcast per user
