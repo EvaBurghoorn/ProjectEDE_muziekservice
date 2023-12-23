@@ -75,7 +75,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![CreatePlaylist](Images/EndpointCreatePlaylist.png)
 
 4. Edit /playlist/id/{id} -> Edit a specific playlist
-![CreatePlaylist](Images/EndpointEditPlaylistById.png)
+![EditPlaylist](Images/EndpointEditPlaylistById.png)
 
 5. Delete /playlist/id/{id} -> Verwijdert een playlist
 ![DeletePlaylist](Images/EndpointDeletePlaylistById.png)
@@ -116,7 +116,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![CreateRating](Images/EndpointCreateRating.png)
 
 4. Put /rating/id/{id} -> Update een specifieke rating
-![CreateRating](Images/EndpointUpdateRating.png)
+![EditRating](Images/EndpointUpdateRating.png)
 
 5. Delete /rating/id/{id} -> Verwijdert een rating
-![CreateRating](Images/EndpointDeleteRating.png)
+![DeleteRating](Images/EndpointDeleteRatingById.png)
