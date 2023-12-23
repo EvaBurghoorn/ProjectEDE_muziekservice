@@ -85,29 +85,60 @@ public class MusicPodcastService {
 //    }
 
     // Get all musicPodcasts with a liked rating per user
+//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+//        String username = ratingResponse.getUsername();
+//
+//        if (username != null) {
+//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                    .uri("http://" + ratingServiceBaseUrl + "/rating",
+//                            uriBuilder -> uriBuilder.queryParam("username", username).build())
+//                    .retrieve()
+//                    .bodyToMono(RatingResponse[].class)
+//                    .block();
+//
+//            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+//            if (ratingResponsePerUserArray != null) {
+//                Arrays.stream(ratingResponsePerUserArray)
+//                        .filter(RatingResponse::isLiked)
+//                        .map(RatingResponse::getUniqueIdentifier)
+//                        .map(this::getMusicPodcastByUniqueIdentifier)
+//                        .filter(Optional::isPresent)
+//                        .map(Optional::get)
+//                        .map(this::mapToMusicPodcastResponse)
+//                        .forEach(musicPodcastResponses::add);
+//            }
+//            return musicPodcastResponses;
+//        }
+//        return Collections.emptyList();
+//    }
     public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
         String username = ratingResponse.getUsername();
 
         if (username != null) {
-            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                    .uri("http://" + ratingServiceBaseUrl + "/rating",
-                            uriBuilder -> uriBuilder.queryParam("username", username).build())
-                    .retrieve()
-                    .bodyToMono(RatingResponse[].class)
-                    .block();
+            try {
+                RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                        .uri("http://" + ratingServiceBaseUrl + "/rating",
+                                uriBuilder -> uriBuilder.queryParam("username", username).build())
+                        .retrieve()
+                        .bodyToMono(RatingResponse[].class)
+                        .block();
 
-            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-            if (ratingResponsePerUserArray != null) {
-                Arrays.stream(ratingResponsePerUserArray)
-                        .filter(RatingResponse::isLiked)
-                        .map(RatingResponse::getUniqueIdentifier)
-                        .map(this::getMusicPodcastByUniqueIdentifier)
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                        .map(this::mapToMusicPodcastResponse)
-                        .forEach(musicPodcastResponses::add);
+                List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+                if (ratingResponsePerUserArray != null) {
+                    Arrays.stream(ratingResponsePerUserArray)
+                            .filter(RatingResponse::isLiked)
+                            .map(RatingResponse::getUniqueIdentifier)
+                            .map(this::getMusicPodcastByUniqueIdentifier)
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .map(this::mapToMusicPodcastResponse)
+                            .forEach(musicPodcastResponses::add);
+                }
+                return musicPodcastResponses;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Collections.emptyList();
             }
-            return musicPodcastResponses;
         }
         return Collections.emptyList();
     }
