@@ -65,7 +65,7 @@ Rating-service: https://rating-service-evaburghoorn.cloud.okteto.net
 Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 
 ### Playlist-service: 
-1. Get /playlist/all -> Geeft alle de playlist terug die er zijn 
+1. Get /playlist/all -> Geeft alle playlists terug die er zijn 
 ![GetPlaylist](Images/EndpointGetAllPlaylist.png)
 
 2. Get /playlist/id/{id} -> Geeft een playlist terug met die specifieke id
@@ -75,7 +75,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![CreatePlaylist](Images/EndpointCreatePlaylist.png)
 
 4. Edit /playlist/id/{id} -> Edit a specific playlist
-   PutPlaylist](Images/EndpointEditPlaylistById.png)
+![PutPlaylist](Images/EndpointEditPlaylistById.png)
 
 5. Delete /playlist/id/{id} -> Verwijdert een playlist
 ![DeletePlaylist](Images/EndpointDeletePlaylistById.png)
