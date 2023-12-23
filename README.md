@@ -66,7 +66,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 
 ### Playlist-service: 
 1. Get /playlist/all -> Geeft alle de playlist terug die er zijn 
-![GetPlaylist](Images/EndpointGetAllMusicPodcasts.png)
+![GetPlaylist](Images/EndpointGetAllPlaylist.png)
 
 2. Get /playlist/id/{id} -> Geeft een playlist terug met die specifieke id
 ![GetPlaylist](Images/EndpointGetPlaylistById.png)
