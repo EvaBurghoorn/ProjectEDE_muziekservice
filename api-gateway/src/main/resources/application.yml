@@ -146,3 +146,17 @@ spring:
             - Method=GET
           filters:
             - SetPath=/musicpodcast/id/{uniqueIdentifier}
+        - id: music-podcast-service-ratings-username
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcast/ratings/{username}
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/ratings/{username}
+        - id: music-podcast-service-ratings-username-uniqueidentifier
+          uri: http://${MUSICPODCAST_SERVICE_BASEURL:localhost:8080}
+          predicates:
+            - Path=/musicpodcast/ratings/{username}/{uniqueIdentifier}
+            - Method=GET
+          filters:
+            - SetPath=/musicpodcast/ratings/{username}/{uniqueIdentifier}
