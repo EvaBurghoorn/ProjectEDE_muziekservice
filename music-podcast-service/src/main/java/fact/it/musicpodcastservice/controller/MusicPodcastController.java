@@ -53,21 +53,20 @@ public class MusicPodcastController {
     }
 
 
-//    @GetMapping("/ratings/{username}")
-//    public ResponseEntity<List<MusicPodcastResponse>> getAllMusicPodcastsWithRatingLikedPerUser(@PathVariable String username) {
-//        MusicPodcastRequest musicPodcastRequest = new MusicPodcastRequest();
-//        RatingResponse ratingResponse = new RatingResponse();
-//        ratingResponse.setUsername(username);
-//
-//        List<MusicPodcastResponse> musicPodcastResponses = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(musicPodcastRequest, ratingResponse);
-//        return new ResponseEntity<>(musicPodcastResponses, HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/ratings/{username}/{uniqueIdentifier}")
-//    public ResponseEntity<MusicPodcast> getMusicPodcastPerUserByUsername(@PathVariable String username, @PathVariable String uniqueIdentifier) {
-//        MusicPodcast musicPodcast = musicPodcastService.getMusicPodcastPerUser(username, uniqueIdentifier);
-//        return new ResponseEntity<>(musicPodcast, HttpStatus.OK);
-//    }
+    @GetMapping("/ratings/{username}")
+    public ResponseEntity<List<MusicPodcastResponse>> getAllMusicPodcastsWithRatingLikedPerUser(@PathVariable String username) {
+        RatingResponse ratingResponse = new RatingResponse();
+        ratingResponse.setUsername(username);
+
+        List<MusicPodcastResponse> musicPodcastResponses = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(ratingResponse);
+        return new ResponseEntity<>(musicPodcastResponses, HttpStatus.OK);
+    }
+
+    @GetMapping("/ratings/{username}/{uniqueIdentifier}")
+    public ResponseEntity<MusicPodcast> getMusicPodcastPerUserByUsername(@PathVariable String username, @PathVariable String uniqueIdentifier) {
+        MusicPodcast musicPodcast = musicPodcastService.getMusicPodcastPerUser(username, uniqueIdentifier);
+        return new ResponseEntity<>(musicPodcast, HttpStatus.OK);
+    }
 
 
 }
