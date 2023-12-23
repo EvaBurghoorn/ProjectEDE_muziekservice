@@ -2,6 +2,7 @@ package fact.it.musicpodcastservice.controller;
 
 import fact.it.musicpodcastservice.dto.MusicPodcastRequest;
 import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
+import fact.it.musicpodcastservice.dto.RatingResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.service.MusicPodcastService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +53,21 @@ public class MusicPodcastController {
     }
 
 
+    @GetMapping("/ratings/{username}")
+    public ResponseEntity<List<MusicPodcastResponse>> getAllMusicPodcastsWithRatingLikedPerUser(@PathVariable String username) {
+        MusicPodcastRequest musicPodcastRequest = new MusicPodcastRequest();
+        RatingResponse ratingResponse = new RatingResponse();
+        ratingResponse.setUsername(username);
 
+        List<MusicPodcastResponse> musicPodcastResponses = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(musicPodcastRequest, ratingResponse);
+        return new ResponseEntity<>(musicPodcastResponses, HttpStatus.OK);
+    }
 
+    @GetMapping("/ratings/{username}/{uniqueIdentifier}")
+    public ResponseEntity<MusicPodcast> getMusicPodcastPerUserByUsername(@PathVariable String username, @PathVariable String uniqueIdentifier) {
+        MusicPodcast musicPodcast = musicPodcastService.getMusicPodcastPerUser(username, uniqueIdentifier);
+        return new ResponseEntity<>(musicPodcast, HttpStatus.OK);
+    }
 
 
 }

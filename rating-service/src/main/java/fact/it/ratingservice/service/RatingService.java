@@ -99,17 +99,6 @@ public class RatingService {
             }
         }
     }
-//    public void createRating(RatingRequest ratingRequest){
-//        Rating rating = Rating.builder()
-//                .isLiked(ratingRequest.isLiked())
-//                .isDisliked(ratingRequest.isDisliked())
-//                .uniqueIdentifier(ratingRequest.getUniqueIdentifier())
-//                .username(ratingRequest.getUsername())
-//                .build();
-//
-//        ratingRepository.save(rating);
-//    }
-
 
 //    Edit a rating
     public void editRatingMusicPodcast(String ratingId, RatingRequest ratingRequest){
