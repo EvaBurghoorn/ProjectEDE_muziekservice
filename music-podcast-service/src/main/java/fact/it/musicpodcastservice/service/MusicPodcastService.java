@@ -87,66 +87,33 @@ public class MusicPodcastService {
 //    }
 
 //     Get all musicPodcasts with liked rating per user
-//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
-//
-//        String username = ratingResponse.getUsername();
-//
-//        if (username != null) {
-//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-//                    .uri("http://" + ratingServiceBaseUrl + "/rating",
-//                            uriBuilder -> uriBuilder.queryParam("username", username).build())
-//                    .retrieve()
-//                    .bodyToMono(RatingResponse[].class)
-//                    .block();
-//
-//            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-//            if (ratingResponsePerUserArray != null) {
-//                Arrays.stream(ratingResponsePerUserArray)
-//                        .filter(RatingResponse::isLiked)
-//                        .map(RatingResponse::getUniqueIdentifier)
-//                        .map(this::getMusicPodcastByUniqueIdentifier)
-//                        .filter(Optional::isPresent)
-//                        .map(Optional::get)
-//                        .map(this::mapToMusicPodcastResponse)
-//                        .forEach(musicPodcastResponses::add);
-//            }
-//            return musicPodcastResponses;
-//        }
-//        return Collections.emptyList();
-//    }
-public RatingResponse[] getRatingsByUsername(String username) {
-    RatingResponse[] ratingResponsePerUserArray = webClient.get()
-            .uri("http://" + ratingServiceBaseUrl + "/rating",
-                    uriBuilder -> uriBuilder.queryParam("username", username).build())
-            .retrieve()
-            .bodyToMono(RatingResponse[].class)
-            .block();
-    return ratingResponsePerUserArray;
-}
+    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 
-    public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
-        if (username == null) {
-            throw new IllegalArgumentException("Username cannot be null");
+        String username = ratingResponse.getUsername();
 
-        } else {
-            // Ratings voor testdoeleinden
-            RatingResponse[] ratings = {
-                    new RatingResponse("1", true, false, "uniqueId1", "d"),
-                    new RatingResponse("2", true, false, "uniqueId2", "username"),
-                    new RatingResponse("3", false, true, "uniqueId3", "de") // Een extra rating voor testdoeleinden
-            };
+        if (username != null) {
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating",
+                            uriBuilder -> uriBuilder.queryParam("username", username).build())
+                    .retrieve()
+                    .bodyToMono(RatingResponse[].class)
+                    .block();
 
-            // Filter de ratings op basis van IsLiked
-            List<String> likedPodcastIds = Arrays.stream(ratings)
-                    .filter(RatingResponse::isLiked)
-                    .map(RatingResponse::getUniqueIdentifier)
-                    .collect(Collectors.toList());
-
-            // Haal de bijbehorende musicpodcasts op uit de database
-            return musicPodcastRepository.findAllByIdIn(likedPodcastIds);
+            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
+            if (ratingResponsePerUserArray != null) {
+                Arrays.stream(ratingResponsePerUserArray)
+                        .filter(RatingResponse::isLiked)
+                        .map(RatingResponse::getUniqueIdentifier)
+                        .map(this::getMusicPodcastByUniqueIdentifier)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .map(this::mapToMusicPodcastResponse)
+                        .forEach(musicPodcastResponses::add);
+            }
+            return musicPodcastResponses;
         }
+        return Collections.emptyList();
     }
-
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
