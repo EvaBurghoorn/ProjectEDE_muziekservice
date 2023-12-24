@@ -125,12 +125,17 @@ public RatingResponse[] getRatingsByUsername(String username) {
 }
 
     public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
-        RatingResponse[] ratings = getRatingsByUsername(username);
+//        RatingResponse[] ratings = getRatingsByUsername(username);
+        RatingResponse[] ratings = {
+                new RatingResponse("1", true, false, "uniqueId1", username),
+                new RatingResponse("2", true, false, "uniqueId2", username),
+                new RatingResponse("3", false, true, "uniqueId3", username) // Een extra rating voor testdoeleinden
+        };
 
         // Filter de ratings op basis van IsLiked
         List<String> likedPodcastIds = Arrays.stream(ratings)
                 .filter(rating -> rating.isLiked())
-                .map(RatingResponse::getId)
+                .map(RatingResponse::getUniqueIdentifier)
                 .collect(Collectors.toList());
 
 
