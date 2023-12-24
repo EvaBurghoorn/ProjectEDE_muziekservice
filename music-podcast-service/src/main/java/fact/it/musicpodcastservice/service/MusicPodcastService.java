@@ -114,55 +114,55 @@ public class MusicPodcastService {
 //        }
 //        return Collections.emptyList();
 //    }
-public RatingResponse[] getRatingsByUsername(String username) {
-    RatingResponse[] ratingResponsePerUserArray = webClient.get()
-            .uri("http://" + ratingServiceBaseUrl + "/rating",
-                    uriBuilder -> uriBuilder.queryParam("username", username).build())
-            .retrieve()
-            .bodyToMono(RatingResponse[].class)
-            .block();
-    return ratingResponsePerUserArray;
-}
+//public RatingResponse[] getRatingsByUsername(String username) {
+//    RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//            .uri("http://" + ratingServiceBaseUrl + "/rating",
+//                    uriBuilder -> uriBuilder.queryParam("username", username).build())
+//            .retrieve()
+//            .bodyToMono(RatingResponse[].class)
+//            .block();
+//    return ratingResponsePerUserArray;
+//}
+//
+//    public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
+//        RatingResponse[] ratings = getRatingsByUsername(username);
+//
+//        // Filter de ratings op basis van IsLiked
+//
+//        // Filter de ratings op basis van IsLiked
+//        List<String> likedPodcastIds = Arrays.stream(ratings)
+//                .filter(rating -> rating.isLiked())
+//                .map(RatingResponse::getId)
+//                .collect(Collectors.toList());
+//
+//
+//        // Haal de bijbehorende musicpodcasts op uit de database
+//        return musicPodcastRepository.findAllById(likedPodcastIds);
+//    }
 
-    public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
-        RatingResponse[] ratings = getRatingsByUsername(username);
-
-        // Filter de ratings op basis van IsLiked
-
-        // Filter de ratings op basis van IsLiked
-        List<String> likedPodcastIds = Arrays.stream(ratings)
-                .filter(rating -> rating.isLiked())
-                .map(RatingResponse::getId)
-                .collect(Collectors.toList());
-
-
-        // Haal de bijbehorende musicpodcasts op uit de database
-        return musicPodcastRepository.findAllById(likedPodcastIds);
-    }
-
-
-    // Get a musicPodcast per user
-    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
-
-        RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                .uri("http://" + ratingServiceBaseUrl + "/rating",
-                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
-                .retrieve()
-                .bodyToMono(RatingResponse[].class)
-                .block();
-
-        if (username != null && uniqueIdentifier != null) {
-            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
-                    .findFirst()
-                    .orElse(null);
-
-            if (userMP != null) {
-                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
-                return musicPodcast;
-            }
-        }
-        return null;
-    }
+//
+//    // Get a musicPodcast per user
+//    public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
+//
+//        RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                .uri("http://" + ratingServiceBaseUrl + "/rating",
+//                        uriBuilder -> uriBuilder.queryParam("username", username, "uniqueIdentifierCode", uniqueIdentifier).build())
+//                .retrieve()
+//                .bodyToMono(RatingResponse[].class)
+//                .block();
+//
+//        if (username != null && uniqueIdentifier != null) {
+//            RatingResponse userMP = Arrays.stream(ratingResponsePerUserArray)
+//                    .findFirst()
+//                    .orElse(null);
+//
+//            if (userMP != null) {
+//                MusicPodcast musicPodcast = musicPodcastRepository.findByUniqueIdentifier(userMP.getUniqueIdentifier());
+//                return musicPodcast;
+//            }
+//        }
+//        return null;
+//    }
 
     //    Get all the songs and podcasts
     public List<MusicPodcastResponse> getAllMusicPodcast(){
