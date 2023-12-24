@@ -125,24 +125,27 @@ public RatingResponse[] getRatingsByUsername(String username) {
 }
 
     public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
-//        RatingResponse[] ratings = getRatingsByUsername(username);
-        RatingResponse[] ratings = {
-                new RatingResponse("1", true, false, "uniqueId1", "d"),
-                new RatingResponse("2", true, false, "uniqueId2", "username"),
-                new RatingResponse("3", false, true, "uniqueId3", "de") // Een extra rating voor testdoeleinden
-        };
-        
-        // Filter de ratings op basis van IsLiked
-        List<String> likedPodcastIds = Arrays.stream(ratings)
-                .filter(rating -> rating.isLiked())
-                .map(RatingResponse::getUniqueIdentifier)
-                .collect(Collectors.toList());
+        if (username == null) {
+            throw new IllegalArgumentException("Username cannot be null");
 
+        } else {
+            // Ratings voor testdoeleinden
+            RatingResponse[] ratings = {
+                    new RatingResponse("1", true, false, "uniqueId1", "d"),
+                    new RatingResponse("2", true, false, "uniqueId2", "username"),
+                    new RatingResponse("3", false, true, "uniqueId3", "de") // Een extra rating voor testdoeleinden
+            };
 
-        // Haal de bijbehorende musicpodcasts op uit de database
-        return musicPodcastRepository.findAllByIdIn(likedPodcastIds);
+            // Filter de ratings op basis van IsLiked
+            List<String> likedPodcastIds = Arrays.stream(ratings)
+                    .filter(RatingResponse::isLiked)
+                    .map(RatingResponse::getUniqueIdentifier)
+                    .collect(Collectors.toList());
+
+            // Haal de bijbehorende musicpodcasts op uit de database
+            return musicPodcastRepository.findAllByIdIn(likedPodcastIds);
+        }
     }
-
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {

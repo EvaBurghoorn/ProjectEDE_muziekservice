@@ -87,7 +87,8 @@ public class RatingService {
 
             if (musicPodcastResponse != null && userResponse != null) {
                 rating.setUniqueIdentifier(uniqueIdentifierCode);
-                rating.setUsername(userResponse.getUsername());                if (ratingRequest.isLiked()) {
+                rating.setUsername(userResponse.getUsername());
+                if (ratingRequest.isLiked()) {
                     rating.setLiked(true);
                     rating.setDisliked(false);
                 } else if (ratingRequest.isDisliked()) {
