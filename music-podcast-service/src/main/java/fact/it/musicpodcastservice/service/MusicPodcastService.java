@@ -86,8 +86,9 @@ public class MusicPodcastService {
 //        return musicPodcastResponses;
 //    }
 
-    // Get all musicPodcasts with a liked rating per user
+//     Get all musicPodcasts with liked rating per user
 //    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+//
 //        String username = ratingResponse.getUsername();
 //
 //        if (username != null) {
@@ -113,54 +114,32 @@ public class MusicPodcastService {
 //        }
 //        return Collections.emptyList();
 //    }
-// Create a custom exception class
-    public class CustomException extends RuntimeException {
-        private final String errorMessage;
+public RatingResponse[] getRatingsByUsername(String username) {
+    RatingResponse[] ratingResponsePerUserArray = webClient.get()
+            .uri("http://" + ratingServiceBaseUrl + "/rating",
+                    uriBuilder -> uriBuilder.queryParam("username", username).build())
+            .retrieve()
+            .bodyToMono(RatingResponse[].class)
+            .block();
+    return ratingResponsePerUserArray;
+}
 
-        public CustomException(String errorMessage) {
-            this.errorMessage = errorMessage;
-        }
+    public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
+        RatingResponse[] ratings = getRatingsByUsername(username);
 
-        public String getErrorMessage() {
-            return errorMessage;
-        }
+        // Filter de ratings op basis van IsLiked
+
+        // Filter de ratings op basis van IsLiked
+        List<String> likedPodcastIds = Arrays.stream(ratings)
+                .filter(rating -> rating.isLiked())
+                .map(RatingResponse::getId)
+                .collect(Collectors.toList());
+
+
+        // Haal de bijbehorende musicpodcasts op uit de database
+        return musicPodcastRepository.findAllById(likedPodcastIds);
     }
 
-    // Modify your method to throw the custom exception
-    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) throws CustomException {
-        String username = ratingResponse.getUsername();
-
-        if (username == null) {
-            throw new CustomException("Username cannot be null");
-        }
-
-        try {
-            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                    .uri("http://" + ratingServiceBaseUrl + "/rating",
-                            uriBuilder -> uriBuilder.queryParam("username", username).build())
-                    .retrieve()
-                    .bodyToMono(RatingResponse[].class)
-                    .block();
-
-            if (ratingResponsePerUserArray == null) {
-                throw new CustomException("No rating responses received");
-            }
-
-            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-            Arrays.stream(ratingResponsePerUserArray)
-                    .filter(RatingResponse::isLiked)
-                    .map(RatingResponse::getUniqueIdentifier)
-                    .map(this::getMusicPodcastByUniqueIdentifier)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .map(this::mapToMusicPodcastResponse)
-                    .forEach(musicPodcastResponses::add);
-
-            return musicPodcastResponses;
-        } catch (CustomException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getErrorMessage());
-        }
-    }
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
