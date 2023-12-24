@@ -58,7 +58,7 @@ public class MusicPodcastController {
         RatingResponse ratingResponse = new RatingResponse();
         ratingResponse.setUsername(username);
 
-        List<MusicPodcastResponse> musicPodcastResponses = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(ratingResponse);
+        List<MusicPodcastResponse> musicPodcastResponses = musicPodcastService.getLikedMusicPodcastsByUsername(ratingResponse);
         return new ResponseEntity<>(musicPodcastResponses, HttpStatus.OK);
     }
 
