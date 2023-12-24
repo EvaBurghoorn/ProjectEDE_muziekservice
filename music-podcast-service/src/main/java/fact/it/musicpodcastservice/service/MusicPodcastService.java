@@ -127,9 +127,9 @@ public RatingResponse[] getRatingsByUsername(String username) {
     public List<MusicPodcast> getLikedMusicPodcastsByUsername(String username) {
 //        RatingResponse[] ratings = getRatingsByUsername(username);
         RatingResponse[] ratings = {
-                new RatingResponse("1", true, false, "uniqueId1", username),
-                new RatingResponse("2", true, false, "uniqueId2", username),
-                new RatingResponse("3", false, true, "uniqueId3", username) // Een extra rating voor testdoeleinden
+                new RatingResponse("1", true, false, "uniqueId1", "d"),
+                new RatingResponse("2", true, false, "uniqueId2", "username"),
+                new RatingResponse("3", false, true, "uniqueId3", "de") // Een extra rating voor testdoeleinden
         };
         
         // Filter de ratings op basis van IsLiked
@@ -140,7 +140,7 @@ public RatingResponse[] getRatingsByUsername(String username) {
 
 
         // Haal de bijbehorende musicpodcasts op uit de database
-        return musicPodcastRepository.findAllById(likedPodcastIds);
+        return musicPodcastRepository.findAllByIdIn(likedPodcastIds);
     }
 
 

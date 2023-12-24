@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface MusicPodcastRepository extends MongoRepository<MusicPodcast, String> {
     MusicPodcast findByUniqueIdentifier(String uniqueIdentifier);
+    List<MusicPodcast> findAllByIdIn(List<String> uniqueIdentifiers);
 
 }
