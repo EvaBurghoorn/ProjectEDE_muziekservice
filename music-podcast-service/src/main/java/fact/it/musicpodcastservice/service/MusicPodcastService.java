@@ -92,6 +92,7 @@ public class MusicPodcastService {
         String username = ratingResponse.getUsername();
 
         if (username != null) {
+
             RatingResponse[] ratingResponsePerUserArray = webClient.get()
                     .uri("http://" + ratingServiceBaseUrl + "/rating",
                             uriBuilder -> uriBuilder.queryParam("username", username).build())
