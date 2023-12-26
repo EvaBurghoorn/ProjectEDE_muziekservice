@@ -143,6 +143,11 @@ public class RatingService {
         return ratings.stream().map(this::mapToRatingResponse).toList();
     }
 
+    public List<RatingResponse> getAllRatingsPerUser(String username){
+        List<Rating> ratings = ratingRepository.findAllByUsername(username);
+        return ratings.stream().map(this::mapToRatingResponse).toList();
+    }
+
     private RatingResponse mapToRatingResponse(Rating rating)
     {
         return RatingResponse.builder()
