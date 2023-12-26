@@ -94,7 +94,7 @@ public class MusicPodcastService {
         if (username != null) {
 
             RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                    .uri("http://" + ratingServiceBaseUrl + "/rating/" + username
+                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username
                             )
                     .retrieve()
                     .bodyToMono(RatingResponse[].class)
