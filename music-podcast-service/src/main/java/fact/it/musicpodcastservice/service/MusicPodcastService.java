@@ -7,6 +7,8 @@ import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -86,114 +88,42 @@ public class MusicPodcastService {
 //        return musicPodcastResponses;
 //    }
 
-////     Get all musicPodcasts with liked rating per user
-//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
-//
-//        String username = ratingResponse.getUsername();
-//
-//        if (username != null) {
-//
-//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-//                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username
-//                            )
-//                    .retrieve()
-//                    .bodyToMono(RatingResponse[].class)
-//                    .block();
-//
-//            List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
-//                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
-//                    .map(RatingResponse::getUniqueIdentifier)
-//                    .map(this::getMusicPodcastByUniqueIdentifier)
-//                    .filter(Optional::isPresent)
-//                    .map(Optional::get)
-//                    .map(this::mapToMusicPodcastResponse)
-//                    .collect(Collectors.toList());
-//
-//            return musicPodcastResponses;
-//        }
-//        return Collections.emptyList();
-//    }
-public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+//     Get all musicPodcasts with liked rating per user
+private static final Logger logger = LoggerFactory.getLogger(MusicPodcast.class);
 
-    System.err.println("Starting method getAllMusicPodcastsWithRatingLikedPerUser");
+    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 
-    String username = null;
+        String username = ratingResponse.getUsername();
 
-    try {
-        username = ratingResponse.getUsername();
-        System.err.println("Username retrieved: " + username);
-    } catch (Exception e) {
-        System.err.println("Exception during getting username: " + e.getMessage());
-    }
+        if (username != null) {
+            logger.info("Fetching ratings for user {}", username);
 
-    if (username != null) {
-
-        RatingResponse[] ratingResponsePerUserArray = null;
-
-        try {
-            ratingResponsePerUserArray = webClient.get()
-                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username
-                    )
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username)
                     .retrieve()
                     .bodyToMono(RatingResponse[].class)
-                    .doOnError(e -> System.err.println("An error occurred: " + e.getMessage()))
                     .block();
-            System.err.println("Retrieved rating responses: " + Arrays.toString(ratingResponsePerUserArray));
-        } catch (Exception e) {
-            System.err.println("Exception during getting rating responses: " + e.getMessage());
-        }
 
-        if (ratingResponsePerUserArray != null) {
-
-            System.err.println("Processing rating responses...");
+            logger.info("Received {} ratings for user {}", ratingResponsePerUserArray.length, username);
 
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
-                    .filter(rating -> {
-                        try {
-                            boolean result = rating != null && rating.isLiked(); // Filter for liked ratings
-                            System.err.println("Filter result: " + result);
-                            return result;
-                        } catch (Exception e) {
-                            System.err.println("Exception during filter: " + e.getMessage());
-                            return false;
-                        }
-                    })
+                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
                     .map(RatingResponse::getUniqueIdentifier)
-                    .map(uniqueIdentifier -> {
-                        try {
-                            Optional<MusicPodcast> result = getMusicPodcastByUniqueIdentifier(uniqueIdentifier);
-                            System.err.println("Mapping result: " + result);
-                            return result;
-                        } catch (Exception e) {
-                            System.err.println("Exception during map: " + e.getMessage());
-                            return Optional.empty();
-                        }
-                    })
+                    .map(this::getMusicPodcastByUniqueIdentifier)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .map(musicPodcast -> {
-                        try {
-                            MusicPodcastResponse result = mapToMusicPodcastResponse((MusicPodcast) musicPodcast);
-                            System.err.println("Mapping result: " + result);
-                            return result;
-                        } catch (Exception e) {
-                            System.err.println("Exception during map: " + e.getMessage());
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
+                    .map(this::mapToMusicPodcastResponse)
                     .collect(Collectors.toList());
 
-            System.err.println("Finished processing rating responses");
+            logger.info("Found {} liked music podcasts for user {}", musicPodcastResponses.size(), username);
 
             return musicPodcastResponses;
+        } else {
+            logger.warn("No username provided");
+            return Collections.emptyList();
         }
     }
 
-    System.err.println("No rating responses found or username was null");
-
-    return Collections.emptyList();
-}
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
