@@ -2,6 +2,7 @@ package fact.it.musicpodcastservice;
 
 import fact.it.musicpodcastservice.dto.MusicPodcastRequest;
 import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
+import fact.it.musicpodcastservice.dto.RatingResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import fact.it.musicpodcastservice.service.MusicPodcastService;
@@ -195,6 +196,7 @@ class MusicPodcastServiceApplicationTests {
 		// Assert
 		assertFalse(responseOptional.isPresent());
 	}
+
 
 
 
