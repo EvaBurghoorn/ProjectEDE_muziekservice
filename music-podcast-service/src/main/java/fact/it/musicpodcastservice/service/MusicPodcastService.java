@@ -89,22 +89,26 @@ public class MusicPodcastService {
 //    }
 
 //     Get all musicPodcasts with liked rating per user
-private static final Logger logger = LoggerFactory.getLogger(MusicPodcast.class);
 
     public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 
         String username = ratingResponse.getUsername();
 
         if (username != null) {
-            logger.info("Fetching ratings for user {}", username);
 
-            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username)
-                    .retrieve()
-                    .bodyToMono(RatingResponse[].class)
-                    .block();
+//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username)
+//                    .retrieve()
+//                    .bodyToMono(RatingResponse[].class)
+//                    .block();
 
-            logger.info("Received {} ratings for user {}", ratingResponsePerUserArray.length, username);
+            RatingResponse[] hardcodedRatings = {
+                    new RatingResponse("658c04b424c01e2dbf77d57e", true, false, "Title1Artist1", "Lillie123"),
+                    new RatingResponse("658c04b424c01e2dbf77d57f", false, true, "TitlePodcastArtist2", "Lillie123")
+            };
+
+            RatingResponse[] ratingResponsePerUserArray = hardcodedRatings;
+
 
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
                     .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
@@ -115,13 +119,11 @@ private static final Logger logger = LoggerFactory.getLogger(MusicPodcast.class)
                     .map(this::mapToMusicPodcastResponse)
                     .collect(Collectors.toList());
 
-            logger.info("Found {} liked music podcasts for user {}", musicPodcastResponses.size(), username);
 
             return musicPodcastResponses;
-        } else {
-            logger.warn("No username provided");
-            return Collections.emptyList();
         }
+            return Collections.emptyList();
+
     }
 
 
