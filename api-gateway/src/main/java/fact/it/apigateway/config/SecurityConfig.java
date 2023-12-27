@@ -17,11 +17,9 @@ public class SecurityConfig {
         serverHttpSecurity
                 .authorizeExchange(exchange ->
                         exchange.pathMatchers(HttpMethod.POST,"/user")
-                              .permitAll()
-                              .pathMatchers(HttpMethod.GET, "/musicpodcast/all")
-                              .permitAll()
-                              .anyExchange()
-                              .authenticated()
+                                .permitAll()
+                                .anyExchange()
+                                .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
