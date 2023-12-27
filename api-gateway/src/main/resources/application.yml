@@ -115,6 +115,13 @@ spring:
             - Method=PUT
           filters:
             - SetPath=/rating/id/{id}
+        - id: rating-service-get-all-ratings-per-user
+          uri: http://${RATING_SERVICE_BASEURL:localhost:8082}
+          predicates:
+            - Path=/ratings/username/{username}
+            - Method=GET
+          filters:
+            - SetPath=/ratings/username/{username}
 
 
 
