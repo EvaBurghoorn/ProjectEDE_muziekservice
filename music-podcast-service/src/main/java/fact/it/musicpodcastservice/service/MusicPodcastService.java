@@ -115,10 +115,13 @@ public class MusicPodcastService {
 //    }
 public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 
+    System.err.println("Starting method getAllMusicPodcastsWithRatingLikedPerUser");
+
     String username = null;
 
     try {
         username = ratingResponse.getUsername();
+        System.err.println("Username retrieved: " + username);
     } catch (Exception e) {
         System.err.println("Exception during getting username: " + e.getMessage());
     }
@@ -133,17 +136,23 @@ public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(Rati
                     )
                     .retrieve()
                     .bodyToMono(RatingResponse[].class)
+                    .doOnError(e -> System.err.println("An error occurred: " + e.getMessage()))
                     .block();
+            System.err.println("Retrieved rating responses: " + Arrays.toString(ratingResponsePerUserArray));
         } catch (Exception e) {
             System.err.println("Exception during getting rating responses: " + e.getMessage());
         }
 
         if (ratingResponsePerUserArray != null) {
 
+            System.err.println("Processing rating responses...");
+
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
                     .filter(rating -> {
                         try {
-                            return rating != null && rating.isLiked(); // Filter for liked ratings
+                            boolean result = rating != null && rating.isLiked(); // Filter for liked ratings
+                            System.err.println("Filter result: " + result);
+                            return result;
                         } catch (Exception e) {
                             System.err.println("Exception during filter: " + e.getMessage());
                             return false;
@@ -152,7 +161,9 @@ public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(Rati
                     .map(RatingResponse::getUniqueIdentifier)
                     .map(uniqueIdentifier -> {
                         try {
-                            return getMusicPodcastByUniqueIdentifier(uniqueIdentifier);
+                            Optional<MusicPodcast> result = getMusicPodcastByUniqueIdentifier(uniqueIdentifier);
+                            System.err.println("Mapping result: " + result);
+                            return result;
                         } catch (Exception e) {
                             System.err.println("Exception during map: " + e.getMessage());
                             return Optional.empty();
@@ -162,7 +173,9 @@ public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(Rati
                     .map(Optional::get)
                     .map(musicPodcast -> {
                         try {
-                            return mapToMusicPodcastResponse((MusicPodcast) musicPodcast);
+                            MusicPodcastResponse result = mapToMusicPodcastResponse((MusicPodcast) musicPodcast);
+                            System.err.println("Mapping result: " + result);
+                            return result;
                         } catch (Exception e) {
                             System.err.println("Exception during map: " + e.getMessage());
                             return null;
@@ -171,9 +184,14 @@ public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(Rati
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
+            System.err.println("Finished processing rating responses");
+
             return musicPodcastResponses;
         }
     }
+
+    System.err.println("No rating responses found or username was null");
+
     return Collections.emptyList();
 }
 
