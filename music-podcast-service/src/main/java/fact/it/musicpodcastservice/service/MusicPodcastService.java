@@ -86,33 +86,96 @@ public class MusicPodcastService {
 //        return musicPodcastResponses;
 //    }
 
-//     Get all musicPodcasts with liked rating per user
-    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+////     Get all musicPodcasts with liked rating per user
+//    public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
+//
+//        String username = ratingResponse.getUsername();
+//
+//        if (username != null) {
+//
+//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+//                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username
+//                            )
+//                    .retrieve()
+//                    .bodyToMono(RatingResponse[].class)
+//                    .block();
+//
+//            List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
+//                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
+//                    .map(RatingResponse::getUniqueIdentifier)
+//                    .map(this::getMusicPodcastByUniqueIdentifier)
+//                    .filter(Optional::isPresent)
+//                    .map(Optional::get)
+//                    .map(this::mapToMusicPodcastResponse)
+//                    .collect(Collectors.toList());
+//
+//            return musicPodcastResponses;
+//        }
+//        return Collections.emptyList();
+//    }
+public List<MusicPodcastResponse> getAllMusicPodcastsWithRatingLikedPerUser(RatingResponse ratingResponse) {
 
-        String username = ratingResponse.getUsername();
+    String username = null;
 
-        if (username != null) {
+    try {
+        username = ratingResponse.getUsername();
+    } catch (Exception e) {
+        System.err.println("Exception during getting username: " + e.getMessage());
+    }
 
-            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+    if (username != null) {
+
+        RatingResponse[] ratingResponsePerUserArray = null;
+
+        try {
+            ratingResponsePerUserArray = webClient.get()
                     .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username
-                            )
+                    )
                     .retrieve()
                     .bodyToMono(RatingResponse[].class)
                     .block();
+        } catch (Exception e) {
+            System.err.println("Exception during getting rating responses: " + e.getMessage());
+        }
+
+        if (ratingResponsePerUserArray != null) {
 
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
-                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
+                    .filter(rating -> {
+                        try {
+                            return rating != null && rating.isLiked(); // Filter for liked ratings
+                        } catch (Exception e) {
+                            System.err.println("Exception during filter: " + e.getMessage());
+                            return false;
+                        }
+                    })
                     .map(RatingResponse::getUniqueIdentifier)
-                    .map(this::getMusicPodcastByUniqueIdentifier)
+                    .map(uniqueIdentifier -> {
+                        try {
+                            return getMusicPodcastByUniqueIdentifier(uniqueIdentifier);
+                        } catch (Exception e) {
+                            System.err.println("Exception during map: " + e.getMessage());
+                            return Optional.empty();
+                        }
+                    })
                     .filter(Optional::isPresent)
                     .map(Optional::get)
-                    .map(this::mapToMusicPodcastResponse)
+                    .map(musicPodcast -> {
+                        try {
+                            return mapToMusicPodcastResponse((MusicPodcast) musicPodcast);
+                        } catch (Exception e) {
+                            System.err.println("Exception during map: " + e.getMessage());
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toList());
 
             return musicPodcastResponses;
         }
-        return Collections.emptyList();
     }
+    return Collections.emptyList();
+}
 
     // Get a musicPodcast per user
     public MusicPodcast getMusicPodcastPerUser(String username, String uniqueIdentifier) {
