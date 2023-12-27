@@ -100,17 +100,15 @@ public class MusicPodcastService {
                     .bodyToMono(RatingResponse[].class)
                     .block();
 
-            List<MusicPodcastResponse> musicPodcastResponses = new ArrayList<>();
-            if (ratingResponsePerUserArray != null) {
-                Arrays.stream(ratingResponsePerUserArray)
-                        .filter(RatingResponse::isLiked)
-                        .map(RatingResponse::getUniqueIdentifier)
-                        .map(this::getMusicPodcastByUniqueIdentifier)
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                        .map(this::mapToMusicPodcastResponse)
-                        .forEach(musicPodcastResponses::add);
-            }
+            List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
+                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
+                    .map(RatingResponse::getUniqueIdentifier)
+                    .map(this::getMusicPodcastByUniqueIdentifier)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .map(this::mapToMusicPodcastResponse)
+                    .collect(Collectors.toList());
+
             return musicPodcastResponses;
         }
         return Collections.emptyList();
