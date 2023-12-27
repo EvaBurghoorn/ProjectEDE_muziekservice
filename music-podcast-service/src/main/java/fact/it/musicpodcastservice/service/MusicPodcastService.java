@@ -111,7 +111,7 @@ public class MusicPodcastService {
 
 
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
-                    .filter(rating -> rating != null && rating.isLiked()) // Filter for liked ratings
+                    .filter(rating -> rating.isLiked()) // Filter for liked ratings
                     .map(RatingResponse::getUniqueIdentifier)
                     .map(this::getMusicPodcastByUniqueIdentifier)
                     .filter(Optional::isPresent)
@@ -119,6 +119,7 @@ public class MusicPodcastService {
                     .map(this::mapToMusicPodcastResponse)
                     .collect(Collectors.toList());
 
+            musicPodcastResponses.forEach(System.out::println); // Print each MusicPodcastResponse to the console
 
             return musicPodcastResponses;
         }
