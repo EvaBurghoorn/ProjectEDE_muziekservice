@@ -96,18 +96,18 @@ public class MusicPodcastService {
 
         if (username != null) {
 
-//            RatingResponse[] ratingResponsePerUserArray = webClient.get()
-//                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username)
-//                    .retrieve()
-//                    .bodyToMono(RatingResponse[].class)
-//                    .block();
+            RatingResponse[] ratingResponsePerUserArray = webClient.get()
+                    .uri("http://" + ratingServiceBaseUrl + "/rating/username/" + username)
+                    .retrieve()
+                    .bodyToMono(RatingResponse[].class)
+                    .block();
 
-            RatingResponse[] hardcodedRatings = {
-                    new RatingResponse("658c04b424c01e2dbf77d57e", true, false, "Title1Artist1", "Lillie123"),
-                    new RatingResponse("658c04b424c01e2dbf77d57f", false, true, "TitlePodcastArtist2", "Lillie123")
-            };
-
-            RatingResponse[] ratingResponsePerUserArray = hardcodedRatings;
+//            RatingResponse[] hardcodedRatings = {
+//                    new RatingResponse("658c04b424c01e2dbf77d57e", true, false, "Title1Artist1", "Lillie123"),
+//                    new RatingResponse("658c04b424c01e2dbf77d57f", false, true, "TitlePodcastArtist2", "Lillie123")
+//            };
+//
+//            RatingResponse[] ratingResponsePerUserArray = hardcodedRatings;
 
 
             List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
@@ -118,8 +118,6 @@ public class MusicPodcastService {
                     .map(Optional::get)
                     .map(this::mapToMusicPodcastResponse)
                     .collect(Collectors.toList());
-
-            musicPodcastResponses.forEach(System.out::println); // Print each MusicPodcastResponse to the console
 
             return musicPodcastResponses;
         }
