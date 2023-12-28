@@ -35,7 +35,6 @@ public class RatingController {
     public List<RatingResponse> getAllRatingPerUsername(@PathVariable("username") String username){
         return ratingService.getAllRatingsPerUser(username);
     }
-
     // Create a rating for a music podcast per user
     @PostMapping
     @ResponseStatus(HttpStatus.OK)

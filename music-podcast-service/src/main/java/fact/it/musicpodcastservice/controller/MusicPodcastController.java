@@ -63,11 +63,5 @@ public class MusicPodcastController {
     }
 
 
-    @GetMapping("/rating/{username}/{uniqueIdentifier}")
-    public ResponseEntity<MusicPodcast> getMusicPodcastPerUserByUsername(@PathVariable("username") String username, @PathVariable("uniqueIdentifier") String uniqueIdentifier) {
-        MusicPodcast musicPodcast = musicPodcastService.getMusicPodcastPerUser(username, uniqueIdentifier);
-        return new ResponseEntity<>(musicPodcast, HttpStatus.OK);
-    }
-
 
 }
