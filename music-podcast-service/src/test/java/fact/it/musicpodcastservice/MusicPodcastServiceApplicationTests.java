@@ -49,6 +49,12 @@ class MusicPodcastServiceApplicationTests {
 	@Mock
 	private WebClient.ResponseSpec responseSpec;
 
+
+	@BeforeEach
+	void setUp() {
+		ReflectionTestUtils.setField(musicPodcastService, "ratingServiceBaseUrl", "http://localhost:8082");
+	}
+
 	@Test
 	public void testGetAllMusicPodcast(){
 		// Arrange
@@ -224,11 +230,11 @@ class MusicPodcastServiceApplicationTests {
 		// Arrange
 		RatingResponse[] mockedRatingResponseArray = {
 				new RatingResponse("id1", true, false, "uniqueId1", "user1"),
-				new RatingResponse("id2", false, false, "uniqueId2", "user1"),
+				new RatingResponse("Lillie123", true, false, "uniqueId2", "Lillie123"),
 		};
 
 		when(webClient.get()).thenReturn(requestHeadersUriSpec);
-		when(requestHeadersUriSpec.uri(anyString(), anyString())).thenReturn(requestHeadersSpec);
+		when(requestHeadersUriSpec.uri("http://localhost:8082/rating/username/Lillie123")).thenReturn(requestHeadersSpec);
 		when(requestHeadersSpec.exchange()).thenReturn(Mono.just(responseSpec));
 		when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
 
@@ -238,12 +244,12 @@ class MusicPodcastServiceApplicationTests {
 		// Act
 
 		RatingResponse ratingResponse = new RatingResponse();
-		ratingResponse.setUsername("user1");
+		ratingResponse.setUsername("Lillie123");
 
-		List<MusicPodcastResponse> result = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(ratingResponse);
+		List<MusicPodcastResponse> result = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(mockedRatingResponseArray[1]);
 
 		// Assert
-		assertEquals(2, result.size());
+		assertEquals(1, result.size());
 	}
 
 }

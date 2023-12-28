@@ -19,13 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-//    Get all users
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<UserResponse> getAllUsers(){
-        return  userService.getAllUsers();
-    }
-
 // Get a user with username
     @GetMapping("/username/{username}")
     public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
