@@ -51,43 +51,33 @@ public class RatingService {
     }
 
 //    Create a new rating for a music podcast
-    public void rateMusicPodcast(RatingRequest ratingRequest){
+    public void rateMusicPodcast(RatingRequest ratingRequest) {
 
         Rating rating = new Rating();
 
         String uniqueIdentifierCode = ratingRequest.getUniqueIdentifier();
         String username = ratingRequest.getUsername();
 
-        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
-                        uriBuilder -> uriBuilder.queryParam("uniqueIdentifier", uniqueIdentifierCode).build())
+
+        UserResponse userResponseUsername = webClient.get()
+                .uri(userServiceBaseUrl + "/user/username/" + username)
                 .retrieve()
-                .bodyToMono(MusicPodcastResponse[].class)
+                .bodyToMono(UserResponse.class)
                 .block();
 
-        UserResponse[] userResponseArray = webClient.get()
-                .uri("http://" + userServiceBaseUrl + "/user",
-                        uriBuilder -> uriBuilder.queryParam("username", username).build())
+        MusicPodcastResponse musicPodcastResponseUniqueIdentifierCode = webClient.get()
+                .uri(musicpodcastServiceBaseUrl+"/musicpodcast/id/" + uniqueIdentifierCode)
                 .retrieve()
-                .bodyToMono(UserResponse[].class)
+                .bodyToMono(MusicPodcastResponse.class)
                 .block();
 
         if (uniqueIdentifierCode != null && username != null) {
-            MusicPodcastResponse musicPodcastResponse = Arrays.stream(musicPodcastResponseArray )
-                    .filter(mp -> mp.getUniqueIdentifier().equals(uniqueIdentifierCode))
-                    .findFirst()
-                    .orElse(null);
 
 
-                UserResponse userResponse = Arrays.stream(userResponseArray)
-                        .filter(u -> u.getUsername().equals(username))
-                        .findFirst()
-                        .orElse(null);
-
-
-            if (musicPodcastResponse != null && userResponse != null) {
+            if (musicPodcastResponseUniqueIdentifierCode != null && userResponseUsername != null) {
                 rating.setUniqueIdentifier(uniqueIdentifierCode);
-                rating.setUsername(userResponse.getUsername());                if (ratingRequest.isLiked()) {
+                rating.setUsername(username);
+                if (ratingRequest.isLiked()) {
                     rating.setLiked(true);
                     rating.setDisliked(false);
                 } else if (ratingRequest.isDisliked()) {
@@ -130,7 +120,7 @@ public class RatingService {
     // Get all liked music podcasts
     public List<MusicPodcastResponse> getAllLikedMusicPodcast(){
         MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri("http://" + musicpodcastServiceBaseUrl + "/musicpodcast",
+                .uri(musicpodcastServiceBaseUrl + "/musicpodcast",
                         uriBuilder -> uriBuilder.build())
                 .retrieve()
                 .bodyToMono(MusicPodcastResponse[].class)
