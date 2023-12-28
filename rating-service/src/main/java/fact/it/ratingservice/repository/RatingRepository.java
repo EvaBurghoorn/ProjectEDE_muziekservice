@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface RatingRepository extends MongoRepository<Rating, String> {
 
-    Rating findById(int id);
-
     List<Rating> findAllByUsername(@Param("username") String username);
 
 }

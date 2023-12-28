@@ -2,9 +2,7 @@ package fact.it.playlistservice.controller;
 
 import fact.it.playlistservice.dto.PlaylistRequest;
 import fact.it.playlistservice.dto.PlaylistResponse;
-import fact.it.playlistservice.model.Playlist;
 import fact.it.playlistservice.service.PlaylistService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

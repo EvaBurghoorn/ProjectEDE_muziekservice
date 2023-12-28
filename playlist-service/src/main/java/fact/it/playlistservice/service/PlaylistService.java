@@ -22,7 +22,7 @@ public class PlaylistService {
         if(playlistRepository.count() <= 0){
             Playlist playlist = new Playlist();
             playlist.setTitle("Title1");
-            playlist.setUsername("eburghoorn ");
+            playlist.setUsername("Lillie123 ");
             playlist.setUniqueIdentifier("Title1Artist1 ");
             playlist.setPrivate(true);
             playlist.setDescription("Dit is een test description");
