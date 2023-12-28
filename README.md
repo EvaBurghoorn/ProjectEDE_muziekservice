@@ -110,13 +110,12 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![GetMusicpodcastWithLikedRatingByUsername](Images/EndpointGetAllMuiscPocastLikedRatingByUsername.png)
 
 ### Rating-service: 
-1. Get /rating/all/liked -> Geeft alle ratings waarvan de liked rating op true staat
 
-2. Post /rating -> Maakt een nieuwe rating aan
+1. Post /rating -> Maakt een nieuwe rating aan
 ![CreateRating](Images/EndpointCreateRating.png)
 
-4. Put /rating/id/{id} -> Update een specifieke rating
+2. Put /rating/id/{id} -> Update een specifieke rating
 ![EditRating](Images/EndpointUpdateRating.png)
 
-5. Delete /rating/id/{id} -> Verwijdert een rating
+3. Delete /rating/id/{id} -> Verwijdert een rating
 ![DeleteRating](Images/EndpointDeleteRatingById.png)
