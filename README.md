@@ -106,7 +106,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 4. Get /musicpodcast/id/{uniqueIdentifier} -> Geeft een music podcast terug met die specifieke unieke identifier
 ![GetMusicpodcastByUniqueIdentifier](Images/EndpointGetAllPodcasts.png)
 
-5. Get /musicpodcast/ratings/{username} -> 
+5. Get /musicpodcast/ratings/{username} -> Geeft alle music podcasts terug die een rating hebben die geliked is van een specifieke user die wordt opgehaald door de username.
 ![GetMusicpodcastWithLikedRatingByUsername](Images/EndpointGetAllMuiscPocastLikedRatingByUsername.png)
 
 ### Rating-service: 
