@@ -102,22 +102,17 @@ public class MusicPodcastService {
                     .bodyToMono(RatingResponse[].class)
                     .block();
 
-//            RatingResponse[] hardcodedRatings = {
-//                    new RatingResponse("658c04b424c01e2dbf77d57e", true, false, "Title1Artist1", "Lillie123"),
-//                    new RatingResponse("658c04b424c01e2dbf77d57f", false, true, "TitlePodcastArtist2", "Lillie123")
-//            };
-//
-//            RatingResponse[] ratingResponsePerUserArray = hardcodedRatings;
 
 
-            List<MusicPodcastResponse> musicPodcastResponses = Arrays.stream(ratingResponsePerUserArray)
-                    .filter(rating -> rating.isLiked()) // Filter for liked ratings
-                    .map(RatingResponse::getUniqueIdentifier)
-                    .map(this::getMusicPodcastByUniqueIdentifier)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .map(this::mapToMusicPodcastResponse)
-                    .collect(Collectors.toList());
+
+            List<MusicPodcastResponse> musicPodcastResponses = (List<MusicPodcastResponse>) Arrays.stream(ratingResponsePerUserArray);
+//                    .filter(rating -> rating.isLiked()) // Filter for liked ratings
+//                    .map(RatingResponse::getUniqueIdentifier)
+//                    .map(this::getMusicPodcastByUniqueIdentifier)
+//                    .filter(Optional::isPresent)
+//                    .map(Optional::get)
+//                    .map(this::mapToMusicPodcastResponse)
+//                    .collect(Collectors.toList());
 
             return musicPodcastResponses;
         }
