@@ -77,8 +77,9 @@ class RatingServiceApplicationTests {
         savedRating.setDisliked(isDisliked);
         savedRating.setLiked(isLiked);
 
-        when(webClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri("http://localhost:8080/musicpodcast")).thenReturn(requestHeadersSpec);
+        when(requestHeadersUriSpec.uri("http://localhost:8081/user")).thenReturn(requestHeadersSpec);
+
         when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(new MusicPodcastResponse[]{musicPodcastResponse}));
         when(responseSpec.bodyToMono(UserResponse[].class)).thenReturn(Mono.just(new UserResponse[]{userResponse}));
