@@ -227,12 +227,12 @@ class MusicPodcastServiceApplicationTests {
 				new RatingResponse("id2", false, false, "uniqueId2", "user1"),
 		};
 
-//		when(webClient.get()).thenReturn(requestHeadersUriSpec);
-//		when(requestHeadersUriSpec.uri(anyString(), anyString())).thenReturn(requestHeadersSpec);
-//		when(requestHeadersSpec.exchange()).thenReturn(Mono.just(responseSpec));
-//		when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-//
-//		when(responseSpec.bodyToMono(RatingResponse[].class)).thenReturn(Mono.just(mockedRatingResponseArray));
+		when(webClient.get()).thenReturn(requestHeadersUriSpec);
+		when(requestHeadersUriSpec.uri(anyString(), anyString())).thenReturn(requestHeadersSpec);
+		when(requestHeadersSpec.exchange()).thenReturn(Mono.just(responseSpec));
+		when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+
+		when(responseSpec.bodyToMono(RatingResponse[].class)).thenReturn(Mono.just(mockedRatingResponseArray));
 
 
 		// Act
