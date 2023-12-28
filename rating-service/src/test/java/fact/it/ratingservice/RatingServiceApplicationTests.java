@@ -51,39 +51,24 @@ class RatingServiceApplicationTests {
     }
 
     @Test
-    public void testCreateRating() {
+    public void testRateMusicPodcast() {
         // Arrange
-        String uniqueIdentifier = "test";
-        String username = "test";
-        Boolean isDisliked= false;
-        Boolean isLiked = true;
-
-
-        MusicPodcastResponse musicPodcastResponse = new MusicPodcastResponse();
-        musicPodcastResponse.setUniqueIdentifier(uniqueIdentifier);
+        String username = "Lillie123";
+        String uniqueIdentifierCode = "uniqueId2";
 
         UserResponse userResponse = new UserResponse();
-        userResponse.setUsername(username);
+        MusicPodcastResponse musicPodcastResponse = new MusicPodcastResponse();
+
+        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
+        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(UserResponse.class)).thenReturn(Mono.just(userResponse));
+        when(responseSpec.bodyToMono(MusicPodcastResponse.class)).thenReturn(Mono.just(musicPodcastResponse));
 
         RatingRequest ratingRequest = new RatingRequest();
-        ratingRequest.setUniqueIdentifier(uniqueIdentifier);
         ratingRequest.setUsername(username);
-        ratingRequest.setDisliked(isDisliked);
-        ratingRequest.setLiked(isLiked);
-
-        Rating savedRating = new Rating();
-        savedRating.setUniqueIdentifier(uniqueIdentifier);
-        savedRating.setUsername(username);
-        savedRating.setDisliked(isDisliked);
-        savedRating.setLiked(isLiked);
-
-        when(requestHeadersUriSpec.uri("http://localhost:8080/musicpodcast")).thenReturn(requestHeadersSpec);
-        when(requestHeadersUriSpec.uri("http://localhost:8081/user")).thenReturn(requestHeadersSpec);
-
-        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-        when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(new MusicPodcastResponse[]{musicPodcastResponse}));
-        when(responseSpec.bodyToMono(UserResponse[].class)).thenReturn(Mono.just(new UserResponse[]{userResponse}));
-        when(ratingRepository.save(any(Rating.class))).thenReturn(savedRating);
+        ratingRequest.setUniqueIdentifier(uniqueIdentifierCode);
+        ratingRequest.setLiked(true);
 
         // Act
         ratingService.rateMusicPodcast(ratingRequest);
