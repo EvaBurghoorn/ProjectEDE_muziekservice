@@ -107,7 +107,7 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 ![GetMusicpodcastByUniqueIdentifier](Images/EndpointGetAllPodcasts.png)
 
 5. Get /musicpodcast/ratings/{username} -> 
-6. Get /musicpodcast/ratings/{username}/{uniqueIdentifier} -> 
+![GetMusicpodcastWithLikedRatingByUsername](Images/EndpointGetAllMuiscPocastLikedRatingByUsername.png)
 
 ### Rating-service: 
 1. Get /rating/all/liked -> Geeft alle ratings waarvan de liked rating op true staat
