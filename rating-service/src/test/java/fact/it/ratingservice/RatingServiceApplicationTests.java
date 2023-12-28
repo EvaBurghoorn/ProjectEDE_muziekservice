@@ -2,6 +2,7 @@ package fact.it.ratingservice;
 
 import fact.it.ratingservice.dto.MusicPodcastResponse;
 import fact.it.ratingservice.dto.RatingRequest;
+import fact.it.ratingservice.dto.RatingResponse;
 import fact.it.ratingservice.dto.UserResponse;
 import fact.it.ratingservice.model.Rating;
 import fact.it.ratingservice.repository.RatingRepository;
@@ -48,50 +49,63 @@ class RatingServiceApplicationTests {
         ReflectionTestUtils.setField(ratingService, "musicpodcastServiceBaseUrl", "http://localhost:8080");
         ReflectionTestUtils.setField(ratingService, "userServiceBaseUrl", "http://localhost:8081");
     }
+
     @Test
-    public void testGetAllLikedRatings() {
+    public void testCreateRating() {
         // Arrange
+        String uniqueIdentifier = "test";
+        String username = "test";
+        Boolean isDisliked= false;
+        Boolean isLiked = true;
+
+
+        MusicPodcastResponse musicPodcastResponse = new MusicPodcastResponse();
+        musicPodcastResponse.setUniqueIdentifier(uniqueIdentifier);
+
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUsername(username);
+
+        RatingRequest ratingRequest = new RatingRequest();
+        ratingRequest.setUniqueIdentifier(uniqueIdentifier);
+        ratingRequest.setUsername(username);
+        ratingRequest.setDisliked(isDisliked);
+        ratingRequest.setLiked(isLiked);
+
+        Rating savedRating = new Rating();
+        savedRating.setUniqueIdentifier(uniqueIdentifier);
+        savedRating.setUsername(username);
+        savedRating.setDisliked(isDisliked);
+        savedRating.setLiked(isLiked);
+
+        when(webClient.get()).thenReturn(requestHeadersUriSpec);
+        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
+        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(new MusicPodcastResponse[]{musicPodcastResponse}));
+        when(responseSpec.bodyToMono(UserResponse[].class)).thenReturn(Mono.just(new UserResponse[]{userResponse}));
+        when(ratingRepository.save(any(Rating.class))).thenReturn(savedRating);
 
         // Act
+        ratingService.rateMusicPodcast(ratingRequest);
 
         // Assert
-
+        verify(ratingRepository, times(1)).save(any(Rating.class));
     }
-//    @Test
-//    public void testCreateRating() {
-//        // Arrange
-//        String uniqueIdentifier = "test";
-//        String username = "test";
-//        Boolean isDisliked= false;
-//        Boolean isLiked = true;
-//
-//        RatingRequest ratingRequest = new RatingRequest();
-//        ratingRequest.setDisliked(isDisliked);
-//        ratingRequest.setLiked(isLiked);
-//        ratingRequest.setUniqueIdentifier(uniqueIdentifier);
-//        ratingRequest.setUsername(username);
-//
-//        MusicPodcastResponse musicPodcastResponse = new MusicPodcastResponse();
-//        musicPodcastResponse.setUniqueIdentifier(uniqueIdentifier);
-//
-//        UserResponse userResponse = new UserResponse();
-//        userResponse.setUsername(username);
-//
-//
-//        when(webClient.get()).thenReturn(requestHeadersUriSpec);
-//        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
-//        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-//        when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(new MusicPodcastResponse[]{musicPodcastResponse}));
-//        when(responseSpec.bodyToMono(UserResponse[].class)).thenReturn(Mono.just(new UserResponse[]{userResponse}));
-//        when(ratingRepository.save(any(Rating.class)));
-//
-//        // Act
-//        ratingService.rateMusicPodcast(ratingRequest);
-//
-//        // Assert
-//        verify(ratingRepository, times(1)).save(any(Rating.class));
-//    }
 
+        @Test
+        void testGetAllRatingsPerUser() {
+            // Arrange
+            String username = "testUser";
+            List<Rating> ratings = new ArrayList<>();
+            ratings.add(new Rating());
+
+            when(ratingRepository.findAllByUsername(username)).thenReturn(ratings);
+
+            // Act
+            List<RatingResponse> result = ratingService.getAllRatingsPerUser(username);
+
+            // Assert
+            assertEquals(ratings.size(), result.size());
+        }
     @Test
     public void testEditRating() {
         // Arrange

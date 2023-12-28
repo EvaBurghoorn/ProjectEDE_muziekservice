@@ -6,16 +6,25 @@ import fact.it.musicpodcastservice.dto.RatingResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
 import fact.it.musicpodcastservice.repository.MusicPodcastRepository;
 import fact.it.musicpodcastservice.service.MusicPodcastService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,6 +36,19 @@ class MusicPodcastServiceApplicationTests {
 
 	@Mock
 	private MusicPodcastRepository musicPodcastRepository;
+
+	@Mock
+	private WebClient webClient;
+
+	@Mock
+	private WebClient.RequestHeadersUriSpec requestHeadersUriSpec;
+
+	@Mock
+	private WebClient.RequestHeadersSpec requestHeadersSpec;
+
+	@Mock
+	private WebClient.ResponseSpec responseSpec;
+
 	@Test
 	public void testGetAllMusicPodcast(){
 		// Arrange
@@ -197,8 +219,31 @@ class MusicPodcastServiceApplicationTests {
 		assertFalse(responseOptional.isPresent());
 	}
 
+	@Test
+	public void testGetAllMusicPodcastsWithRatingLikedPerUser() {
+		// Arrange
+		RatingResponse[] mockedRatingResponseArray = {
+				new RatingResponse("id1", true, false, "uniqueId1", "user1"),
+				new RatingResponse("id2", false, false, "uniqueId2", "user1"),
+		};
+
+//		when(webClient.get()).thenReturn(requestHeadersUriSpec);
+//		when(requestHeadersUriSpec.uri(anyString(), anyString())).thenReturn(requestHeadersSpec);
+//		when(requestHeadersSpec.exchange()).thenReturn(Mono.just(responseSpec));
+//		when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+//
+//		when(responseSpec.bodyToMono(RatingResponse[].class)).thenReturn(Mono.just(mockedRatingResponseArray));
 
 
+		// Act
 
+		RatingResponse ratingResponse = new RatingResponse();
+		ratingResponse.setUsername("user1");
+
+		List<MusicPodcastResponse> result = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(ratingResponse);
+
+		// Assert
+		assertEquals(2, result.size());
+	}
 
 }
