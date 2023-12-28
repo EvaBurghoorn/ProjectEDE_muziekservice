@@ -16,25 +16,13 @@ import java.util.List;
 public class RatingController {
     private final RatingService ratingService;
 
-
-    //    Get all songs and podcasts
-    @GetMapping("/all")
-    @ResponseStatus(HttpStatus.OK)
-    public List<RatingResponse> getAllRating(){
-        return  ratingService.getAllRatings();
-    }
-
-    // Get all the liked ratings
-    @GetMapping("/all/liked")
-    @ResponseStatus(HttpStatus.OK)
-    public List<MusicPodcastResponse> getAllLikedRating(){return ratingService.getAllLikedMusicPodcast();}
-
     //Get rating per username
     @GetMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public List<RatingResponse> getAllRatingPerUsername(@PathVariable("username") String username){
         return ratingService.getAllRatingsPerUser(username);
     }
+
     // Create a rating for a music podcast per user
     @PostMapping
     @ResponseStatus(HttpStatus.OK)

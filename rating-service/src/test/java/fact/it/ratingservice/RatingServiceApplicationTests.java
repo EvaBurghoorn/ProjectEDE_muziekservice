@@ -51,39 +51,6 @@ class RatingServiceApplicationTests {
     }
 
     @Test
-    public void testGetAllLikedRatings() {
-        MusicPodcastResponse[] musicPodcastResponses = new MusicPodcastResponse[2];
-        musicPodcastResponses[0] = new MusicPodcastResponse();
-        musicPodcastResponses[0].setId("1");
-        musicPodcastResponses[0].setTitle("Podcast 1");
-        musicPodcastResponses[0].setArtist("Artist 1");
-        musicPodcastResponses[0].setDurationSeconds(3600);
-        musicPodcastResponses[0].setGenre("Genre 1");
-        musicPodcastResponses[0].setPodcast(true);
-        musicPodcastResponses[0].setUniqueIdentifier("uniqueIdentifier1");
-
-        musicPodcastResponses[1] = new MusicPodcastResponse();
-        musicPodcastResponses[1].setId("2");
-        musicPodcastResponses[1].setTitle("Podcast 2");
-        musicPodcastResponses[1].setArtist("Artist 2");
-        musicPodcastResponses[1].setDurationSeconds(7200);
-        musicPodcastResponses[1].setGenre("Genre 2");
-        musicPodcastResponses[1].setPodcast(true);
-        musicPodcastResponses[1].setUniqueIdentifier("uniqueIdentifier2");
-
-        when(webClient.get()).thenReturn(requestHeadersUriSpec);
-        when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
-        when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-        when(responseSpec.bodyToMono(MusicPodcastResponse[].class)).thenReturn(Mono.just(musicPodcastResponses));
-
-
-        // Act
-        List<MusicPodcastResponse> result = ratingService.getAllLikedMusicPodcast();
-
-        // Assert
-        assertEquals(2, result.size());
-    }
-    @Test
     public void testCreateRating() {
         // Arrange
         String uniqueIdentifier = "test";

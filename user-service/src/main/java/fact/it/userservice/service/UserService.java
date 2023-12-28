@@ -46,12 +46,6 @@ public class UserService {
     }
 
 
-    //    Get all the users
-    public List<UserResponse> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(this::mapToUserResponse).toList();
-    }
-
     // Get user by username
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);

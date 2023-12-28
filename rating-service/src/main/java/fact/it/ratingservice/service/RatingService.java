@@ -117,22 +117,6 @@ public class RatingService {
         }
     }
 
-    // Get all liked music podcasts
-    public List<MusicPodcastResponse> getAllLikedMusicPodcast(){
-        MusicPodcastResponse[] musicPodcastResponseArray = webClient.get()
-                .uri(musicpodcastServiceBaseUrl + "/musicpodcast",
-                        uriBuilder -> uriBuilder.build())
-                .retrieve()
-                .bodyToMono(MusicPodcastResponse[].class)
-                .block();
-        return Arrays.stream(musicPodcastResponseArray).toList();
-    }
-
-    public List<RatingResponse> getAllRatings(){
-        List<Rating> ratings = ratingRepository.findAll();
-        return ratings.stream().map(this::mapToRatingResponse).toList();
-    }
-
     public List<RatingResponse> getAllRatingsPerUser(String username){
         List<Rating> ratings = ratingRepository.findAllByUsername(username);
         return ratings.stream().map(this::mapToRatingResponse).toList();
