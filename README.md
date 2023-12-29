@@ -30,6 +30,7 @@ Je kan hierop onze 4 microservices terugvinden, met de api gateway. Wij hebben e
 
   
 ## Hosted Links
+Hier onder kan je al onze micro-services en de api-gateway URL's zien die gehost zijn op Okteto.
 API-gateway: https://api-gateway-evaburghoorn.cloud.okteto.net/
 
 Playlist-service: https://playlist-service-evaburghoorn.cloud.okteto.net/
@@ -41,33 +42,33 @@ MusicPodcast-service: https://musicpodcast-service-evaburghoorn.cloud.okteto.net
 Rating-service: https://rating-service-evaburghoorn.cloud.okteto.net/
   
 
-## Endpoints in postman
-Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
+## Endpoints in Postman
+Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman.
 
 ### Playlist-service: 
-1. Get /playlist/all -> Geeft alle playlists terug die er zijn 
+1. Get /playlist/all -> Geeft alle playlists terug
 ![GetPlaylist](Images/EndpointGetAllPlaylist.png)
 
-2. Get /playlist/id/{id} -> Geeft een playlist terug met die specifieke id
+2. Get /playlist/id/{id} -> Geeft een playlist terug met een specifieke id die je meegeeft
 ![GetPlaylist](Images/EndpointGetPlaylistById.png)
 
 3. Post /playlist -> Maakt een nieuwe playlist aan 
 ![CreatePlaylist](Images/EndpointCreatePlaylist.png)
 
-4. Edit /playlist/id/{id} -> Edit a specific playlist
+4. Put /playlist/id/{id} -> Past een specifieke playlist aan met de id die je meegeeft
 ![EditPlaylist](Images/EndpointEditPlaylistById.png)
 
 5. Delete /playlist/id/{id} -> Verwijdert een playlist
 ![DeletePlaylist](Images/EndpointDeletePlaylistById.png)
 
 ### User-service: 
-1. Get /user/username/{username} -> Geeft een gebruiker terug met die specifieke username
+1. Get /user/username/{username} -> Geeft een gebruiker terug met die specifieke gebruikersnaam
 ![GetUserByUsername](Images/EndpointGetUserByUsername.png)
 
 2. Post /user -> Maakt een nieuwe gebruiker aan 
 ![CreateUser](Images/EndpointPostUser.png)
 
-3. Edit /user/username/{username} -> Pas een gebruiker zijn informatie aan
+3. Edit /user/username/{username} -> Past een gebruiker zijn informatie aan
 ![PutPlaylist](Images/EndpointPutUser.png)
 
 4. Delete /user/username/{username} -> Verwijdert een gebruiker
@@ -86,18 +87,20 @@ Hieronder kan je screenshots vinden van de endpoints die wij gemaakt hebben.
 4. Get /musicpodcast/id/{uniqueIdentifier} -> Geeft een music podcast terug met die specifieke unieke identifier
 ![GetMusicpodcastByUniqueIdentifier](Images/EndpointGetAllPodcasts.png)
 
-5. Get /musicpodcast/ratings/{username} -> Geeft alle music podcasts terug die een rating hebben die geliked is van een specifieke user die wordt opgehaald door de username.
+5. Get /musicpodcast/ratings/{username} -> Geeft alle music podcasts terug die een rating hebben die geliked is van een specifieke user die wordt opgehaald door de gebruikersnaam.
 ![GetMusicpodcastWithLikedRatingByUsername](Images/EndpointGetAllMuiscPocastLikedRatingByUsername.png)
 
 ### Rating-service: 
+1. Get /rating/username/{username} -> Haalt alle ratings op van een specifieke gebruiker met behulp van de gebruikersnaam
+![GetRatingsByUsername](Images/EndpointGetRatingsByUsername.png)
 
-1. Post /rating -> Maakt een nieuwe rating aan
+2. Post /rating -> Maakt een nieuwe rating aan
 ![CreateRating](Images/EndpointCreateRating.png)
 
-2. Put /rating/id/{id} -> Update een specifieke rating
+3. Put /rating/id/{id} -> Update een specifieke rating
 ![EditRating](Images/EndpointUpdateRating.png)
 
-3. Delete /rating/id/{id} -> Verwijdert een rating
+4. Delete /rating/id/{id} -> Verwijdert een rating
 ![DeleteRating](Images/EndpointDeleteRatingById.png)
 
 ## Projectdoelen en Vereisten
