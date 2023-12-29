@@ -33,8 +33,8 @@ Je kan hierop onze 4 microservices terugvinden, met de api gateway. Wij hebben e
 Wij hebben ons vooral gefocust op de algemene eisen en de documentatie. Dus hieronder kan je zien wat wij hebben geimplementeerd. 
 
 ### Basics:
-- Minstens 3 GET, 1 POST, 1 PUT en 1 DELETE endpoints op een API Gateway, gebaseerd op je eigen services. -> Wij hebben in totaal 9 GET, 3 POST, 3 PUT en 3 DELETE endpoints.
-- Minstens 1 keer MongoDB als databank en minstens 1 keer SQL. -> Wij hebben 3 keer MongoDB en 1 keer SQL databank gebruikt.
+- Minstens 3 GET, 1 POST, 1 PUT en 1 DELETE endpoints op een API Gateway, gebaseerd op je eigen services. Wij hebben in totaal 9 GET, 3 POST, 3 PUT en 3 DELETE endpoints.
+- Minstens 1 keer MongoDB als databank en minstens 1 keer SQL. Wij hebben 3 keer MongoDB en 1 keer SQL databank gebruikt.
 - Logisch gebruik van path parameters, query parameters en body.
 
 ### Documentatie:
@@ -52,13 +52,15 @@ Wij hebben ons vooral gefocust op de algemene eisen en de documentatie. Dus hier
 - Unit testing all the Service classes.
   
 ## Hosted Links
+API-gateway: https://api-gateway-evaburghoorn.cloud.okteto.net/
+
 Playlist-service: https://playlist-service-evaburghoorn.cloud.okteto.net/
 
 User-service: https://user-service-evaburghoorn.cloud.okteto.net/
 
 MusicPodcast-service: https://musicpodcast-service-evaburghoorn.cloud.okteto.net/
 
-Rating-service: https://rating-service-evaburghoorn.cloud.okteto.net
+Rating-service: https://rating-service-evaburghoorn.cloud.okteto.net/
   
 
 ## Endpoints in postman
