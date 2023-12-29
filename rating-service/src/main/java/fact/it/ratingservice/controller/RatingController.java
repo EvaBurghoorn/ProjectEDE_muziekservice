@@ -1,6 +1,5 @@
 package fact.it.ratingservice.controller;
 
-import fact.it.ratingservice.dto.MusicPodcastResponse;
 import fact.it.ratingservice.dto.RatingRequest;
 import fact.it.ratingservice.dto.RatingResponse;
 import fact.it.ratingservice.service.RatingService;

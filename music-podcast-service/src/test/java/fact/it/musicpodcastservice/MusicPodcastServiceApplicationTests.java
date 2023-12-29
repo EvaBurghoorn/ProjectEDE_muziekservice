@@ -1,6 +1,5 @@
 package fact.it.musicpodcastservice;
 
-import fact.it.musicpodcastservice.dto.MusicPodcastRequest;
 import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
 import fact.it.musicpodcastservice.dto.RatingResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
@@ -11,20 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -227,29 +220,38 @@ class MusicPodcastServiceApplicationTests {
 
 	@Test
 	public void testGetAllMusicPodcastsWithRatingLikedPerUser() {
+
 		// Arrange
-		RatingResponse[] mockedRatingResponseArray = {
-				new RatingResponse("id1", true, false, "uniqueId1", "user1"),
-				new RatingResponse("Lillie123", true, false, "uniqueId2", "Lillie123"),
-		};
+		String username = "testUser";
+
+		RatingResponse response1 = RatingResponse.builder()
+				.id("1")
+				.isLiked(true)
+				.isDisliked(false)
+				.uniqueIdentifier("podcast1")
+				.username(username)
+				.build();
+		RatingResponse response2 = RatingResponse.builder()
+				.id("2")
+				.isLiked(false)
+				.isDisliked(true)
+				.uniqueIdentifier("podcast2")
+				.username(username)
+				.build();
+		RatingResponse[] responses = new RatingResponse[]{response1, response2};
+
 
 		when(webClient.get()).thenReturn(requestHeadersUriSpec);
-		when(requestHeadersUriSpec.uri("http://localhost:8082/rating/username/Lillie123")).thenReturn(requestHeadersSpec);
-		when(requestHeadersSpec.exchange()).thenReturn(Mono.just(responseSpec));
+		when(requestHeadersUriSpec.uri(anyString())).thenReturn(requestHeadersSpec);
 		when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
-
-		when(responseSpec.bodyToMono(RatingResponse[].class)).thenReturn(Mono.just(mockedRatingResponseArray));
-
+		when(responseSpec.bodyToMono(RatingResponse[].class)).thenReturn(Mono.just(responses));
 
 		// Act
-
-		RatingResponse ratingResponse = new RatingResponse();
-		ratingResponse.setUsername("Lillie123");
-
-		List<MusicPodcastResponse> result = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(mockedRatingResponseArray[1]);
+		List<MusicPodcastResponse> result = musicPodcastService.getAllMusicPodcastsWithRatingLikedPerUser(response1);
 
 		// Assert
 		assertEquals(1, result.size());
 	}
+
 
 }
