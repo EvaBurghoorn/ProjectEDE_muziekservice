@@ -31,6 +31,7 @@ Je kan hierop onze 4 microservices terugvinden, met de api gateway. Wij hebben e
   
 ## Hosted Links
 Hier onder kan je al onze micro-services en de api-gateway URL's zien die gehost zijn op Okteto.
+
 API-gateway: https://api-gateway-evaburghoorn.cloud.okteto.net/
 
 Playlist-service: https://playlist-service-evaburghoorn.cloud.okteto.net/
