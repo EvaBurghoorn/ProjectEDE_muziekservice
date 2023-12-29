@@ -91,7 +91,7 @@ Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman.
 ![GetMusicpodcastWithLikedRatingByUsername](Images/EndpointGetAllMuiscPocastLikedRatingByUsername.png)
 
 ### Rating-service: 
-1. Get /rating/username/{username} -> Haalt alle ratings op van een specifieke gebruiker met behulp van de gebruikersnaam
+1. Get /rating/username/{username} -> Haalt alle ratings op van een specifieke gebruiker met behulp van de gebruikersnaam, in dit postman request hebben we de gebruikersnaam 'Lillie123' gebruikt.
 ![GetRatingsByUsername](Images/EndpointGetRatingsByUsername.png)
 
 2. Post /rating -> Maakt een nieuwe rating aan
