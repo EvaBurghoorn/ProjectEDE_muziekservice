@@ -56,7 +56,7 @@ Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman.
 ![CreatePlaylist](Images/EndpointCreatePlaylist.png)
 
 4. Put /playlist/id/{id} -> Past een specifieke playlist aan met de id die je meegeeft
-![EditPlaylist](Images/EndpointEditPlaylistById.png)
+![EditPlaylist](Images/EndpointPutPlaylistById.png)
 
 5. Delete /playlist/id/{id} -> Verwijdert een playlist
 ![DeletePlaylist](Images/EndpointDeletePlaylistById.png)
