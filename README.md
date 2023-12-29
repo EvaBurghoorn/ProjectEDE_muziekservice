@@ -20,7 +20,7 @@ Dit is kort uitgelegd wat deze muziekservice met de 4 microservices inhoudt.
 ## API Gateway
 Wij hebben ook een api gateway geïmplementeerd als onderdeel van onze muziekservice. Het dient als een soort toegangspunt voor externe gebruikers, hier rond hoort onder andere ook de authentication, authorization, routing, security,...
 
-Voor de authenticatie hebben wij GCP 0Auth2 geimplementeerd. Alle onze routes zijn beveiligd buiten het aanmaken van een gebruiker. Het creëren van een gebruiker kan je dus zonder authenticatie aanmaken. 
+Voor de authenticatie hebben wij GCP 0Auth2 geïmplementeerd. Alle onze routes zijn beveiligd buiten het aanmaken van een gebruiker. Het creëren van een gebruiker kan je dus zonder authenticatie aanmaken. 
 
 ## Draw.io
 Hieronder op de foto kan je ons draw.io schema terugvinden, hierop kan je dus zien hoe onze muziekservice er uitziet. 
