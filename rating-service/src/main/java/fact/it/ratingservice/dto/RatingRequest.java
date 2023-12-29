@@ -1,6 +1,5 @@
 package fact.it.ratingservice.dto;
 
-import fact.it.ratingservice.model.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

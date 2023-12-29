@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -117,6 +115,7 @@ public class RatingService {
         }
     }
 
+    // Get all the ratings by a username
     public List<RatingResponse> getAllRatingsPerUser(String username){
         List<Rating> ratings = ratingRepository.findAllByUsername(username);
         return ratings.stream().map(this::mapToRatingResponse).toList();

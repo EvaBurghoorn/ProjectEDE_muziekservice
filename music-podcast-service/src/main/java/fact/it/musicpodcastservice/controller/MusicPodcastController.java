@@ -1,6 +1,5 @@
 package fact.it.musicpodcastservice.controller;
 
-import fact.it.musicpodcastservice.dto.MusicPodcastRequest;
 import fact.it.musicpodcastservice.dto.MusicPodcastResponse;
 import fact.it.musicpodcastservice.dto.RatingResponse;
 import fact.it.musicpodcastservice.model.MusicPodcast;
@@ -52,7 +51,7 @@ public class MusicPodcastController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
+// Get all the musicpodcast with a liked rating by a username
     @GetMapping("/ratings/{username}")
     public ResponseEntity<List<MusicPodcastResponse>> getAllMusicPodcastsWithRatingLikedPerUser(@PathVariable("username") String username) {
         RatingResponse ratingResponse = new RatingResponse();
