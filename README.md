@@ -105,7 +105,7 @@ Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman. W
 ![DeleteRating](Images/EndpointDeleteRatingById.png)
 
 ## Projectdoelen en Vereisten
-Wij hebben ons vooral gefocust op de algemene eisen en de documentatie. Dus hieronder kan je zien wat wij hebben geimplementeerd. 
+Wij hebben ons vooral gefocust op de algemene eisen en de documentatie. Dus hieronder kan je zien wat wij hebben geïmplementeerd. 
 
 ### Basics:
 - Minstens 3 GET, 1 POST, 1 PUT en 1 DELETE endpoints op een API Gateway, gebaseerd op je eigen services. Wij hebben in totaal 9 GET, 3 POST, 3 PUT en 3 DELETE endpoints.
