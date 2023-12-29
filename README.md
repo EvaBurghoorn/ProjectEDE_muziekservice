@@ -44,7 +44,7 @@ Rating-service: https://rating-service-evaburghoorn.cloud.okteto.net/
   
 
 ## Endpoints in Postman
-Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman.
+Hieronder kan je de foto's zien van de resultaten van de endpoints in Postman. Wij zijn het meeste trots op de endpoint van GET/musicpodcasts/ratings/{username} & POST /rating . Voor ons waren deze 2 het meest uitdagend en het moeilijkste omdat we hierbij onder andere connectie moesten maken met behulp van webclient met de andere microservices.
 
 ### Playlist-service: 
 1. Get /playlist/all -> Geeft alle playlists terug
